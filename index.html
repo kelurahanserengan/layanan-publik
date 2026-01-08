@@ -64,10 +64,25 @@ footer{background:#fff;font-size:14px}
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar fixed-top px-3">
+<nav class="navbar fixed-top px-3 bg-white shadow-sm">
   <strong>Kelurahan Serengan – Kota Surakarta</strong>
-  <a href="#tracking" class="btn btn-outline-primary btn-sm ms-auto">Cek Permohonan</a>
+
+  <div class="ms-auto d-flex gap-2">
+    <a href="#layanan" class="btn btn-primary btn-sm">
+      📋 Layanan
+    </a>
+
+    <a href="#kontak" class="btn btn-outline-secondary btn-sm">
+      📍 Kontak
+    </a>
+
+    <button class="btn btn-outline-primary btn-sm" disabled
+            title="Fitur sedang dikembangkan">
+      🧾 Cek Permohonan
+    </button>
+  </div>
 </nav>
+
 
 <!-- HERO -->
 <section class="hero">
@@ -292,5 +307,6 @@ document.getElementById("hasil").innerHTML=data[k]?
 
 </body>
 </html>
+
 
 
