@@ -177,6 +177,39 @@ width="100%" height="100%" style="border:0;min-height:360px;"></iframe>
 <footer class="text-center py-4 text-muted">
 © 2026 Kelurahan Serengan – Kota Surakarta
 </footer>
+<!-- MODAL SCRIPT -->
+<script>
+function modal(id,title,syarat,alur){
+document.write(`
+<div class="modal fade" id="${id}">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+<h5>${title}</h5>
+<button class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<h6>📑 Persyaratan</h6><ul>${syarat}</ul>
+<h6>🔄 Alur</h6><ol>${alur}</ol>
+</div>
+<div class="modal-footer">
+<a href="https://docs.google.com/forms/" target="_blank" class="btn btn-primary">
+Ajukan Permohonan
+</a>
+</div>
+</div></div></div>
+`);
+}
+modal("skum","Surat Keterangan Umum","<li>KTP</li><li>KK</li><li>Pengantar RT/RW</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>");
+modal("nikah","Surat Pengantar Nikah","<li>KTP</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>");
+modal("kk","Kartu Keluarga","<li>KK Lama</li><li>KTP</li>","<li>Pengajuan</li><li>Dukcapil</li><li>Selesai</li>");
+modal("ktp","KTP-el","<li>KK</li><li>Usia 17+</li>","<li>Pengajuan</li><li>Perekaman</li><li>Selesai</li>");
+modal("kia","KIA","<li>Akta Lahir</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>");
+modal("lahir","Akta Kelahiran","<li>Surat Kelahiran</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>");
+modal("mati","Akta Kematian","<li>Surat Kematian</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>");
+modal("ikd","Identitas Digital","<li>KTP-el</li><li>HP</li>","<li>Registrasi</li><li>Aktivasi</li>");
+modal("pindah","Pindah Datang","<li>KTP</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>");
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -184,5 +217,6 @@ width="100%" height="100%" style="border:0;min-height:360px;"></iframe>
 
 </body>
 </html>
+
 
 
