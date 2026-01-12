@@ -329,11 +329,49 @@ modal("pindah","Pindah Datang","<li>KTP</li><li>KK</li>","<li>Pengajuan</li><li>
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('click', function () {
+    modalTitle.innerText = this.dataset.title;
+    modalSyarat.innerHTML = this.dataset.syarat;
+    modalAlur.innerHTML = this.dataset.alur;
+    modalLink.href = this.dataset.link;
+  });
+});
+</script>
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>AOS.init({duration:800,once:true});</script>
+<div class="modal fade" id="layananModal">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 id="modalTitle"></h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <h6>📑 Persyaratan</h6>
+        <ul id="modalSyarat"></ul>
+
+        <h6>🔄 Alur</h6>
+        <ol id="modalAlur"></ol>
+      </div>
+
+      <div class="modal-footer">
+        <a id="modalLink" target="_blank" class="btn btn-primary">
+          Ajukan Permohonan
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
+
 
 
 
