@@ -134,24 +134,18 @@ footer{background:#fff;font-size:14px}
   <div class="row g-4">
 
     <!-- SKUM -->
-    <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card"
-        data-bs-toggle="modal"
-        data-bs-target="#layananModal"
-        data-title="Surat Keterangan Umum"
-        data-syarat="<li>KTP</li><li>KK</li><li>Pengantar RT/RW</li>"
-        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>"
-        <iframe 
-  src="https://script.google.com/macros/s/AKfycbxQLHh8gXV0kZzcOvJx0-79-j5BSO-Zj43RyxoG07iJ/exec?layanan=skum"
-  width="100%"
-  height="700"
-  style="border:0">
-</iframe>
+<div class="col-6 col-md-4" data-aos="fade-up">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan Umum"
+    data-link="https://script.google.com/macros/s/AKfycbyy6xR-bWvytOYYORv-zZGp6zz_YaefFTOfFJesbvCorRkYL5z8BCgZV_i_KzNtIrJG6A/exec">
 
-        <div class="icon">📄</div>
-        <h6>Surat Keterangan Umum</h6>
-      </div>
-    </div>
+    <div class="icon">📄</div>
+    <h6>Surat Keterangan Umum</h6>
+  </div>
+</div>
+
 
     <!-- NIKAH -->
     <div class="col-6 col-md-4" data-aos="fade-up">
@@ -374,9 +368,45 @@ document.querySelectorAll('.service-card').forEach(card => {
     </div>
   </div>
 </div>
+<div class="modal fade" id="layananModal">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 id="modalTitle"></h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body p-0">
+        <iframe
+          id="layananFrame"
+          src=""
+          style="width:100%; height:80vh; border:0;"
+          loading="lazy">
+        </iframe>
+      </div>
+<script>
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('click', function () {
+    document.getElementById('modalTitle').innerText = this.dataset.title;
+    document.getElementById('layananFrame').src = this.dataset.link;
+  });
+});
+
+/* Reset iframe saat modal ditutup (biar tidak jalan di background) */
+document.getElementById('layananModal')
+  .addEventListener('hidden.bs.modal', function () {
+    document.getElementById('layananFrame').src = '';
+  });
+</script>
+
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
+
 
 
 
