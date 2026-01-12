@@ -139,8 +139,8 @@ footer{background:#fff;font-size:14px}
     data-bs-toggle="modal"
     data-bs-target="#layananModal"
     data-title="Surat Keterangan Umum"
-    data-link="https://script.google.com/macros/s/AKfycbyy6xR-bWvytOYYORv-zZGp6zz_YaefFTOfFJesbvCorRkYL5z8BCgZV_i_KzNtIrJG6A/exec">
-
+    data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>"
+    data-link="https://script.google.com/macros/s/AKfycbzUJstRLqci4RMQolqkeuochrRHVfMre2AHwRCOZtyuoLf2ixNNBbZLRJfpGGiMce1ERA/exec"> 
     <div class="icon">📄</div>
     <h6>Surat Keterangan Umum</h6>
   </div>
@@ -385,20 +385,6 @@ document.querySelectorAll('.service-card').forEach(card => {
           loading="lazy">
         </iframe>
       </div>
-<script>
-document.querySelectorAll('.service-card').forEach(card => {
-  card.addEventListener('click', function () {
-    document.getElementById('modalTitle').innerText = this.dataset.title;
-    document.getElementById('layananFrame').src = this.dataset.link;
-  });
-});
-
-/* Reset iframe saat modal ditutup (biar tidak jalan di background) */
-document.getElementById('layananModal')
-  .addEventListener('hidden.bs.modal', function () {
-    document.getElementById('layananFrame').src = '';
-  });
-</script>
 
     </div>
   </div>
@@ -406,6 +392,7 @@ document.getElementById('layananModal')
 
 </body>
 </html>
+
 
 
 
