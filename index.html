@@ -133,62 +133,135 @@ footer{background:#fff;font-size:14px}
 <section class="container my-5" id="layanan">
   <div class="row g-4">
 
+    <!-- SKUM -->
     <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card" data-bs-toggle="modal" data-bs-target="#skum">
-        <div class="icon">📄</div><h6>Surat Keterangan Umum</h6>
+      <div class="service-card"
+        data-bs-toggle="modal"
+        data-bs-target="#layananModal"
+        data-title="Surat Keterangan Umum"
+        data-syarat="<li>KTP</li><li>KK</li><li>Pengantar RT/RW</li>"
+        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>"
+        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=skum">
+        <div class="icon">📄</div>
+        <h6>Surat Keterangan Umum</h6>
       </div>
     </div>
 
+    <!-- NIKAH -->
     <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card" data-bs-toggle="modal" data-bs-target="#nikah">
-        <div class="icon">💍</div><h6>Surat Pengantar Nikah</h6>
+      <div class="service-card"
+        data-bs-toggle="modal"
+        data-bs-target="#layananModal"
+        data-title="Surat Pengantar Nikah"
+        data-syarat="<li>KTP</li><li>KK</li>"
+        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>"
+        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=nikah">
+        <div class="icon">💍</div>
+        <h6>Surat Pengantar Nikah</h6>
       </div>
     </div>
 
+    <!-- KK -->
     <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card" data-bs-toggle="modal" data-bs-target="#kk">
-        <div class="icon">👨‍👩‍👧</div><h6>Kartu Keluarga</h6>
+      <div class="service-card"
+        data-bs-toggle="modal"
+        data-bs-target="#layananModal"
+        data-title="Kartu Keluarga"
+        data-syarat="<li>KK Lama</li><li>KTP</li>"
+        data-alur="<li>Pengajuan</li><li>Dukcapil</li><li>Selesai</li>"
+        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=kk">
+        <div class="icon">👨‍👩‍👧</div>
+        <h6>Kartu Keluarga</h6>
       </div>
     </div>
 
+    <!-- KTP -->
     <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card" data-bs-toggle="modal" data-bs-target="#ktp">
-        <div class="icon">🪪</div><h6>KTP-el</h6>
+      <div class="service-card"
+        data-bs-toggle="modal"
+        data-bs-target="#layananModal"
+        data-title="KTP-el"
+        data-syarat="<li>KK</li><li>Usia 17+</li>"
+        data-alur="<li>Pengajuan</li><li>Perekaman</li><li>Selesai</li>"
+        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=ktp">
+        <div class="icon">🪪</div>
+        <h6>KTP-el</h6>
       </div>
     </div>
 
+    <!-- KIA -->
     <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card" data-bs-toggle="modal" data-bs-target="#kia">
-        <div class="icon">🧒</div><h6>Kartu Identitas Anak</h6>
+      <div class="service-card"
+        data-bs-toggle="modal"
+        data-bs-target="#layananModal"
+        data-title="Kartu Identitas Anak"
+        data-syarat="<li>Akta Lahir</li><li>KK</li>"
+        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>"
+        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=kia">
+        <div class="icon">🧒</div>
+        <h6>Kartu Identitas Anak</h6>
       </div>
     </div>
 
+    <!-- AKTA LAHIR -->
     <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card" data-bs-toggle="modal" data-bs-target="#lahir">
-        <div class="icon">👶</div><h6>Akta Kelahiran</h6>
+      <div class="service-card"
+        data-bs-toggle="modal"
+        data-bs-target="#layananModal"
+        data-title="Akta Kelahiran"
+        data-syarat="<li>Surat Kelahiran</li><li>KK</li>"
+        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>"
+        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=lahir">
+        <div class="icon">👶</div>
+        <h6>Akta Kelahiran</h6>
       </div>
     </div>
 
+    <!-- AKTA MATI -->
     <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card" data-bs-toggle="modal" data-bs-target="#mati">
-        <div class="icon">⚰️</div><h6>Akta Kematian</h6>
+      <div class="service-card"
+        data-bs-toggle="modal"
+        data-bs-target="#layananModal"
+        data-title="Akta Kematian"
+        data-syarat="<li>Surat Kematian</li><li>KK</li>"
+        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>"
+        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=mati">
+        <div class="icon">⚰️</div>
+        <h6>Akta Kematian</h6>
       </div>
     </div>
 
+    <!-- IKD -->
     <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card" data-bs-toggle="modal" data-bs-target="#ikd">
-        <div class="icon">📱</div><h6>Identitas Kependudukan Digital</h6>
+      <div class="service-card"
+        data-bs-toggle="modal"
+        data-bs-target="#layananModal"
+        data-title="Identitas Kependudukan Digital"
+        data-syarat="<li>KTP-el</li><li>HP</li>"
+        data-alur="<li>Registrasi</li><li>Aktivasi</li>"
+        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=ikd">
+        <div class="icon">📱</div>
+        <h6>Identitas Kependudukan Digital</h6>
       </div>
     </div>
 
+    <!-- PINDAH -->
     <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card" data-bs-toggle="modal" data-bs-target="#pindah">
-        <div class="icon">🚚</div><h6>Pindah Datang</h6>
+      <div class="service-card"
+        data-bs-toggle="modal"
+        data-bs-target="#layananModal"
+        data-title="Pindah Datang"
+        data-syarat="<li>KTP</li><li>KK</li>"
+        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>"
+        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=pindah">
+        <div class="icon">🚚</div>
+        <h6>Pindah Datang</h6>
       </div>
     </div>
 
   </div>
 </section>
+
 
 <!-- KONTAK -->
 <section class="container my-5" id="kontak" data-aos="fade-up">
@@ -261,6 +334,7 @@ modal("pindah","Pindah Datang","<li>KTP</li><li>KK</li>","<li>Pengajuan</li><li>
 
 </body>
 </html>
+
 
 
 
