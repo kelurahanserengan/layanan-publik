@@ -13,6 +13,7 @@ body{
   font-family:Inter,system-ui;
   background:#eef2f7;
   margin:0;
+  padding-bottom:90px;
 }
 .app-header{
   position:sticky;
@@ -25,7 +26,7 @@ body{
   box-shadow:0 4px 12px rgba(0,0,0,.2);
 }
 .hero-slider{
-  height:32vh;
+  height:28vh;
   position:relative;
   overflow:hidden;
   border-radius:0 0 28px 28px;
@@ -71,9 +72,7 @@ body{
   transition:.25s;
   box-shadow:0 6px 18px rgba(0,0,0,.1);
 }
-.service-card:hover{
-  transform:translateY(-6px) scale(1.02);
-}
+.service-card:hover{transform:translateY(-6px) scale(1.02)}
 .icon{font-size:34px}
 .timeline{
   border-left:3px solid #0d6efd;
@@ -93,10 +92,14 @@ body{
   left:-25px;
   top:4px;
 }
+.search-box input{
+  border-radius:14px;
+  padding:10px 14px;
+}
 .wa-float{
   position:fixed;
   right:18px;
-  bottom:18px;
+  bottom:90px;
   background:#25d366;
   color:#fff;
   padding:14px 18px;
@@ -104,6 +107,25 @@ body{
   font-size:20px;
   z-index:999;
 }
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+  box-shadow:0 -4px 15px rgba(0,0,0,.15);
+  z-index:998;
+}
+.bottom-nav a{
+  text-decoration:none;
+  color:#666;
+  font-size:12px;
+  text-align:center;
+}
+.bottom-nav a.active{color:#0d6efd;font-weight:600}
 footer{
   background:#0d6efd;
   color:#fff;
@@ -119,7 +141,7 @@ footer{
 📱 Pelayanan Desa Digital
 </div>
 
-<div class="hero-slider">
+<div class="hero-slider" id="home">
   <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1601582589907-f92af5ed9db8')"></div>
   <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1509099836639-18ba1795216d')"></div>
   <div class="hero-overlay"></div>
@@ -129,18 +151,22 @@ footer{
   </div>
 </div>
 
-<div class="container mt-3">
+<div class="container mt-3" id="layanan">
 
 <div class="pengumuman mb-3" data-aos="fade-up">
 📢 <b>Pengumuman</b><br>
 Pastikan berkas lengkap sebelum mengajukan permohonan layanan.
 </div>
 
+<div class="card-app mb-3 search-box" data-aos="fade-up">
+<input type="text" id="searchInput" class="form-control" placeholder="🔍 Cari layanan...">
+</div>
+
 <div class="card-app mb-3" data-aos="fade-up">
 <h6>📋 Daftar Layanan</h6>
-<div class="row g-3 mt-2">
+<div class="row g-3 mt-2" id="layananList">
 
-<div class="col-4" data-aos="zoom-in">
+<div class="col-4 layanan-item">
 <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
 data-title="Surat Keterangan"
 data-syarat="<div>Isi Form</div><div>Upload KTP</div><div>Verifikasi</div><div>Terbit</div>">
@@ -149,7 +175,7 @@ data-syarat="<div>Isi Form</div><div>Upload KTP</div><div>Verifikasi</div><div>T
 </div>
 </div>
 
-<div class="col-4" data-aos="zoom-in">
+<div class="col-4 layanan-item">
 <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
 data-title="Domisili"
 data-syarat="<div>Form</div><div>KK</div><div>Validasi</div><div>Cetak</div>">
@@ -158,7 +184,7 @@ data-syarat="<div>Form</div><div>KK</div><div>Validasi</div><div>Cetak</div>">
 </div>
 </div>
 
-<div class="col-4" data-aos="zoom-in">
+<div class="col-4 layanan-item">
 <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
 data-title="Usaha"
 data-syarat="<div>Input</div><div>KTP</div><div>Survey</div><div>Selesai</div>">
@@ -179,7 +205,7 @@ data-syarat="<div>Input</div><div>KTP</div><div>Survey</div><div>Selesai</div>">
 </ul>
 </div>
 
-<div class="card-app mb-3" data-aos="fade-up">
+<div class="card-app mb-3" data-aos="fade-up" id="lokasi">
 <h6>📍 Lokasi Kantor</h6>
 <iframe src="https://maps.google.com/maps?q=kantor%20desa&t=&z=13&ie=UTF8&iwloc=&output=embed"
 width="100%" height="260" style="border-radius:16px;border:0"></iframe>
@@ -187,13 +213,20 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
 
 </div>
 
-<footer>
+<footer id="kontak">
 📞 0812-xxxx-xxxx<br>
 ✉ desa@email.com<br><br>
 © Desa Digital
 </footer>
 
 <a class="wa-float" href="https://wa.me/628123456789" target="_blank">💬</a>
+
+<div class="bottom-nav">
+<a href="#home" class="active">🏠<br>Home</a>
+<a href="#layanan">📄<br>Layanan</a>
+<a href="#lokasi">📍<br>Lokasi</a>
+<a href="#kontak">☎️<br>Kontak</a>
+</div>
 
 <div class="modal fade" id="layananModal">
 <div class="modal-dialog modal-dialog-centered">
@@ -214,6 +247,7 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
 <script>
 AOS.init();
 
+// slider
 const slides=document.querySelectorAll('.hero-slide');
 let i=0;
 setInterval(()=>{
@@ -222,10 +256,28 @@ i=(i+1)%slides.length;
 slides[i].classList.add('active');
 },4500);
 
+// modal
 document.querySelectorAll('.service-card').forEach(c=>{
 c.onclick=()=>{
 modalTitle.innerText=c.dataset.title;
 modalSyarat.innerHTML=c.dataset.syarat;
+};
+});
+
+// search
+searchInput.addEventListener('input',function(){
+let v=this.value.toLowerCase();
+document.querySelectorAll('.layanan-item').forEach(item=>{
+let t=item.innerText.toLowerCase();
+item.style.display=t.includes(v)?"block":"none";
+});
+});
+
+// bottom nav active
+document.querySelectorAll('.bottom-nav a').forEach(a=>{
+a.onclick=()=>{
+document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.remove('active'));
+a.classList.add('active');
 };
 });
 </script>
