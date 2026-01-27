@@ -6,6 +6,7 @@
 <title>Layanan Digital Kelurahan Serengan</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <style>
 :root{--p:#1f7aec;--s:#20c997;--bg:#f4fbfa}
@@ -31,12 +32,37 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg)}
 .step{flex:1;background:#f3f6fb;padding:12px;border-radius:12px;text-align:center}
 .step span{display:block;width:32px;height:32px;margin:auto;background:var(--p);color:#fff;border-radius:50%;line-height:32px;margin-bottom:6px}
 
+/* === SYARAT STYLE === */
+.syarat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.syarat-item{background:#eef3ff;border-radius:12px;padding:12px;text-align:center;font-size:14px}
+.syarat-item span{display:block;width:30px;height:30px;margin:auto;background:var(--s);color:#fff;border-radius:50%;line-height:30px;margin-bottom:6px}
+
 .loader-wrap{position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:10}
 .spinner{width:48px;height:48px;border:5px solid #ddd;border-top:5px solid var(--p);border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .contact-box,.map-box{background:#fff;border-radius:18px;padding:24px;box-shadow:0 8px 20px rgba(0,0,0,.08);height:100%}
 .map-box{padding:0;overflow:hidden}
+
+/* === WA BUTTON === */
+.wa-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25d366;
+color:#fff;
+width:58px;
+height:58px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+box-shadow:0 8px 25px rgba(0,0,0,.25);
+z-index:9999;
+text-decoration:none;
+}
+
 @media(max-width:768px){.hero-slider{height:65vh}.hero-overlay{padding:0 6%}}
 </style>
 </head>
@@ -44,93 +70,88 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg)}
 <body>
 
 <nav class="navbar px-3">
-  <strong>Kelurahan Serengan – Kota Surakarta</strong>
+<strong>Kelurahan Serengan – Kota Surakarta</strong>
 </nav>
 
 <!-- HERO -->
 <section class="hero-slider">
+<div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1600&q=80')">
+<div class="hero-overlay">
+<h1>Pelayanan Digital Kelurahan Serengan</h1>
+<p>Mudah • Cepat • Transparan</p>
+<a href="#layanan" class="hero-btn">Ajukan Layanan</a>
+</div></div>
 
-  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1600&q=80')">
-    <div class="hero-overlay">
-      <h1>Pelayanan Digital Kelurahan Serengan</h1>
-      <p>Mudah • Cepat • Transparan</p>
-      <a href="#layanan" class="hero-btn">Ajukan Layanan</a>
-    </div>
-  </div>
+<div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80')">
+<div class="hero-overlay">
+<h1>Administrasi Lebih Modern</h1>
+<p>Untuk Warga Serengan</p>
+<a href="#layanan" class="hero-btn">Lihat Layanan</a>
+</div></div>
 
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80')">
-    <div class="hero-overlay">
-      <h1>Administrasi Lebih Modern</h1>
-      <p>Untuk Warga Serengan</p>
-      <a href="#layanan" class="hero-btn">Lihat Layanan</a>
-    </div>
-  </div>
+<div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1507209696998-3c532be9b2b6?auto=format&fit=crop&w=1600&q=80')">
+<div class="hero-overlay">
+<h1>Kelurahan Terintegrasi Digital</h1>
+<p>Layanan Tanpa Ribet</p>
+<a href="#layanan" class="hero-btn">Mulai</a>
+</div></div>
 
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1507209696998-3c532be9b2b6?auto=format&fit=crop&w=1600&q=80')">
-    <div class="hero-overlay">
-      <h1>Kelurahan Terintegrasi Digital</h1>
-      <p>Layanan Tanpa Ribet</p>
-      <a href="#layanan" class="hero-btn">Mulai</a>
-    </div>
-  </div>
-
-  <div class="hero-dots"></div>
+<div class="hero-dots"></div>
 </section>
 
 <!-- LAYANAN -->
 <section class="container my-5 pt-5" id="layanan">
 <div class="row g-4">
 
-<div class="col-6 col-md-4">
-  <div class="service-card"
-    data-bs-toggle="modal"
-    data-bs-target="#layananModal"
-    data-title="Surat Keterangan Umum"
-    data-syarat="<li>KTP</li><li>KK</li><li>Pengantar RT/RW</li>"
-    data-alur="Pengajuan|Verifikasi|Terbit"
-    data-link="https://script.google.com/macros/s/AKfycbwF5EunAgB5lDdFr5sdZJvhnhO0ZZAwAKdwdIE9OlR_Bj9LxKDS8ytnX7R9XHP7Qu6X3A/exec">
-    <div class="icon">📄</div>
-    <h6>Surat Keterangan Umum</h6>
-  </div>
+<div class="col-6 col-md-4" data-aos="zoom-in">
+<div class="service-card"
+data-bs-toggle="modal"
+data-bs-target="#layananModal"
+data-title="Surat Keterangan Umum"
+data-syarat="KTP|KK|Pengantar RT/RW"
+data-alur="Pengajuan|Verifikasi|Terbit"
+data-link="https://script.google.com/macros/s/xxx/exec">
+<div class="icon">📄</div>
+<h6>Surat Keterangan Umum</h6>
+</div>
 </div>
 
 </div>
 </section>
 
-<!-- KONTAK + MAP -->
+<!-- KONTAK -->
 <section class="container my-5">
-  <div class="row g-4 align-items-stretch">
+<div class="row g-4 align-items-stretch">
 
-    <div class="col-md-5">
-      <div class="contact-box h-100">
-        <h5>Kontak Kelurahan</h5>
-        <p><b>Alamat:</b> Jl. Serengan Raya No. 1</p>
-        <p><b>Telepon:</b> (0271) 123456</p>
-        <p><b>Email:</b> serengan@surakarta.go.id</p>
+<div class="col-md-5" data-aos="fade-right">
+<div class="contact-box">
+<h5>Kontak Kelurahan</h5>
+<p><b>Alamat:</b> Jl. Serengan Raya No. 1</p>
+<p><b>Telepon:</b> (0271) 123456</p>
+<p><b>Email:</b> serengan@surakarta.go.id</p>
+<p><b>Jam Layanan:</b><br>Senin–Jumat<br>08.00 – 15.30 WIB</p>
+<a href="https://maps.google.com/?q=Kelurahan+Serengan+Surakarta" target="_blank" class="btn btn-primary w-100 mt-3">
+Navigasi ke Lokasi
+</a>
+</div>
+</div>
 
-        <a href="https://maps.google.com/?q=Kelurahan+Serengan+Surakarta"
-           target="_blank"
-           class="btn btn-primary w-100 mt-3">
-          Navigasi ke Lokasi
-        </a>
-      </div>
-    </div>
+<div class="col-md-7" data-aos="fade-left">
+<div class="map-box h-100">
+<iframe src="https://maps.google.com/maps?q=Kelurahan%20Serengan%20Surakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
+style="border:0;width:100%;height:100%;border-radius:16px" loading="lazy"></iframe>
+</div>
+</div>
 
-    <div class="col-md-7">
-      <div class="map-box h-100">
-        <iframe
-          src="https://maps.google.com/maps?q=Kelurahan%20Serengan%20Surakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
-          style="border:0;width:100%;height:100%;border-radius:16px"
-          loading="lazy"></iframe>
-      </div>
-    </div>
-
-  </div>
+</div>
 </section>
 
 <footer class="text-center py-4 text-muted">
 © 2026 Kelurahan Serengan – Kota Surakarta
 </footer>
+
+<!-- WA -->
+<a href="https://wa.me/6281234567890" class="wa-float">💬</a>
 
 <!-- MODAL -->
 <div class="modal fade" id="layananModal" tabindex="-1">
@@ -141,8 +162,10 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg)}
 <button class="btn-close" data-bs-dismiss="modal"></button>
 </div>
 <div class="modal-body">
+
 <h6>Syarat</h6>
-<ul id="modalSyarat"></ul>
+<div id="modalSyarat" class="syarat-grid"></div>
+
 <h6 class="mt-3">Alur</h6>
 <div id="modalAlur" class="stepper"></div>
 
@@ -154,10 +177,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg)}
 <div class="text-end mt-3">
 <button id="btnOpenForm" class="btn btn-primary">Isi Formulir</button>
 </div>
-</div>
-</div>
-</div>
-</div>
+
+</div></div></div></div>
 
 <div class="modal fade" id="formModal" tabindex="-1">
 <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -169,12 +190,11 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg)}
 <div class="modal-body p-0 position-relative">
 <div class="loader-wrap" id="frameLoader"><div class="spinner"></div></div>
 <iframe id="layananFrame" style="width:100%;height:80vh;border:0"></iframe>
-</div>
-</div>
-</div>
-</div>
+</div></div></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({duration:900,once:true});</script>
 
 <script>
 const frame=document.getElementById('layananFrame');
@@ -183,8 +203,14 @@ const loader=document.getElementById('frameLoader');
 document.querySelectorAll('.service-card').forEach(card=>{
 card.onclick=function(){
 modalTitle.innerText=this.dataset.title;
-modalSyarat.innerHTML=this.dataset.syarat;
 
+// SYARAT
+modalSyarat.innerHTML='';
+this.dataset.syarat.split('|').forEach((s,i)=>{
+modalSyarat.innerHTML+=`<div class="syarat-item"><span>${i+1}</span>${s}</div>`;
+});
+
+// ALUR
 modalAlur.innerHTML='';
 this.dataset.alur.split('|').forEach((a,i)=>{
 modalAlur.innerHTML+=`<div class="step"><span>${i+1}</span>${a}</div>`;
@@ -203,6 +229,7 @@ bootstrap.Modal.getOrCreateInstance(formModal).show();
 
 frame.onload=()=>loader.style.display='none';
 
+// SLIDER
 const slides=document.querySelectorAll('.hero-slide');
 const dotsWrap=document.querySelector('.hero-dots');
 let current=0;
