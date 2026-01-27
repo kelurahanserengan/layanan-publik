@@ -138,10 +138,12 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
 
 /* MOBILE */
 @media(max-width:768px){
-  .lokasi-wrapper{
-    grid-template-columns:1fr;
+  .hero-slider{
+    height:55vh;
+    min-height:340px;
   }
 }
+
 .hero-slider{
   position:relative;
   height:85vh;
@@ -217,9 +219,12 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
 }
 .hero-slider{
   position:relative;
-  height:100vh;
+  height:70vh;
+  min-height:420px;
+  max-height:650px;
   overflow:hidden;
 }
+
 
 .hero-slide{
   position:absolute;
@@ -284,6 +289,26 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
   .hero-slider{height:70vh;}
   .hero-overlay{padding:0 6%;}
 }
+.contact-box,
+.map-box{
+  background:#fff;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  height:100%;
+}
+
+.map-box{
+  padding:0;
+  overflow:hidden;
+}
+
+@media(max-width:768px){
+  .contact-box,
+  .map-box{
+    height:auto;
+  }
+}
 
 </style>
 </head>
@@ -336,7 +361,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
       data-title="Surat Keterangan Umum"
       data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Pengantar RT/RW</li>"
       data-alur="Pengajuan|Verifikasi|Terbit"
-      data-link="https://script.google.com/macros/s/AKfycbwF5EunAgB5lDdFr5sdZJvhnhO0ZZAwAKdwdIE9OlR_Bj9LxKDS8ytnX7R9XHP7Qu6X3A/exec"<div class="icon">📄</div>
+      data-link="https://script.google.com/macros/s/AKfycbwF5EunAgB5lDdFr5sdZJvhnhO0ZZAwAKdwdIE9OlR_Bj9LxKDS8ytnX7R9XHP7Qu6X3A/exec"
+      <div class="icon">📄</div>
       <h6>Surat Keterangan Umum</h6>
     </div>
   </div>
@@ -345,44 +371,36 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
 </section>
 
 <!-- KONTAK + MAP -->
-<section class="lokasi-section">
-  <div class="lokasi-wrapper">
+<section class="container my-5">
+  <div class="row g-4 align-items-stretch">
 
-    <!-- INFO KIRI -->
-    <div class="lokasi-info" data-aos="fade-right">
-      <h3>📍 Kantor Kelurahan Serengan</h3>
+    <div class="col-md-5">
+      <div class="contact-box h-100">
+        <h5>Kontak Kelurahan</h5>
+        <p><b>Alamat:</b> Jl. Serengan Raya No. 1</p>
+        <p><b>Telepon:</b> (0271) 123456</p>
+        <p><b>Email:</b> serengan@surakarta.go.id</p>
 
-      <p><b>Alamat</b><br>
-      Jl. Contoh Raya No.12, Serengan, Surakarta</p>
-
-      <p><b>Jam Layanan</b><br>
-      Senin – Jumat<br>
-      08.00 – 15.00 WIB</p>
-
-      <p><b>Telepon</b><br>
-      (0271) 123456</p>
-
-      <p><b>Email</b><br>
-      kelurahan@serengan.go.id</p>
-
-      <a 
-        href="https://www.google.com/maps/search/?api=1&query=Kantor+Kelurahan+Serengan"
-        target="_blank"
-        class="btn-navigasi">
-        🧭 Navigasi ke Lokasi
-      </a>
+        <a href="https://maps.google.com/?q=Kelurahan+Serengan+Surakarta"
+           target="_blank"
+           class="btn btn-primary w-100 mt-3">
+          Navigasi ke Lokasi
+        </a>
+      </div>
     </div>
 
-    <!-- MAP KANAN -->
-    <div class="lokasi-map" data-aos="fade-left">
-      <iframe 
-        src="https://www.google.com/maps?q=Kantor+Kelurahan+Serengan&output=embed"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
+    <div class="col-md-7">
+      <div class="map-box h-100">
+        <iframe
+          src="https://maps.google.com/maps?q=Kelurahan%20Serengan%20Surakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          style="border:0;width:100%;height:100%;border-radius:16px"
+          loading="lazy"></iframe>
+      </div>
     </div>
 
   </div>
+</section>
+
 </section>
 <footer class="text-center py-4 text-muted">
 © 2026 Kelurahan Serengan – Kota Surakarta
@@ -540,6 +558,7 @@ window.addEventListener('scroll',()=>{
 
 </body>
 </html>
+
 
 
 
