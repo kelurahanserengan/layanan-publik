@@ -3,257 +3,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Layanan Digital Kelurahan Serengan</title>
+<title>Pelayanan Desa Digital</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <style>
-:root{--p:#1f7aec;--s:#20c997;--bg:#f4fbfa}
-body{font-family:'Segoe UI',sans-serif;background:var(--bg)}
-.navbar{position:fixed;top:0;width:100%;z-index:999;background:rgba(255,255,255,.05);backdrop-filter:blur(8px);transition:.4s}
-.navbar.scrolled{background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.1)}
-
-.hero-slider{position:relative;height:70vh;min-height:420px;overflow:hidden}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.1);opacity:0;transition:opacity 1.2s ease,transform 6s ease}
-.hero-slide.active{opacity:1;transform:scale(1)}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.65),rgba(0,0,0,.25));display:flex;flex-direction:column;justify-content:center;padding:0 10%;color:#fff}
-.hero-overlay h1{font-size:clamp(28px,5vw,54px)}
-.hero-btn{background:#2563eb;padding:14px 24px;border-radius:10px;color:#fff;text-decoration:none;width:max-content;font-weight:600}
-.hero-dots{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
-.hero-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer}
-.hero-dots span.active{background:#fff;transform:scale(1.3)}
-
-.service-card{background:#fff;border-radius:18px;padding:24px;text-align:center;cursor:pointer;transition:.3s;box-shadow:0 8px 20px rgba(0,0,0,.08)}
-.service-card:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(0,0,0,.15)}
-.icon{width:60px;height:60px;background:linear-gradient(135deg,var(--p),var(--s));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:auto;margin-bottom:10px}
-
-.stepper{display:flex;gap:12px;flex-wrap:wrap}
-.step{flex:1;background:#f3f6fb;padding:12px;border-radius:12px;text-align:center}
-.step span{display:block;width:32px;height:32px;margin:auto;background:var(--p);color:#fff;border-radius:50%;line-height:32px;margin-bottom:6px}
-
-/* === SYARAT STYLE === */
-.syarat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.syarat-item{background:#eef3ff;border-radius:12px;padding:12px;text-align:center;font-size:14px}
-.syarat-item span{display:block;width:30px;height:30px;margin:auto;background:var(--s);color:#fff;border-radius:50%;line-height:30px;margin-bottom:6px}
-
-.loader-wrap{position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:10}
-.spinner{width:48px;height:48px;border:5px solid #ddd;border-top:5px solid var(--p);border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-.contact-box,.map-box{background:#fff;border-radius:18px;padding:24px;box-shadow:0 8px 20px rgba(0,0,0,.08);height:100%}
-.map-box{padding:0;overflow:hidden}
-
-/* === WA BUTTON === */
-.wa-float{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25d366;
-color:#fff;
-width:58px;
-height:58px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-box-shadow:0 8px 25px rgba(0,0,0,.25);
-z-index:9999;
-text-decoration:none;
-}
-
-@media(max-width:768px){.hero-slider{height:65vh}.hero-overlay{padding:0 6%}}
+body{font-family:Inter,system-ui;background:#f4f7fb}
+.navbar{background:#0d6efd}
+.hero-slider{height:42vh;overflow:hidden;position:relative}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:.8s}
+.hero-slide.active{opacity:1}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.4),#000)}
+.hero-content{position:absolute;bottom:20%;left:8%;color:#fff}
+.service-card{background:#fff;border-radius:18px;padding:22px;text-align:center;cursor:pointer;transition:.3s;box-shadow:0 8px 25px rgba(0,0,0,.08)}
+.service-card:hover{transform:translateY(-8px);box-shadow:0 15px 40px rgba(0,0,0,.18)}
+.icon{font-size:38px}
+.pengumuman{background:#fff;border-left:6px solid #0d6efd;padding:18px;border-radius:12px}
+.timeline{border-left:3px solid #0d6efd;padding-left:20px}
+.timeline div{margin-bottom:12px;position:relative}
+.timeline div:before{content:"";width:12px;height:12px;background:#0d6efd;border-radius:50%;position:absolute;left:-28px;top:4px}
+.wa-float{position:fixed;bottom:25px;right:25px;background:#25d366;color:#fff;padding:14px 18px;border-radius:50px;font-size:22px;z-index:999}
+footer{background:#0d6efd;color:#fff;padding:30px}
 </style>
 </head>
 
 <body>
 
-<nav class="navbar px-3">
-<strong>Kelurahan Serengan – Kota Surakarta</strong>
+<nav class="navbar navbar-dark">
+<div class="container">
+<span class="navbar-brand">🌐 Pelayanan Desa Digital</span>
+</div>
 </nav>
 
 <!-- HERO -->
-<section class="hero-slider">
-<div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1600&q=80')">
-<div class="hero-overlay">
-<h1>Pelayanan Digital Kelurahan Serengan</h1>
+<div class="hero-slider">
+<div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1601582589907-f92af5ed9db8')"></div>
+<div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1509099836639-18ba1795216d')"></div>
+<div class="hero-overlay"></div>
+<div class="hero-content">
+<h2>Pelayanan Administrasi</h2>
 <p>Mudah • Cepat • Transparan</p>
-<a href="#layanan" class="hero-btn">Ajukan Layanan</a>
-</div></div>
+</div>
+</div>
 
-<div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80')">
-<div class="hero-overlay">
-<h1>Administrasi Lebih Modern</h1>
-<p>Untuk Warga Serengan</p>
-<a href="#layanan" class="hero-btn">Lihat Layanan</a>
-</div></div>
-
-<div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1507209696998-3c532be9b2b6?auto=format&fit=crop&w=1600&q=80')">
-<div class="hero-overlay">
-<h1>Kelurahan Terintegrasi Digital</h1>
-<p>Layanan Tanpa Ribet</p>
-<a href="#layanan" class="hero-btn">Mulai</a>
-</div></div>
-
-<div class="hero-dots"></div>
-</section>
+<!-- PENGUMUMAN -->
+<div class="container mt-4">
+<div class="pengumuman" data-aos="fade-up">
+<b>📢 Pengumuman:</b> Pelayanan buka Senin–Jumat, pastikan data lengkap sebelum mengajukan permohonan.
+</div>
+</div>
 
 <!-- LAYANAN -->
-<section class="container my-5 pt-5" id="layanan">
-<div class="row g-4">
-
-<div class="col-6 col-md-4" data-aos="zoom-in">
-<div class="service-card"
-data-bs-toggle="modal"
-data-bs-target="#layananModal"
-data-title="Surat Keterangan Umum"
-data-syarat="KTP|KK|Pengantar RT/RW"
-data-alur="Pengajuan|Verifikasi|Terbit"
-data-link="https://script.google.com/macros/s/xxx/exec">
+<div class="container mt-4">
+<div class="row g-3">
+<div class="col-md-4" data-aos="zoom-in">
+<div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal" data-title="Surat Keterangan Umum" data-syarat="<div>Isi Form</div><div>Upload KTP</div><div>Verifikasi</div><div>Terbit</div>">
 <div class="icon">📄</div>
-<h6>Surat Keterangan Umum</h6>
+<h6>Surat Keterangan</h6>
 </div>
 </div>
 
-</div>
-</section>
-
-<!-- KONTAK -->
-<section class="container my-5">
-<div class="row g-4 align-items-stretch">
-
-<div class="col-md-5" data-aos="fade-right">
-<div class="contact-box">
-<h5>Kontak Kelurahan</h5>
-<p><b>Alamat:</b> Jl. Serengan Raya No. 1</p>
-<p><b>Telepon:</b> (0271) 123456</p>
-<p><b>Email:</b> serengan@surakarta.go.id</p>
-<p><b>Jam Layanan:</b><br>Senin–Jumat<br>08.00 – 15.30 WIB</p>
-<a href="https://maps.google.com/?q=Kelurahan+Serengan+Surakarta" target="_blank" class="btn btn-primary w-100 mt-3">
-Navigasi ke Lokasi
-</a>
+<div class="col-md-4" data-aos="zoom-in">
+<div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal" data-title="Surat Domisili" data-syarat="<div>Form</div><div>KK</div><div>Validasi</div><div>Cetak</div>">
+<div class="icon">🏠</div>
+<h6>Domisili</h6>
 </div>
 </div>
 
-<div class="col-md-7" data-aos="fade-left">
-<div class="map-box h-100">
-<iframe src="https://maps.google.com/maps?q=Kelurahan%20Serengan%20Surakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
-style="border:0;width:100%;height:100%;border-radius:16px" loading="lazy"></iframe>
+<div class="col-md-4" data-aos="zoom-in">
+<div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal" data-title="Surat Usaha" data-syarat="<div>Input</div><div>KTP</div><div>Survey</div><div>Selesai</div>">
+<div class="icon">🏪</div>
+<h6>Usaha</h6>
+</div>
+</div>
 </div>
 </div>
 
+<!-- JAM LAYANAN -->
+<div class="container mt-5" data-aos="fade-up">
+<h5>⏰ Jam Layanan</h5>
+<ul>
+<li>Senin – Jumat : 08.00 – 15.30</li>
+<li>Sabtu : 08.00 – 12.00</li>
+<li>Minggu : Libur</li>
+</ul>
 </div>
-</section>
 
-<footer class="text-center py-4 text-muted">
-© 2026 Kelurahan Serengan – Kota Surakarta
+<!-- MAP -->
+<div class="container mt-4" data-aos="fade-up">
+<h5>📍 Lokasi Kantor</h5>
+<iframe src="https://maps.google.com/maps?q=kantor%20desa&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="300" style="border-radius:12px;border:0"></iframe>
+</div>
+
+<!-- FOOTER -->
+<footer class="mt-5">
+<div class="container">
+<p>📞 0812-xxxx-xxxx | ✉ desa@email.com</p>
+<p>© Desa Digital</p>
+</div>
 </footer>
 
-<!-- WA -->
-<a href="https://wa.me/6281234567890" class="wa-float">💬</a>
+<a class="wa-float" href="https://wa.me/628123456789" target="_blank">💬 WA</a>
 
 <!-- MODAL -->
-<div class="modal fade" id="layananModal" tabindex="-1">
-<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal fade" id="layananModal">
+<div class="modal-dialog">
 <div class="modal-content">
 <div class="modal-header">
 <h5 id="modalTitle"></h5>
-<button class="btn-close" data-bs-dismiss="modal"></button>
 </div>
 <div class="modal-body">
-
-<h6>Syarat</h6>
-<div id="modalSyarat" class="syarat-grid"></div>
-
-<h6 class="mt-3">Alur</h6>
-<div id="modalAlur" class="stepper"></div>
-
-<div class="form-check mt-3">
-<input class="form-check-input" type="checkbox" id="chkAgree">
-<label class="form-check-label">Saya sudah menyiapkan persyaratan</label>
+<div class="timeline" id="modalSyarat"></div>
+</div>
+</div>
+</div>
 </div>
 
-<div class="text-end mt-3">
-<button id="btnOpenForm" class="btn btn-primary">Isi Formulir</button>
-</div>
-
-</div></div></div></div>
-
-<div class="modal fade" id="formModal" tabindex="-1">
-<div class="modal-dialog modal-xl modal-dialog-centered">
-<div class="modal-content">
-<div class="modal-header">
-<h5 id="formTitle"></h5>
-<button class="btn-close" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body p-0 position-relative">
-<div class="loader-wrap" id="frameLoader"><div class="spinner"></div></div>
-<iframe id="layananFrame" style="width:100%;height:80vh;border:0"></iframe>
-</div></div></div></div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init({duration:900,once:true});</script>
 
 <script>
-const frame=document.getElementById('layananFrame');
-const loader=document.getElementById('frameLoader');
+AOS.init();
 
-document.querySelectorAll('.service-card').forEach(card=>{
-card.onclick=function(){
-modalTitle.innerText=this.dataset.title;
-
-// SYARAT
-modalSyarat.innerHTML='';
-this.dataset.syarat.split('|').forEach((s,i)=>{
-modalSyarat.innerHTML+=`<div class="syarat-item"><span>${i+1}</span>${s}</div>`;
-});
-
-// ALUR
-modalAlur.innerHTML='';
-this.dataset.alur.split('|').forEach((a,i)=>{
-modalAlur.innerHTML+=`<div class="step"><span>${i+1}</span>${a}</div>`;
-});
-
-btnOpenForm.onclick=()=>{
-if(!chkAgree.checked)return alert('Centang persetujuan dulu');
-loader.style.display='flex';
-frame.src=this.dataset.link;
-formTitle.innerText=this.dataset.title;
-bootstrap.Modal.getOrCreateInstance(layananModal).hide();
-bootstrap.Modal.getOrCreateInstance(formModal).show();
-}
-}
-});
-
-frame.onload=()=>loader.style.display='none';
-
-// SLIDER
 const slides=document.querySelectorAll('.hero-slide');
-const dotsWrap=document.querySelector('.hero-dots');
-let current=0;
-
-slides.forEach((_,i)=>{
-let d=document.createElement('span');
-d.onclick=()=>showSlide(i);
-dotsWrap.appendChild(d);
-});
-
-function showSlide(i){
+let i=0;
+setInterval(()=>{
 slides.forEach(s=>s.classList.remove('active'));
-dotsWrap.querySelectorAll('span').forEach(d=>d.classList.remove('active'));
-current=i;
+i=(i+1)%slides.length;
 slides[i].classList.add('active');
-dotsWrap.children[i].classList.add('active');
-}
+},5000);
 
-showSlide(0);
-setInterval(()=>showSlide((current+1)%slides.length),6000);
-
-window.addEventListener('scroll',()=>{
-document.querySelector('.navbar')
-.classList.toggle('scrolled',window.scrollY>50);
+document.querySelectorAll('.service-card').forEach(c=>{
+c.onclick=()=>{
+modalTitle.innerText=c.dataset.title;
+modalSyarat.innerHTML=c.dataset.syarat;
+};
 });
 </script>
 
