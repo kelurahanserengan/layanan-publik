@@ -65,6 +65,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
 }
 footer{background:#fff;font-size:14px}
 #tracking{display:none;}
+  .table td { vertical-align: middle; }
+
 </style>
 </head>
 
@@ -133,19 +135,20 @@ footer{background:#fff;font-size:14px}
 <section class="container my-5" id="layanan">
   <div class="row g-4">
 
-    <!-- SKUM -->
+<!-- SKUM -->
 <div class="col-6 col-md-4" data-aos="fade-up">
   <div class="service-card"
     data-bs-toggle="modal"
     data-bs-target="#layananModal"
     data-title="Surat Keterangan Umum"
-    data-syarat="<li>KTP</li><li>KK</li>"
-    data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>"
+    data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Pengantar RT/RW</li>"
+    data-alur="Pengajuan|Verifikasi|Terbit"
     data-link="https://script.google.com/macros/s/AKfycbwLlvuOY-vO9m9dbrtCpLRBn5bxUzWDPvsU-S_X8ZdVjmVRahpYXy2ZM7mrIhdhhzzsPg/exec"> 
     <div class="icon">📄</div>
     <h6>Surat Keterangan Umum</h6>
   </div>
 </div>
+
 
 
     <!-- NIKAH -->
@@ -343,32 +346,39 @@ document.querySelectorAll('.service-card').forEach(card => {
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>AOS.init({duration:800,once:true});</script>
-<div class="modal fade" id="layananModal">
+<div class="modal fade" id="layananModal" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-
       <div class="modal-header">
-        <h5 id="modalTitle"></h5>
+        <h5 class="modal-title" id="modalTitle"></h5>
         <button class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
-        <h6>📑 Persyaratan</h6>
+        <h6>Syarat</h6>
         <ul id="modalSyarat"></ul>
 
-        <h6>🔄 Alur</h6>
-        <ol id="modalAlur"></ol>
-      </div>
+        <h6 class="mt-3">Alur Pelayanan</h6>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th width="60">No</th>
+              <th>Proses</th>
+            </tr>
+          </thead>
+          <tbody id="modalAlur"></tbody>
+        </table>
 
-      <div class="modal-footer">
-        <a id="modalLink" target="_blank" class="btn btn-primary">
-          Ajukan Permohonan
-        </a>
+        <div class="text-end mt-3">
+          <button id="btnOpenForm" class="btn btn-primary">
+            Isi Formulir
+          </button>
+        </div>
       </div>
-
     </div>
   </div>
 </div>
+
 <div class="modal fade" id="layananModal">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
@@ -390,9 +400,40 @@ document.querySelectorAll('.service-card').forEach(card => {
     </div>
   </div>
 </div>
+<script>
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('click', function () {
+
+    const title = this.dataset.title;
+    const syarat = this.dataset.syarat;
+    const alur = this.dataset.alur;
+    const link = this.dataset.link;
+
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalSyarat').innerHTML = syarat;
+
+    // buat tabel alur
+    let rows = '';
+    alur.split('|').forEach((item, i) => {
+      rows += `<tr>
+        <td>${i+1}</td>
+        <td>${item}</td>
+      </tr>`;
+    });
+    document.getElementById('modalAlur').innerHTML = rows;
+
+    // tombol buka form
+    document.getElementById('btnOpenForm').onclick = function(){
+      window.open(link, '_blank');
+    }
+
+  });
+});
+</script>
 
 </body>
 </html>
+
 
 
 
