@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SERENA – Serengan Easy N’ Active Service</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+body{
+  font-family:Inter,system-ui;
+  background:#eef2f7;
+  margin:0;
+  padding-bottom:90px;
+}
+.app-header{
+  position:sticky;
+  top:0;
+  z-index:999;
+  background:#0d6efd;
+  color:#fff;
+  padding:14px 18px;
+  font-weight:600;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+.hero-slider{
+  height:28vh;
+  position:relative;
+  overflow:hidden;
+  border-radius:0 0 28px 28px;
+}
+.hero-slide{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transition:.8s;
+}
+.hero-slide.active{opacity:1}
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.55),transparent);
+}
+.hero-text{
+  position:absolute;
+  bottom:18px;
+  left:18px;
+  color:#fff;
+}
+.card-app{
+  background:#fff;
+  border-radius:22px;
+  padding:18px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+.pengumuman{
+  background:linear-gradient(135deg,#0d6efd,#3b82f6);
+  color:#fff;
+  padding:16px;
+  border-radius:18px;
+}
+.service-card{
+  background:#fff;
+  border-radius:22px;
+  padding:18px 12px;
+  text-align:center;
+  cursor:pointer;
+  transition:.25s;
+  box-shadow:0 6px 18px rgba(0,0,0,.1);
+}
+.service-card:hover{transform:translateY(-6px) scale(1.02)}
+.icon{font-size:34px}
+.timeline{
+  border-left:3px solid #0d6efd;
+  padding-left:18px;
+}
+.timeline div{
+  margin-bottom:14px;
+  position:relative;
+}
+.timeline div:before{
+  content:"";
+  width:12px;
+  height:12px;
+  background:#0d6efd;
+  border-radius:50%;
+  position:absolute;
+  left:-25px;
+  top:4px;
+}
+.search-box input{
+  border-radius:14px;
+  padding:10px 14px;
+}
+.wa-float{
+  position:fixed;
+  right:18px;
+  bottom:90px;
+  background:#25d366;
+  color:#fff;
+  padding:14px 18px;
+  border-radius:50px;
+  font-size:20px;
+  z-index:999;
+}
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+  box-shadow:0 -4px 15px rgba(0,0,0,.15);
+  z-index:998;
+}
+.bottom-nav a{
+  text-decoration:none;
+  color:#666;
+  font-size:12px;
+  text-align:center;
+}
+.bottom-nav a.active{color:#0d6efd;font-weight:600}
+footer{
+  background:#0d6efd;
+  color:#fff;
+  padding:28px;
+  border-radius:28px 28px 0 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-header">
+📱 SERENA <small style="font-weight:400">– Serengan Easy N’ Active Service</small>
+</div>
+
+
+
+<div class="hero-slider" id="home">
+  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1601582589907-f92af5ed9db8')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1509099836639-18ba1795216d')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+<h5>SERENA – Layanan Digital Serengan</h5>
+<small>Easy • Active • Service</small>
+  </div>
+</div>
+
+<div class="container mt-3" id="layanan">
+
+<div class="pengumuman mb-3" data-aos="fade-up">
+📢 <b>Pengumuman</b><br>
+Pastikan berkas lengkap sebelum mengajukan permohonan layanan.
+</div>
+<div class="card-app mb-3" data-aos="fade-up">
+<h6>🌟 Tentang SERENA</h6>
+
+<p style="font-size:14px;line-height:1.6">
+<b>SERENA (Serengan Easy N’ Active Service)</b> merupakan inovasi tata kelola pemerintahan dan pelayanan publik Kelurahan Serengan untuk mewujudkan pelayanan yang <b>mudah, aktif, dan responsif</b> berbasis teknologi.
+</p>
+
+<div class="timeline mt-2">
+
+<div>
+<b>Pendahuluan</b><br>
+SERENA menghadirkan sistem pelayanan terpadu berbasis digital, terintegrasi, dan adaptif terhadap kebutuhan warga.
+</div>
+
+<div>
+<b>Tujuan</b><br>
+Meningkatkan kualitas tata kelola pemerintahan yang efektif, efisien, dan transparan.
+</div>
+
+<div>
+<b>Sasaran</b><br>
+Masyarakat Serengan, aparatur kelurahan, serta lembaga kemasyarakatan sebagai mitra inovasi.
+</div>
+
+<div>
+<b>Ruang Lingkup</b><br>
+Pelayanan adminduk digital, konsultasi interaktif, kolaborasi sosial, Mas Carik, Click WA, dan SRAWUNG.
+</div>
+
+<div>
+<b>Mekanisme</b><br>
+Tim inovasi mengembangkan layanan, mengintegrasikan sistem, dan melakukan monitoring berkala.
+</div>
+
+<div>
+<b>Indikator</b><br>
+Kecepatan layanan meningkat, kepuasan warga naik, dan budaya kerja aparatur makin inovatif.
+</div>
+
+</div>
+</div>
+  
+<div class="card-app mb-3 search-box" data-aos="fade-up">
+<input type="text" id="searchInput" class="form-control" placeholder="🔍 Cari layanan...">
+</div>
+
+<div class="card-app mb-3" data-aos="fade-up">
+<h6>📋 Daftar Layanan</h6>
+<div class="row g-3 mt-2" id="layananList">
+
+<div class="col-4 layanan-item">
+<div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
+data-title="Surat Keterangan"
+data-syarat="<div>Isi Form</div><div>Upload KTP</div><div>Verifikasi</div><div>Terbit</div>">
+<div class="icon">📄</div>
+<small>Surat</small>
+</div>
+</div>
+
+<div class="col-4 layanan-item">
+<div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
+data-title="Domisili"
+data-syarat="<div>Form</div><div>KK</div><div>Validasi</div><div>Cetak</div>">
+<div class="icon">🏠</div>
+<small>Domisili</small>
+</div>
+</div>
+
+<div class="col-4 layanan-item">
+<div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
+data-title="Usaha"
+data-syarat="<div>Input</div><div>KTP</div><div>Survey</div><div>Selesai</div>">
+<div class="icon">🏪</div>
+<small>Usaha</small>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="card-app mb-3" data-aos="fade-up">
+<h6>⏰ Jam Layanan</h6>
+<ul class="mb-0">
+<li>Senin : 07.30 – 16.30 WIB</li>
+<li>Jumat : 07.30 – 14.30 WIB</li>
+<li>Sabtu/Minggu : Libur</li>
+</ul>
+</div>
+
+<div class="card-app mb-3" data-aos="fade-up" id="lokasi">
+<h6>📍 Lokasi Kantor</h6>
+<iframe src="https://maps.google.com/maps?q=kantor%20desa&t=&z=13&ie=UTF8&iwloc=&output=embed"
+width="100%" height="260" style="border-radius:16px;border:0"></iframe>
+</div>
+
+</div>
+
+<footer id="kontak">
+📞 0882003654359<br>
+✉ kel-serengan@surakarta.go.id<br><br>
+© SERENA – Kelurahan Serengan Kota Surakarta
+</footer>
+
+<a class="wa-float" href="https://wa.me/62882003654359" target="_blank">💬</a>
+
+<div class="bottom-nav">
+<a href="#home" class="active">🏠<br>Home</a>
+<a href="#layanan">📄<br>Layanan</a>
+<a href="#lokasi">📍<br>Lokasi</a>
+<a href="#kontak">☎️<br>Kontak</a>
+</div>
+
+
+<div class="modal fade" id="layananModal">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+<h5 id="modalTitle"></h5>
+</div>
+<div class="modal-body">
+<div class="timeline" id="modalSyarat"></div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+AOS.init();
+
+// slider
+const slides=document.querySelectorAll('.hero-slide');
+let i=0;
+setInterval(()=>{
+slides.forEach(s=>s.classList.remove('active'));
+i=(i+1)%slides.length;
+slides[i].classList.add('active');
+},4500);
+
+// modal
+document.querySelectorAll('.service-card').forEach(c=>{
+c.onclick=()=>{
+modalTitle.innerText=c.dataset.title;
+modalSyarat.innerHTML=c.dataset.syarat;
+};
+});
+
+// search
+searchInput.addEventListener('input',function(){
+let v=this.value.toLowerCase();
+document.querySelectorAll('.layanan-item').forEach(item=>{
+let t=item.innerText.toLowerCase();
+item.style.display=t.includes(v)?"block":"none";
+});
+});
+
+// bottom nav active
+document.querySelectorAll('.bottom-nav a').forEach(a=>{
+a.onclick=()=>{
+document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.remove('active'));
+a.classList.add('active');
+};
+});
+</script>
+
+</body>
+</html>
+
