@@ -16,35 +16,20 @@
 }
 body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
 .navbar{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.hero{
-  margin-top:56px;
-}
-.hero img{
-  height:45vh;
-  object-fit:cover;
-}
+.hero{margin-top:56px;}
+.hero img{height:45vh;object-fit:cover;}
 .hero-overlay{
-  position:absolute;
-  inset:0;
+  position:absolute;inset:0;
   background:linear-gradient(135deg,rgba(31,122,236,.85),rgba(32,201,151,.85));
 }
 .hero-content{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  color:#fff;
-  z-index:2;
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;color:#fff;z-index:2;
 }
 .service-card{
-  background:#fff;
-  border-radius:18px;
-  padding:24px;
-  text-align:center;
-  cursor:pointer;
-  transition:.3s;
+  background:#fff;border-radius:18px;padding:24px;
+  text-align:center;cursor:pointer;transition:.3s;
   box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 .service-card:hover{
@@ -54,303 +39,194 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
 .icon{
   width:60px;height:60px;
   background:linear-gradient(135deg,var(--p),var(--s));
-  color:#fff;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  margin:auto;
-  margin-bottom:10px;
+  color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin:auto;margin-bottom:10px;
 }
-footer{background:#fff;font-size:14px}
-#tracking{display:none;}
-  .table td { vertical-align: middle; }
 
+/* === LOADER === */
+.loader-wrap{
+  position:absolute;inset:0;background:#fff;
+  display:flex;align-items:center;justify-content:center;z-index:10;
+}
+.spinner{
+  width:48px;height:48px;border:5px solid #ddd;
+  border-top:5px solid var(--p);border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* === STEPPER === */
+.stepper{display:flex;gap:12px;flex-wrap:wrap}
+.step{
+  flex:1;background:#f3f6fb;padding:12px;border-radius:12px;
+  text-align:center;animation:fadeUp .4s ease;
+}
+.step span{
+  display:block;width:32px;height:32px;margin:auto;
+  background:var(--p);color:#fff;border-radius:50%;
+  line-height:32px;margin-bottom:6px;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+
+/* === FULLSCREEN MOBILE === */
+@media(max-width:768px){
+  #formModal .modal-dialog{max-width:100%;height:100%;margin:0;}
+  #formModal .modal-content{height:100vh;border-radius:0;}
+  #formModal iframe{height:92vh!important;}
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar fixed-top px-3">
   <strong>Kelurahan Serengan – Kota Surakarta</strong>
-  <div class="ms-auto d-flex gap-2">
-    <a href="#layanan" class="btn btn-primary btn-sm">Layanan</a>
-    <a href="#kontak" class="btn btn-outline-danger btn-sm">Kontak</a>
-  </div>
 </nav>
 
-<!-- HERO SLIDER -->
-<section class="hero position-relative">
-<div id="heroSlider" class="carousel slide carousel-fade" 
-     data-bs-ride="carousel" 
-     data-bs-interval="4500">
-
-  <div class="carousel-inner">
-
-    <div class="carousel-item active">
-      <img src="img/hero-1.jpg" class="d-block w-100" alt="">
-    </div>
-
-    <div class="carousel-item">
-      <img src="img/hero-2.jpg" class="d-block w-100" alt="">
-    </div>
-
-    <div class="carousel-item">
-      <img src="img/hero-3.jpg" class="d-block w-100" alt="">
-    </div>
-
-  </div>
-
-</div>
-
-
-  <div class="hero-overlay"></div>
-
-  <div class="hero-content">
-    <div data-aos="zoom-in">
-      <h1 class="fw-bold">Layanan Digital Kelurahan Serengan</h1>
-      <p>Mudah • Cepat • Transparan</p>
-      <a href="#layanan" class="btn btn-light mt-3">Lihat Layanan ↓</a>
-    </div>
-  </div>
-
-</div>
-</section>
-
-<!-- PENGUMUMAN -->
-<section class="container my-4" data-aos="fade-down">
-  <div class="alert alert-warning shadow-sm rounded-4 d-flex">
-    <div class="me-3 fs-3">📢</div>
-    <div>
-      <strong>Pengumuman</strong><br>
-      Pelayanan administrasi <b>ditutup sementara</b>  
-      Jumat, <b>12 Januari 2026</b>
-    </div>
-  </div>
-</section>
-
-<!-- LAYANAN -->
-<section class="container my-5" id="layanan">
-  <div class="row g-4">
+<section class="container my-5 pt-5" id="layanan">
+<div class="row g-4">
 
 <!-- SKUM -->
-<div class="col-6 col-md-4" data-aos="fade-up">
+<div class="col-6 col-md-4">
   <div class="service-card"
     data-bs-toggle="modal"
     data-bs-target="#layananModal"
     data-title="Surat Keterangan Umum"
     data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Pengantar RT/RW</li>"
     data-alur="Pengajuan|Verifikasi|Terbit"
-    data-link="https://script.google.com/macros/s/AKfycbwLlvuOY-vO9m9dbrtCpLRBn5bxUzWDPvsU-S_X8ZdVjmVRahpYXy2ZM7mrIhdhhzzsPg/exec"> 
+    data-link="LINK_SKUM">
     <div class="icon">📄</div>
     <h6>Surat Keterangan Umum</h6>
   </div>
 </div>
 
-
-
-    <!-- NIKAH -->
-    <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card"
-        data-bs-toggle="modal"
-        data-bs-target="#layananModal"
-        data-title="Surat Pengantar Nikah"
-        data-syarat="<li>KTP</li><li>KK</li>"
-        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>"
-        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=nikah">
-        <div class="icon">💍</div>
-        <h6>Surat Pengantar Nikah</h6>
-      </div>
-    </div>
-
-    <!-- KK -->
-    <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card"
-        data-bs-toggle="modal"
-        data-bs-target="#layananModal"
-        data-title="Kartu Keluarga"
-        data-syarat="<li>KK Lama</li><li>KTP</li>"
-        data-alur="<li>Pengajuan</li><li>Dukcapil</li><li>Selesai</li>"
-        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=kk">
-        <div class="icon">👨‍👩‍👧</div>
-        <h6>Kartu Keluarga</h6>
-      </div>
-    </div>
-
-    <!-- KTP -->
-    <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card"
-        data-bs-toggle="modal"
-        data-bs-target="#layananModal"
-        data-title="KTP-el"
-        data-syarat="<li>KK</li><li>Usia 17+</li>"
-        data-alur="<li>Pengajuan</li><li>Perekaman</li><li>Selesai</li>"
-        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=ktp">
-        <div class="icon">🪪</div>
-        <h6>KTP-el</h6>
-      </div>
-    </div>
-
-    <!-- KIA -->
-    <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card"
-        data-bs-toggle="modal"
-        data-bs-target="#layananModal"
-        data-title="Kartu Identitas Anak"
-        data-syarat="<li>Akta Lahir</li><li>KK</li>"
-        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>"
-        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=kia">
-        <div class="icon">🧒</div>
-        <h6>Kartu Identitas Anak</h6>
-      </div>
-    </div>
-
-    <!-- AKTA LAHIR -->
-    <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card"
-        data-bs-toggle="modal"
-        data-bs-target="#layananModal"
-        data-title="Akta Kelahiran"
-        data-syarat="<li>Surat Kelahiran</li><li>KK</li>"
-        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>"
-        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=lahir">
-        <div class="icon">👶</div>
-        <h6>Akta Kelahiran</h6>
-      </div>
-    </div>
-
-    <!-- AKTA MATI -->
-    <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card"
-        data-bs-toggle="modal"
-        data-bs-target="#layananModal"
-        data-title="Akta Kematian"
-        data-syarat="<li>Surat Kematian</li><li>KK</li>"
-        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>"
-        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=mati">
-        <div class="icon">⚰️</div>
-        <h6>Akta Kematian</h6>
-      </div>
-    </div>
-
-    <!-- IKD -->
-    <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card"
-        data-bs-toggle="modal"
-        data-bs-target="#layananModal"
-        data-title="Identitas Kependudukan Digital"
-        data-syarat="<li>KTP-el</li><li>HP</li>"
-        data-alur="<li>Registrasi</li><li>Aktivasi</li>"
-        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=ikd">
-        <div class="icon">📱</div>
-        <h6>Identitas Kependudukan Digital</h6>
-      </div>
-    </div>
-
-    <!-- PINDAH -->
-    <div class="col-6 col-md-4" data-aos="fade-up">
-      <div class="service-card"
-        data-bs-toggle="modal"
-        data-bs-target="#layananModal"
-        data-title="Pindah Datang"
-        data-syarat="<li>KTP</li><li>KK</li>"
-        data-alur="<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>"
-        data-link="https://script.google.com/macros/s/XXXX/exec?layanan=pindah">
-        <div class="icon">🚚</div>
-        <h6>Pindah Datang</h6>
-      </div>
-    </div>
-
+<!-- DOMISILI -->
+<div class="col-6 col-md-4">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan Domisili"
+    data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Pengantar RT/RW</li>"
+    data-alur="Pengajuan|Validasi|Cetak"
+    data-link="LINK_DOMISILI">
+    <div class="icon">🏠</div>
+    <h6>Surat Domisili</h6>
   </div>
+</div>
+
+<!-- USAHA -->
+<div class="col-6 col-md-4">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan Usaha"
+    data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Foto Usaha</li>"
+    data-alur="Pengajuan|Survey|Terbit"
+    data-link="LINK_USAHA">
+    <div class="icon">🏪</div>
+    <h6>Surat Usaha</h6>
+  </div>
+</div>
+
+<!-- TIDAK MAMPU -->
+<div class="col-6 col-md-4">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan Tidak Mampu"
+    data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Pengantar RT/RW</li>"
+    data-alur="Pengajuan|Verifikasi|Terbit"
+    data-link="LINK_SKTM">
+    <div class="icon">🤝</div>
+    <h6>SK Tidak Mampu</h6>
+  </div>
+</div>
+
+<!-- PINDAH -->
+<div class="col-6 col-md-4">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan Pindah"
+    data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Alamat Tujuan</li>"
+    data-alur="Pengajuan|Validasi|Terbit"
+    data-link="LINK_PINDAH">
+    <div class="icon">🚚</div>
+    <h6>Surat Pindah</h6>
+  </div>
+</div>
+
+<!-- DATANG -->
+<div class="col-6 col-md-4">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan Datang"
+    data-syarat="<li>KTP-el</li><li>KK Asal</li><li>Alamat Tujuan</li>"
+    data-alur="Pengajuan|Validasi|Cetak"
+    data-link="LINK_DATANG">
+    <div class="icon">📍</div>
+    <h6>Surat Datang</h6>
+  </div>
+</div>
+
+<!-- KELAHIRAN -->
+<div class="col-6 col-md-4">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan Kelahiran"
+    data-syarat="<li>KK</li><li>KTP Orang Tua</li><li>Surat RS/Bidan</li>"
+    data-alur="Pengajuan|Verifikasi|Terbit"
+    data-link="LINK_KELAHIRAN">
+    <div class="icon">👶</div>
+    <h6>Keterangan Kelahiran</h6>
+  </div>
+</div>
+
+<!-- KEMATIAN -->
+<div class="col-6 col-md-4">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan Kematian"
+    data-syarat="<li>KK</li><li>KTP Pelapor</li><li>Surat RS</li>"
+    data-alur="Pengajuan|Validasi|Terbit"
+    data-link="LINK_KEMATIAN">
+    <div class="icon">🕊️</div>
+    <h6>Keterangan Kematian</h6>
+  </div>
+</div>
+
+<!-- IZIN KERAMAIAN -->
+<div class="col-6 col-md-4">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Izin Keramaian"
+    data-syarat="<li>KTP-el</li><li>Waktu & Lokasi</li><li>Penanggung Jawab</li>"
+    data-alur="Pengajuan|Koordinasi|Terbit"
+    data-link="LINK_KERAMAIAN">
+    <div class="icon">🎉</div>
+    <h6>Izin Keramaian</h6>
+  </div>
+</div>
+
+</div>
+
+
+</div>
 </section>
 
-
-<!-- KONTAK -->
-<section class="container my-5" id="kontak" data-aos="fade-up">
-<div class="row g-4">
-
-<div class="col-md-5">
-<div class="card shadow rounded-4 h-100">
-<div class="card-body p-4">
-<h4>📞 Kontak & Informasi</h4>
-<p><b>Kelurahan Serengan</b><br>Kecamatan Serengan, Kota Surakarta</p>
-<p>📍 Jl. Veteran No. xx</p>
-<p>☎️ (0271) 123456</p>
-<p>📧 kelurahanserengan@surakarta.go.id</p>
-<p>🕘 Senin–Jumat 08.00–14.00 WIB</p>
-<a href="https://wa.me/6281234567890" class="btn btn-success rounded-pill">💬 WhatsApp</a>
-</div>
-</div>
-</div>
-
-<div class="col-md-7">
-<div class="card shadow rounded-4 h-100 overflow-hidden">
-<iframe src="https://www.google.com/maps?q=Kelurahan+Serengan+Surakarta&output=embed"
-width="100%" height="100%" style="border:0;min-height:360px;"></iframe>
-</div>
-</div>
-
-</div>
-</section>
-
-<footer class="text-center py-4 text-muted">
-© 2026 Kelurahan Serengan – Kota Surakarta
-</footer>
-<!-- MODAL SCRIPT -->
-<script>
-function modal(id,title,syarat,alur){
-document.write(`
-<div class="modal fade" id="${id}">
-<div class="modal-dialog modal-lg modal-dialog-centered">
-<div class="modal-content">
-<div class="modal-header">
-<h5>${title}</h5>
-<button class="btn-close" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body">
-<h6>📑 Persyaratan</h6><ul>${syarat}</ul>
-<h6>🔄 Alur</h6><ol>${alur}</ol>
-</div>
-<div class="modal-footer">
-<a href="https://script.google.com/macros/s/AKfycbyy6xR-bWvytOYYORv-zZGp6zz_YaefFTOfFJesbvCorRkYL5z8BCgZV_i_KzNtIrJG6A/exec" target="_blank" class="btn btn-primary">
-Ajukan Permohonan
-</a>
-</div>
-</div></div></div>
-`);
-}
-modal("skum","Surat Keterangan Umum","<li>KTP</li><li>KK</li><li>Pengantar RT/RW</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>");
-modal("nikah","Surat Pengantar Nikah","<li>KTP</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Terbit</li>");
-modal("kk","Kartu Keluarga","<li>KK Lama</li><li>KTP</li>","<li>Pengajuan</li><li>Dukcapil</li><li>Selesai</li>");
-modal("ktp","KTP-el","<li>KK</li><li>Usia 17+</li>","<li>Pengajuan</li><li>Perekaman</li><li>Selesai</li>");
-modal("kia","KIA","<li>Akta Lahir</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>");
-modal("lahir","Akta Kelahiran","<li>Surat Kelahiran</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>");
-modal("mati","Akta Kematian","<li>Surat Kematian</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>");
-modal("ikd","Identitas Digital","<li>KTP-el</li><li>HP</li>","<li>Registrasi</li><li>Aktivasi</li>");
-modal("pindah","Pindah Datang","<li>KTP</li><li>KK</li>","<li>Pengajuan</li><li>Verifikasi</li><li>Selesai</li>");
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-document.querySelectorAll('.service-card').forEach(card => {
-  card.addEventListener('click', function () {
-    modalTitle.innerText = this.dataset.title;
-    modalSyarat.innerHTML = this.dataset.syarat;
-    modalAlur.innerHTML = this.dataset.alur;
-    modalLink.href = this.dataset.link;
-  });
-});
-</script>
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init({duration:800,once:true});</script>
 <div class="modal fade" id="layananModal" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle"></h5>
+        <h5 id="modalTitle"></h5>
         <button class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
@@ -359,15 +235,14 @@ document.querySelectorAll('.service-card').forEach(card => {
         <ul id="modalSyarat"></ul>
 
         <h6 class="mt-3">Alur Pelayanan</h6>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th width="60">No</th>
-              <th>Proses</th>
-            </tr>
-          </thead>
-          <tbody id="modalAlur"></tbody>
-        </table>
+        <div id="modalAlur" class="stepper"></div>
+
+        <div class="form-check mt-3">
+          <input class="form-check-input" type="checkbox" id="chkAgree">
+          <label class="form-check-label">
+            Saya sudah menyiapkan persyaratan
+          </label>
+        </div>
 
         <div class="text-end mt-3">
           <button id="btnOpenForm" class="btn btn-primary">
@@ -379,28 +254,34 @@ document.querySelectorAll('.service-card').forEach(card => {
   </div>
 </div>
 
-<div class="modal fade" id="layananModal">
+<div class="modal fade" id="formModal" tabindex="-1">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-
       <div class="modal-header">
-        <h5 id="modalTitle"></h5>
+        <h5 id="formTitle"></h5>
         <button class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
-      <div class="modal-body p-0">
-        <iframe
-          id="layananFrame"
-          src=""
-          style="width:100%; height:80vh; border:0;"
-          loading="lazy">
-        </iframe>
-      </div>
+      <div class="modal-body p-0 position-relative">
+        <div class="loader-wrap" id="frameLoader">
+          <div class="spinner"></div>
+        </div>
 
+        <iframe id="layananFrame"
+          src=""
+          style="width:100%;height:80vh;border:0"
+          loading="lazy"></iframe>
+      </div>
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
+const frame = document.getElementById('layananFrame');
+const loader = document.getElementById('frameLoader');
+
 document.querySelectorAll('.service-card').forEach(card => {
   card.addEventListener('click', function () {
 
@@ -409,40 +290,42 @@ document.querySelectorAll('.service-card').forEach(card => {
     const alur = this.dataset.alur;
     const link = this.dataset.link;
 
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalSyarat').innerHTML = syarat;
+    modalTitle.innerText = title;
+    modalSyarat.innerHTML = syarat;
 
-    // buat tabel alur
-    let rows = '';
-    alur.split('|').forEach((item, i) => {
-      rows += `<tr>
-        <td>${i+1}</td>
-        <td>${item}</td>
-      </tr>`;
+    let steps = '';
+    alur.split('|').forEach((item,i)=>{
+      steps += `
+        <div class="step" style="animation-delay:${i*0.1}s">
+          <span>${i+1}</span>${item}
+        </div>`;
     });
-    document.getElementById('modalAlur').innerHTML = rows;
+    modalAlur.innerHTML = steps;
 
-    // tombol buka form
-    document.getElementById('btnOpenForm').onclick = function(){
-      window.open(link, '_blank');
+    chkAgree.checked = false;
+
+    btnOpenForm.onclick = function(){
+      if(!chkAgree.checked){
+        alert('Silakan centang persetujuan terlebih dahulu.');
+        return;
+      }
+
+      loader.style.display = 'flex';
+      frame.src = link;
+      formTitle.innerText = title;
+
+      bootstrap.Modal.getOrCreateInstance(layananModal).hide();
+      bootstrap.Modal.getOrCreateInstance(formModal).show();
     }
-
   });
+});
+
+frame.onload = () => loader.style.display = 'none';
+
+formModal.addEventListener('hidden.bs.modal',()=>{
+  frame.src = '';
 });
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
