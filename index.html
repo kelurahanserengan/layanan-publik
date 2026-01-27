@@ -201,6 +201,89 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
     padding:0 6%;
   }
 }
+.navbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:999;
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(8px);
+  transition:.4s;
+}
+
+.navbar.scrolled{
+  background:#fff;
+  box-shadow:0 6px 20px rgba(0,0,0,.1);
+}
+.hero-slider{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+}
+
+.hero-slide{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  transform:scale(1.1);
+  opacity:0;
+  transition:opacity 1.2s ease, transform 6s ease;
+}
+
+.hero-slide.active{
+  opacity:1;
+  transform:scale(1);
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.65),rgba(0,0,0,.25));
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:0 10%;
+  color:#fff;
+}
+
+.hero-btn{
+  background:#2563eb;
+  padding:14px 24px;
+  border-radius:10px;
+  width:max-content;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.hero-dots{
+  position:absolute;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+}
+
+.hero-dots span{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.4);
+  cursor:pointer;
+}
+
+.hero-dots span.active{
+  background:#fff;
+  transform:scale(1.3);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .hero-slider{height:70vh;}
+  .hero-overlay{padding:0 6%;}
+}
 
 </style>
 </head>
@@ -211,33 +294,35 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
 </nav>
 
 <!-- HERO / SLIDER bisa ditambahkan di sini jika perlu -->
-  <section class="hero-slider">
+<section class="hero-slider" id="hero">
 
-  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1400&q=80')">
+  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1600&q=80')">
     <div class="hero-overlay">
       <h1>Pelayanan Digital Kelurahan Serengan</h1>
-      <p>Mudah, Cepat, Transparan</p>
+      <p>Mudah • Cepat • Transparan</p>
       <a href="#layanan" class="hero-btn">Ajukan Layanan</a>
     </div>
   </div>
 
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=80')">
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80')">
     <div class="hero-overlay">
       <h1>Administrasi Lebih Modern</h1>
-      <p>Pelayanan Tanpa Ribet</p>
+      <p>Untuk Warga Serengan</p>
       <a href="#layanan" class="hero-btn">Lihat Layanan</a>
     </div>
   </div>
 
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1507209696998-3c532be9b2b6?auto=format&fit=crop&w=1400&q=80')">
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1507209696998-3c532be9b2b6?auto=format&fit=crop&w=1600&q=80')">
     <div class="hero-overlay">
       <h1>Kelurahan Terintegrasi Digital</h1>
-      <p>Untuk Warga Serengan</p>
+      <p>Layanan Tanpa Ribet</p>
       <a href="#layanan" class="hero-btn">Mulai</a>
     </div>
   </div>
 
+  <div class="hero-dots"></div>
 </section>
+
 
 
 <!-- LAYANAN -->
@@ -401,7 +486,60 @@ setInterval(() => {
   slides[index].classList.add('active');
 }, 5000);
 </script>
+<script>
+window.addEventListener('scroll',()=>{
+  document.querySelector('.navbar')
+    .classList.toggle('scrolled',window.scrollY>50);
+});
+</script>
+<script>
+const slides = document.querySelectorAll('.hero-slide');
+const dotsWrap = document.querySelector('.hero-dots');
+let current = 0;
+
+// DOTS
+slides.forEach((_,i)=>{
+  const dot = document.createElement('span');
+  dot.onclick=()=>showSlide(i);
+  dotsWrap.appendChild(dot);
+});
+
+function showSlide(i){
+  slides.forEach(s=>s.classList.remove('active'));
+  dotsWrap.querySelectorAll('span').forEach(d=>d.classList.remove('active'));
+  current=i;
+  slides[i].classList.add('active');
+  dotsWrap.children[i].classList.add('active');
+}
+showSlide(0);
+
+// AUTO
+setInterval(()=>{
+  showSlide((current+1)%slides.length);
+},6000);
+
+// SWIPE
+let startX=0;
+document.querySelector('.hero-slider').addEventListener('touchstart',e=>{
+  startX=e.touches[0].clientX;
+});
+
+document.querySelector('.hero-slider').addEventListener('touchend',e=>{
+  let endX=e.changedTouches[0].clientX;
+  if(startX-endX>50) showSlide((current+1)%slides.length);
+  if(endX-startX>50) showSlide((current-1+slides.length)%slides.length);
+});
+
+// PARALLAX
+window.addEventListener('scroll',()=>{
+  const sc=window.scrollY*0.3;
+  slides.forEach(s=>{
+    s.style.backgroundPosition=`center ${sc}px`;
+  });
+});
+</script>
 
 </body>
 </html>
+
 
