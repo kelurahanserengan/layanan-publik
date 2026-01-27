@@ -156,8 +156,10 @@ footer{
 <div class="container mt-3" id="layanan">
 
 <div class="pengumuman mb-3" data-aos="fade-up">
-
-  <div class="card-app mb-3" data-aos="fade-up">
+📢 <b>Pengumuman</b><br>
+Pastikan berkas lengkap sebelum mengajukan permohonan layanan.
+</div>
+<div class="card-app mb-3" data-aos="fade-up">
 <h6>🌟 Tentang SERENA</h6>
 
 <p style="font-size:14px;line-height:1.6">
@@ -198,11 +200,7 @@ Kecepatan layanan meningkat, kepuasan warga naik, dan budaya kerja aparatur maki
 
 </div>
 </div>
-
-📢 <b>Pengumuman</b><br>
-Pastikan berkas lengkap sebelum mengajukan permohonan layanan.
-</div>
-
+  
 <div class="card-app mb-3 search-box" data-aos="fade-up">
 <input type="text" id="searchInput" class="form-control" placeholder="🔍 Cari layanan...">
 </div>
@@ -330,4 +328,5 @@ a.classList.add('active');
 
 </body>
 </html>
+
 
