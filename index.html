@@ -6,320 +6,49 @@
 <title>Layanan Digital Kelurahan Serengan</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <style>
-:root{
-  --p:#1f7aec;
-  --s:#20c997;
-  --bg:#f4fbfa;
-}
-body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
-.navbar{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.hero{margin-top:56px;}
-.hero img{height:45vh;object-fit:cover;}
-.hero-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(31,122,236,.85),rgba(32,201,151,.85));
-}
-.hero-content{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;color:#fff;z-index:2;
-}
-.service-card{
-  background:#fff;border-radius:18px;padding:24px;
-  text-align:center;cursor:pointer;transition:.3s;
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
-}
-.service-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 16px 32px rgba(0,0,0,.15);
-}
-.icon{
-  width:60px;height:60px;
-  background:linear-gradient(135deg,var(--p),var(--s));
-  color:#fff;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:28px;margin:auto;margin-bottom:10px;
-}
+:root{--p:#1f7aec;--s:#20c997;--bg:#f4fbfa}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg)}
+.navbar{position:fixed;top:0;width:100%;z-index:999;background:rgba(255,255,255,.05);backdrop-filter:blur(8px);transition:.4s}
+.navbar.scrolled{background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.1)}
 
-/* === LOADER === */
-.loader-wrap{
-  position:absolute;inset:0;background:#fff;
-  display:flex;align-items:center;justify-content:center;z-index:10;
-}
-.spinner{
-  width:48px;height:48px;border:5px solid #ddd;
-  border-top:5px solid var(--p);border-radius:50%;
-  animation:spin 1s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg);}}
+.hero-slider{position:relative;height:70vh;min-height:420px;overflow:hidden}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.1);opacity:0;transition:opacity 1.2s ease,transform 6s ease}
+.hero-slide.active{opacity:1;transform:scale(1)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.65),rgba(0,0,0,.25));display:flex;flex-direction:column;justify-content:center;padding:0 10%;color:#fff}
+.hero-overlay h1{font-size:clamp(28px,5vw,54px)}
+.hero-btn{background:#2563eb;padding:14px 24px;border-radius:10px;color:#fff;text-decoration:none;width:max-content;font-weight:600}
+.hero-dots{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
+.hero-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer}
+.hero-dots span.active{background:#fff;transform:scale(1.3)}
 
-/* === STEPPER === */
+.service-card{background:#fff;border-radius:18px;padding:24px;text-align:center;cursor:pointer;transition:.3s;box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.service-card:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(0,0,0,.15)}
+.icon{width:60px;height:60px;background:linear-gradient(135deg,var(--p),var(--s));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:auto;margin-bottom:10px}
+
 .stepper{display:flex;gap:12px;flex-wrap:wrap}
-.step{
-  flex:1;background:#f3f6fb;padding:12px;border-radius:12px;
-  text-align:center;animation:fadeUp .4s ease;
-}
-.step span{
-  display:block;width:32px;height:32px;margin:auto;
-  background:var(--p);color:#fff;border-radius:50%;
-  line-height:32px;margin-bottom:6px;
-}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:none}
-}
+.step{flex:1;background:#f3f6fb;padding:12px;border-radius:12px;text-align:center}
+.step span{display:block;width:32px;height:32px;margin:auto;background:var(--p);color:#fff;border-radius:50%;line-height:32px;margin-bottom:6px}
 
-/* === FULLSCREEN MOBILE === */
-@media(max-width:768px){
-  #formModal .modal-dialog{max-width:100%;height:100%;margin:0;}
-  #formModal .modal-content{height:100vh;border-radius:0;}
-  #formModal iframe{height:92vh!important;}
-}
+.loader-wrap{position:absolute;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:10}
+.spinner{width:48px;height:48px;border:5px solid #ddd;border-top:5px solid var(--p);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* === KONTAK & MAP === */
-#kontak .card{border-radius:18px;}
-  .lokasi-section{
-  padding:60px 20px;
-  background:#f7f9fc;
-}
-
-.lokasi-wrapper{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1fr 1.5fr;
-  gap:24px;
-}
-
-.lokasi-info{
-  background:#fff;
-  padding:28px;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-
-.lokasi-info h3{
-  margin-bottom:14px;
-}
-
-.lokasi-info p{
-  margin:10px 0;
-  line-height:1.6;
-}
-
-.btn-navigasi{
-  display:inline-block;
-  margin-top:16px;
-  padding:12px 18px;
-  background:#2563eb;
-  color:#fff;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:600;
-  transition:.3s;
-}
-
-.btn-navigasi:hover{
-  background:#1e40af;
-  transform:scale(1.03);
-}
-
-.lokasi-map iframe{
-  width:100%;
-  height:100%;
-  min-height:320px;
-  border:0;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .hero-slider{
-    height:55vh;
-    min-height:340px;
-  }
-}
-
-.hero-slider{
-  position:relative;
-  height:85vh;
-  overflow:hidden;
-}
-
-.hero-slide{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  opacity:0;
-  transition:opacity 1s ease;
-}
-
-.hero-slide.active{
-  opacity:1;
-}
-
-.hero-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to right,rgba(0,0,0,.6),rgba(0,0,0,.2));
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:0 10%;
-  color:#fff;
-}
-
-.hero-overlay h1{
-  font-size:clamp(28px,5vw,54px);
-}
-
-.hero-overlay p{
-  margin:12px 0 22px;
-  font-size:18px;
-}
-
-.hero-btn{
-  display:inline-block;
-  background:#2563eb;
-  padding:14px 22px;
-  border-radius:10px;
-  color:#fff;
-  text-decoration:none;
-  width:max-content;
-  font-weight:600;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .hero-slider{
-    height:60vh;
-  }
-  .hero-overlay{
-    padding:0 6%;
-  }
-}
-.navbar{
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:999;
-  background:rgba(255,255,255,.05);
-  backdrop-filter:blur(8px);
-  transition:.4s;
-}
-
-.navbar.scrolled{
-  background:#fff;
-  box-shadow:0 6px 20px rgba(0,0,0,.1);
-}
-.hero-slider{
-  position:relative;
-  height:70vh;
-  min-height:420px;
-  max-height:650px;
-  overflow:hidden;
-}
-
-
-.hero-slide{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  transform:scale(1.1);
-  opacity:0;
-  transition:opacity 1.2s ease, transform 6s ease;
-}
-
-.hero-slide.active{
-  opacity:1;
-  transform:scale(1);
-}
-
-.hero-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,rgba(0,0,0,.65),rgba(0,0,0,.25));
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:0 10%;
-  color:#fff;
-}
-
-.hero-btn{
-  background:#2563eb;
-  padding:14px 24px;
-  border-radius:10px;
-  width:max-content;
-  color:#fff;
-  text-decoration:none;
-  font-weight:600;
-}
-
-.hero-dots{
-  position:absolute;
-  bottom:30px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:10px;
-}
-
-.hero-dots span{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:rgba(255,255,255,.4);
-  cursor:pointer;
-}
-
-.hero-dots span.active{
-  background:#fff;
-  transform:scale(1.3);
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .hero-slider{height:70vh;}
-  .hero-overlay{padding:0 6%;}
-}
-.contact-box,
-.map-box{
-  background:#fff;
-  border-radius:18px;
-  padding:24px;
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
-  height:100%;
-}
-
-.map-box{
-  padding:0;
-  overflow:hidden;
-}
-
-@media(max-width:768px){
-  .contact-box,
-  .map-box{
-    height:auto;
-  }
-}
-
+.contact-box,.map-box{background:#fff;border-radius:18px;padding:24px;box-shadow:0 8px 20px rgba(0,0,0,.08);height:100%}
+.map-box{padding:0;overflow:hidden}
+@media(max-width:768px){.hero-slider{height:65vh}.hero-overlay{padding:0 6%}}
 </style>
 </head>
+
 <body>
 
-<nav class="navbar fixed-top px-3">
+<nav class="navbar px-3">
   <strong>Kelurahan Serengan – Kota Surakarta</strong>
 </nav>
 
-<!-- HERO / SLIDER bisa ditambahkan di sini jika perlu -->
-<section class="hero-slider" id="hero">
+<!-- HERO -->
+<section class="hero-slider">
 
   <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1600&q=80')">
     <div class="hero-overlay">
@@ -348,25 +77,23 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
   <div class="hero-dots"></div>
 </section>
 
-
-
 <!-- LAYANAN -->
 <section class="container my-5 pt-5" id="layanan">
 <div class="row g-4">
-  <!-- Contoh layanan SKUM -->
-  <div class="col-6 col-md-4">
-    <div class="service-card"
-      data-bs-toggle="modal"
-      data-bs-target="#layananModal"
-      data-title="Surat Keterangan Umum"
-      data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Pengantar RT/RW</li>"
-      data-alur="Pengajuan|Verifikasi|Terbit"
-      data-link="https://script.google.com/macros/s/AKfycbwF5EunAgB5lDdFr5sdZJvhnhO0ZZAwAKdwdIE9OlR_Bj9LxKDS8ytnX7R9XHP7Qu6X3A/exec"
-      <div class="icon">📄</div>
-      <h6>Surat Keterangan Umum</h6>
-    </div>
+
+<div class="col-6 col-md-4">
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan Umum"
+    data-syarat="<li>KTP</li><li>KK</li><li>Pengantar RT/RW</li>"
+    data-alur="Pengajuan|Verifikasi|Terbit"
+    data-link="https://script.google.com/macros/s/AKfycbwF5EunAgB5lDdFr5sdZJvhnhO0ZZAwAKdwdIE9OlR_Bj9LxKDS8ytnX7R9XHP7Qu6X3A/exec">
+    <div class="icon">📄</div>
+    <h6>Surat Keterangan Umum</h6>
   </div>
-  <!-- Tambahkan semua layanan lainnya sesuai format di atas -->
+</div>
+
 </div>
 </section>
 
@@ -401,164 +128,107 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);}
   </div>
 </section>
 
-</section>
 <footer class="text-center py-4 text-muted">
 © 2026 Kelurahan Serengan – Kota Surakarta
 </footer>
 
-<!-- MODAL LAYANAN -->
+<!-- MODAL -->
 <div class="modal fade" id="layananModal" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 id="modalTitle"></h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <h6>Syarat</h6>
-        <ul id="modalSyarat"></ul>
-        <h6 class="mt-3">Alur Pelayanan</h6>
-        <div id="modalAlur" class="stepper"></div>
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+<h5 id="modalTitle"></h5>
+<button class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<h6>Syarat</h6>
+<ul id="modalSyarat"></ul>
+<h6 class="mt-3">Alur</h6>
+<div id="modalAlur" class="stepper"></div>
 
-        <div class="form-check mt-3">
-          <input class="form-check-input" type="checkbox" id="chkAgree">
-          <label class="form-check-label">Saya sudah menyiapkan persyaratan</label>
-        </div>
-
-        <div class="text-end mt-3">
-          <button id="btnOpenForm" class="btn btn-primary">Isi Formulir</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="form-check mt-3">
+<input class="form-check-input" type="checkbox" id="chkAgree">
+<label class="form-check-label">Saya sudah menyiapkan persyaratan</label>
 </div>
 
-<!-- MODAL FORM (iframe) -->
+<div class="text-end mt-3">
+<button id="btnOpenForm" class="btn btn-primary">Isi Formulir</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 <div class="modal fade" id="formModal" tabindex="-1">
-  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 id="formTitle"></h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body p-0 position-relative">
-        <div class="loader-wrap" id="frameLoader"><div class="spinner"></div></div>
-        <iframe id="layananFrame" src="" style="width:100%;height:80vh;border:0" loading="lazy"></iframe>
-      </div>
-    </div>
-  </div>
+<div class="modal-dialog modal-xl modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+<h5 id="formTitle"></h5>
+<button class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body p-0 position-relative">
+<div class="loader-wrap" id="frameLoader"><div class="spinner"></div></div>
+<iframe id="layananFrame" style="width:100%;height:80vh;border:0"></iframe>
+</div>
+</div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init({duration:800,once:true});</script>
 
 <script>
-const frame = document.getElementById('layananFrame');
-const loader = document.getElementById('frameLoader');
+const frame=document.getElementById('layananFrame');
+const loader=document.getElementById('frameLoader');
 
-document.querySelectorAll('.service-card').forEach(card => {
-  card.addEventListener('click', function () {
-    const title = this.dataset.title;
-    const syarat = this.dataset.syarat;
-    const alur = this.dataset.alur;
-    const link = this.dataset.link;
+document.querySelectorAll('.service-card').forEach(card=>{
+card.onclick=function(){
+modalTitle.innerText=this.dataset.title;
+modalSyarat.innerHTML=this.dataset.syarat;
 
-    modalTitle.innerText = title;
-    modalSyarat.innerHTML = syarat;
-
-    let steps = '';
-    alur.split('|').forEach((item,i)=>{
-      steps += `<div class="step" style="animation-delay:${i*0.1}s"><span>${i+1}</span>${item}</div>`;
-    });
-    modalAlur.innerHTML = steps;
-
-    chkAgree.checked = false;
-
-    btnOpenForm.onclick = function(){
-      if(!chkAgree.checked){
-        alert('Silakan centang persetujuan terlebih dahulu.');
-        return;
-      }
-      loader.style.display='flex';
-      frame.src = link;
-      formTitle.innerText = title;
-
-      bootstrap.Modal.getOrCreateInstance(layananModal).hide();
-      bootstrap.Modal.getOrCreateInstance(formModal).show();
-    }
-  });
+modalAlur.innerHTML='';
+this.dataset.alur.split('|').forEach((a,i)=>{
+modalAlur.innerHTML+=`<div class="step"><span>${i+1}</span>${a}</div>`;
 });
 
-frame.onload = () => loader.style.display = 'none';
-formModal.addEventListener('hidden.bs.modal',()=>{frame.src='';});
-</script>
-  <script>
-let index = 0;
-const slides = document.querySelectorAll('.hero-slide');
-
-setInterval(() => {
-  slides.forEach(s => s.classList.remove('active'));
-  index = (index + 1) % slides.length;
-  slides[index].classList.add('active');
-}, 5000);
-</script>
-<script>
-window.addEventListener('scroll',()=>{
-  document.querySelector('.navbar')
-    .classList.toggle('scrolled',window.scrollY>50);
+btnOpenForm.onclick=()=>{
+if(!chkAgree.checked)return alert('Centang persetujuan dulu');
+loader.style.display='flex';
+frame.src=this.dataset.link;
+formTitle.innerText=this.dataset.title;
+bootstrap.Modal.getOrCreateInstance(layananModal).hide();
+bootstrap.Modal.getOrCreateInstance(formModal).show();
+}
+}
 });
-</script>
-<script>
-const slides = document.querySelectorAll('.hero-slide');
-const dotsWrap = document.querySelector('.hero-dots');
-let current = 0;
 
-// DOTS
+frame.onload=()=>loader.style.display='none';
+
+const slides=document.querySelectorAll('.hero-slide');
+const dotsWrap=document.querySelector('.hero-dots');
+let current=0;
+
 slides.forEach((_,i)=>{
-  const dot = document.createElement('span');
-  dot.onclick=()=>showSlide(i);
-  dotsWrap.appendChild(dot);
+let d=document.createElement('span');
+d.onclick=()=>showSlide(i);
+dotsWrap.appendChild(d);
 });
 
 function showSlide(i){
-  slides.forEach(s=>s.classList.remove('active'));
-  dotsWrap.querySelectorAll('span').forEach(d=>d.classList.remove('active'));
-  current=i;
-  slides[i].classList.add('active');
-  dotsWrap.children[i].classList.add('active');
+slides.forEach(s=>s.classList.remove('active'));
+dotsWrap.querySelectorAll('span').forEach(d=>d.classList.remove('active'));
+current=i;
+slides[i].classList.add('active');
+dotsWrap.children[i].classList.add('active');
 }
+
 showSlide(0);
+setInterval(()=>showSlide((current+1)%slides.length),6000);
 
-// AUTO
-setInterval(()=>{
-  showSlide((current+1)%slides.length);
-},6000);
-
-// SWIPE
-let startX=0;
-document.querySelector('.hero-slider').addEventListener('touchstart',e=>{
-  startX=e.touches[0].clientX;
-});
-
-document.querySelector('.hero-slider').addEventListener('touchend',e=>{
-  let endX=e.changedTouches[0].clientX;
-  if(startX-endX>50) showSlide((current+1)%slides.length);
-  if(endX-startX>50) showSlide((current-1+slides.length)%slides.length);
-});
-
-// PARALLAX
 window.addEventListener('scroll',()=>{
-  const sc=window.scrollY*0.3;
-  slides.forEach(s=>{
-    s.style.backgroundPosition=`center ${sc}px`;
-  });
+document.querySelector('.navbar')
+.classList.toggle('scrolled',window.scrollY>50);
 });
 </script>
 
 </body>
 </html>
-
-
-
-
