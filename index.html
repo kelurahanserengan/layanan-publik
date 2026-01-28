@@ -317,21 +317,6 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
   </div>
 </div>
 
-
-
-<div class="modal fade" id="layananModal">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content">
-<div class="modal-header">
-<h5 id="modalTitle"></h5>
-</div>
-<div class="modal-body">
-<div class="timeline" id="modalSyarat"></div>
-</div>
-</div>
-</div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -346,14 +331,6 @@ slides.forEach(s=>s.classList.remove('active'));
 i=(i+1)%slides.length;
 slides[i].classList.add('active');
 },4500);
-
-// modal
-document.querySelectorAll('.service-card').forEach(c=>{
-c.onclick=()=>{
-modalTitle.innerText=c.dataset.title;
-modalSyarat.innerHTML=c.dataset.syarat;
-};
-});
 
 // search
 searchInput.addEventListener('input',function(){
@@ -371,32 +348,48 @@ document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.remove('active
 a.classList.add('active');
 };
 });
-</script>
-<script>
+
+// === MODAL LOGIC ===
 const layananModal = document.getElementById('layananModal');
+let CURRENT_LINK = "";
 
 layananModal.addEventListener('show.bs.modal', function (event) {
   const button = event.relatedTarget;
 
-  const title = button.getAttribute('data-title');
-  const syarat = button.getAttribute('data-syarat');
-  const alur = button.getAttribute('data-alur');
-  const link = button.getAttribute('data-link');
+  modalTitle.innerText = button.dataset.title;
+  modalSyarat.innerHTML = button.dataset.syarat || '';
+  modalAlur.innerHTML = button.dataset.alur || '';
+  CURRENT_LINK = button.dataset.link || '';
 
-  document.getElementById('modalTitle').innerText = title;
-  document.getElementById('modalSyarat').innerHTML = syarat;
-  document.getElementById('modalAlur').innerHTML = alur;
-  document.getElementById('modalLink').href = link;
-
-  document.getElementById('cekValidasi').checked = false;
-  document.getElementById('modalLink').classList.add('disabled');
+  cekValidasi.checked = false;
+  modalLink.classList.add('disabled');
 });
 
-document.getElementById('cekValidasi').addEventListener('change', function () {
-  const btn = document.getElementById('modalLink');
-  this.checked ? btn.classList.remove('disabled') : btn.classList.add('disabled');
+cekValidasi.addEventListener('change', function () {
+  this.checked 
+    ? modalLink.classList.remove('disabled') 
+    : modalLink.classList.add('disabled');
+});
+
+modalLink.addEventListener('click', function () {
+  if (this.classList.contains('disabled')) return;
+
+  const isMobile = window.innerWidth < 768;
+
+  if (isMobile) {
+    window.open(CURRENT_LINK, "_self");
+  } else {
+    window.open(
+      CURRENT_LINK,
+      "FormPengajuan",
+      "width=1000,height=700,top=80,left=150,scrollbars=yes,resizable=yes"
+    );
+  }
+
+  bootstrap.Modal.getInstance(layananModal).hide();
 });
 </script>
+
 
 </body>
 </html>
