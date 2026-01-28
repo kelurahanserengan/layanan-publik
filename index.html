@@ -288,7 +288,7 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
   
 <!-- MODAL -->
 <div class="modal fade" id="layananModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-sm-down">
     <div class="modal-content rounded-4">
       <div class="modal-header">
         <h5 class="modal-title" id="modalTitle"></h5>
@@ -296,26 +296,34 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
       </div>
 
       <div class="modal-body">
-        <h6>📌 Persyaratan</h6>
-        <ul id="modalSyarat"></ul>
+        <div id="infoLayanan">
+          <h6>📌 Persyaratan</h6>
+          <ul id="modalSyarat"></ul>
 
-        <h6 class="mt-3">🔄 Alur Layanan</h6>
-        <ol id="modalAlur"></ol>
+          <h6 class="mt-3">🔄 Alur Layanan</h6>
+          <ol id="modalAlur"></ol>
 
-        <div class="form-check mt-3">
-          <input class="form-check-input" type="checkbox" id="cekValidasi">
-          <label class="form-check-label">
-            Saya sudah menyiapkan seluruh persyaratan
-          </label>
+          <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" id="cekValidasi">
+            <label class="form-check-label">
+              Saya sudah menyiapkan seluruh persyaratan
+            </label>
+          </div>
+
+          <button id="modalLink" class="btn btn-primary w-100 mt-3 disabled">
+            🚀 Isi Formulir Pengajuan
+          </button>
         </div>
 
-        <button id="modalLink" class="btn btn-primary w-100 mt-3 disabled">
-          🚀 Isi Formulir Pengajuan
-        </button>
+        <!-- IFRAME FORM -->
+        <div id="formFrameWrap" class="d-none mt-3">
+          <iframe id="formFrame" style="width:100%;height:80vh;border:none;border-radius:12px"></iframe>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -363,30 +371,24 @@ layananModal.addEventListener('show.bs.modal', function (event) {
 
   cekValidasi.checked = false;
   modalLink.classList.add('disabled');
+
+  document.getElementById('infoLayanan').classList.remove('d-none');
+  document.getElementById('formFrameWrap').classList.add('d-none');
 });
 
 cekValidasi.addEventListener('change', function () {
-  this.checked 
-    ? modalLink.classList.remove('disabled') 
+  this.checked
+    ? modalLink.classList.remove('disabled')
     : modalLink.classList.add('disabled');
 });
 
 modalLink.addEventListener('click', function () {
   if (this.classList.contains('disabled')) return;
 
-  const isMobile = window.innerWidth < 768;
+  document.getElementById('infoLayanan').classList.add('d-none');
+  document.getElementById('formFrameWrap').classList.remove('d-none');
 
-  if (isMobile) {
-    window.open(CURRENT_LINK, "_self");
-  } else {
-    window.open(
-      CURRENT_LINK,
-      "FormPengajuan",
-      "width=1000,height=700,top=80,left=150,scrollbars=yes,resizable=yes"
-    );
-  }
-
-  bootstrap.Modal.getInstance(layananModal).hide();
+  document.getElementById('formFrame').src = CURRENT_LINK;
 });
 </script>
 
