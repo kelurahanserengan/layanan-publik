@@ -308,9 +308,10 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
           </label>
         </div>
 
-        <a id="modalLink" href="#" class="btn btn-primary w-100 mt-3 disabled">
-          🚀 Isi Formulir Pengajuan
-        </a>
+      <button id="modalLink" class="btn btn-primary w-100 mt-3 disabled">
+        🚀 Isi Formulir Pengajuan
+      </button>
+
       </div>
     </div>
   </div>
@@ -393,6 +394,40 @@ layananModal.addEventListener('show.bs.modal', function (event) {
 document.getElementById('cekValidasi').addEventListener('change', function () {
   const btn = document.getElementById('modalLink');
   this.checked ? btn.classList.remove('disabled') : btn.classList.add('disabled');
+});
+</script>
+<script>
+const layananModal = document.getElementById('layananModal');
+const FORM_URL = "https://script.google.com/macros/s/AKfycbwF5EunAgB5lDdFr5sdZJvhnhO0ZZAwAKdwdIE9OlR_Bj9LxKDS8ytnX7R9XHP7Qu6X3A/exec";
+
+layananModal.addEventListener('show.bs.modal', function (event) {
+  const button = event.relatedTarget;
+
+  const title = button.getAttribute('data-title');
+  const syarat = button.getAttribute('data-syarat');
+  const alur = button.getAttribute('data-alur');
+
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalSyarat').innerHTML = syarat;
+  document.getElementById('modalAlur').innerHTML = alur;
+
+  document.getElementById('cekValidasi').checked = false;
+  document.getElementById('modalLink').classList.add('disabled');
+});
+
+document.getElementById('cekValidasi').addEventListener('change', function () {
+  const btn = document.getElementById('modalLink');
+  this.checked ? btn.classList.remove('disabled') : btn.classList.add('disabled');
+});
+
+document.getElementById('modalLink').addEventListener('click', function () {
+  if (this.classList.contains('disabled')) return;
+
+  window.open(
+    FORM_URL,
+    "FormPengajuan",
+    "width=900,height=650,top=100,left=200,scrollbars=yes,resizable=yes"
+  );
 });
 </script>
 
