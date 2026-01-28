@@ -194,16 +194,6 @@ Masyarakat Serengan, aparatur kelurahan, serta lembaga kemasyarakatan sebagai mi
 </div>
 
 <div>
-<b>Ruang Lingkup</b><br>
-Pelayanan adminduk digital, konsultasi interaktif, kolaborasi sosial, Mas Carik, Click WA, dan SRAWUNG.
-</div>
-
-<div>
-<b>Mekanisme</b><br>
-Tim inovasi mengembangkan layanan, mengintegrasikan sistem, dan melakukan monitoring berkala.
-</div>
-
-<div>
 <b>Indikator</b><br>
 Kecepatan layanan meningkat, kepuasan warga naik, dan budaya kerja aparatur makin inovatif.
 </div>
@@ -220,13 +210,27 @@ Kecepatan layanan meningkat, kepuasan warga naik, dan budaya kerja aparatur maki
 <div class="row g-3 mt-2" id="layananList">
 
 <div class="col-4 layanan-item">
-<div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
-data-title="Surat Keterangan"
-data-syarat="<div>Isi Form</div><div>Upload KTP</div><div>Verifikasi</div><div>Terbit</div>">
-<div class="icon">📄</div>
-<small>Surat</small>
+  <div class="service-card"
+    data-bs-toggle="modal"
+    data-bs-target="#layananModal"
+    data-title="Surat Keterangan"
+    data-syarat="
+      <li>Pengantar RT/RW</li>
+      <li>Upload KTP-el</li>
+      <li>Upload Kartu Keluarga</li>
+      <li>Form Permohonan</li>"
+    data-alur="
+      <li>Pengajuan Online</li>
+      <li>Verifikasi Petugas</li>
+      <li>Proses Administrasi</li>
+      <li>Dokumen Terbit</li>"
+    data-link="https://script.google.com/macros/s/AKfycbwF5EunAgB5lDdFr5sdZJvhnhO0ZZAwAKdwdIE9OlR_Bj9LxKDS8ytnX7R9XHP7Qu6X3A/exec"
+  >
+    <div class="icon">📄</div>
+    <small>Surat</small>
+  </div>
 </div>
-</div>
+
 
 <div class="col-4 layanan-item">
 <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
@@ -282,6 +286,35 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
 <a href="#kontak">☎️<br>Kontak</a>
 </div>
 
+<div class="modal fade" id="layananModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle"></h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <h6>📌 Persyaratan</h6>
+        <ul id="modalSyarat"></ul>
+
+        <h6 class="mt-3">🔄 Alur Layanan</h6>
+        <ol id="modalAlur"></ol>
+
+        <div class="form-check mt-3">
+          <input class="form-check-input" type="checkbox" id="cekValidasi">
+          <label class="form-check-label">
+            Saya sudah menyiapkan seluruh persyaratan
+          </label>
+        </div>
+
+        <a id="modalLink" href="#" class="btn btn-primary w-100 mt-3 disabled">
+          🚀 Isi Formulir Pengajuan
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <div class="modal fade" id="layananModal">
@@ -335,6 +368,31 @@ a.onclick=()=>{
 document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.remove('active'));
 a.classList.add('active');
 };
+});
+</script>
+<script>
+const layananModal = document.getElementById('layananModal');
+
+layananModal.addEventListener('show.bs.modal', function (event) {
+  const button = event.relatedTarget;
+
+  const title = button.getAttribute('data-title');
+  const syarat = button.getAttribute('data-syarat');
+  const alur = button.getAttribute('data-alur');
+  const link = button.getAttribute('data-link');
+
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalSyarat').innerHTML = syarat;
+  document.getElementById('modalAlur').innerHTML = alur;
+  document.getElementById('modalLink').href = link;
+
+  document.getElementById('cekValidasi').checked = false;
+  document.getElementById('modalLink').classList.add('disabled');
+});
+
+document.getElementById('cekValidasi').addEventListener('change', function () {
+  const btn = document.getElementById('modalLink');
+  this.checked ? btn.classList.remove('disabled') : btn.classList.add('disabled');
 });
 </script>
 
