@@ -478,6 +478,22 @@ const formSheet = document.getElementById('formSheet');
 const sheetFrame = document.getElementById('sheetFrame');
 const sheetTitle = document.getElementById('sheetTitle');
 const sheetBackdrop = document.getElementById('sheetBackdrop');
+const serenaSheet = document.getElementById('serenaSheet');
+const sheetBackdrop = document.getElementById('sheetBackdrop');
+
+document.getElementById('openSerenaMenu').onclick = e=>{
+  e.preventDefault();
+  serenaSheet.classList.add('active');
+  sheetBackdrop.classList.add('active');
+  document.body.style.overflow = "hidden";
+};
+
+window.closeSerena = function(){
+  serenaSheet.classList.remove('active');
+  sheetBackdrop.classList.remove('active');
+  document.body.style.overflow = "";
+};
+  
 
 
 // ===== SLIDER =====
@@ -627,20 +643,6 @@ document.querySelectorAll('.form-sheet').forEach(sheet=>{
     currentSheet = null;
   });
 
-  const serenaSheet = document.getElementById('serenaSheet');
-
-document.getElementById('openSerenaMenu').onclick = e=>{
-  e.preventDefault();
-  serenaSheet.classList.add('active');
-  sheetBackdrop.classList.add('active');
-  document.body.style.overflow = "hidden";
-};
-
-function closeSerena(){
-  serenaSheet.classList.remove('active');
-  sheetBackdrop.classList.remove('active');
-  document.body.style.overflow = "";
-}
 
 
 });
