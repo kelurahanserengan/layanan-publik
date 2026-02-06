@@ -390,7 +390,9 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-<script>
+  <script>
+document.addEventListener("DOMContentLoaded", function(){
+
 AOS.init();
 
 const searchInput = document.getElementById('searchInput');
@@ -401,33 +403,36 @@ const sheetTitle = document.getElementById('sheetTitle');
 const sheetBackdrop = document.getElementById('sheetBackdrop');
 
 
-// slider
+// ===== SLIDER =====
 const slides=document.querySelectorAll('.hero-slide');
 let i=0;
 setInterval(()=>{
-slides.forEach(s=>s.classList.remove('active'));
-i=(i+1)%slides.length;
-slides[i].classList.add('active');
+  slides.forEach(s=>s.classList.remove('active'));
+  i=(i+1)%slides.length;
+  slides[i].classList.add('active');
 },4500);
 
-// search
+
+// ===== SEARCH =====
 searchInput.addEventListener('input',function(){
-let v=this.value.toLowerCase();
-document.querySelectorAll('.layanan-item').forEach(item=>{
-let t=item.innerText.toLowerCase();
-item.style.display=t.includes(v)?"block":"none";
-});
+  let v=this.value.toLowerCase();
+  document.querySelectorAll('.layanan-item').forEach(item=>{
+    let t=item.innerText.toLowerCase();
+    item.style.display=t.includes(v)?"block":"none";
+  });
 });
 
-// bottom nav active
+
+// ===== BOTTOM NAV ACTIVE =====
 document.querySelectorAll('.bottom-nav a').forEach(a=>{
-a.onclick=()=>{
-document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.remove('active'));
-a.classList.add('active');
-};
+  a.onclick=()=>{
+    document.querySelectorAll('.bottom-nav a').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+  };
 });
 
-// === MODAL LOGIC ===
+
+// ===== MODAL =====
 const layananModal = document.getElementById('layananModal');
 let CURRENT_LINK = "";
 
@@ -461,7 +466,8 @@ modalLink.addEventListener('click', function () {
   document.getElementById('formFrame').src = CURRENT_LINK;
 });
 
-  // buka menu formulir
+
+// ===== FORM MENU =====
 document.getElementById('openFormMenu').onclick = e=>{
   e.preventDefault();
   formMenuSheet.classList.add('active');
@@ -469,43 +475,41 @@ document.getElementById('openFormMenu').onclick = e=>{
   document.body.style.overflow = "hidden";
 };
 
-
-// tutup menu
-function closeFormMenu(){
+window.closeFormMenu = function(){
   formMenuSheet.classList.remove('active');
   sheetBackdrop.classList.remove('active');
   document.body.style.overflow = "";
-}
+};
 
-
-// klik item form
 document.querySelectorAll('.form-list a').forEach(a=>{
   a.onclick = e=>{
     e.preventDefault();
     sheetTitle.innerText = a.dataset.title;
     sheetFrame.src = a.dataset.link;
-formMenuSheet.classList.remove('active');
-formSheet.classList.add('active');
-sheetBackdrop.classList.add('active');
-document.body.style.overflow = "hidden";
 
+    formMenuSheet.classList.remove('active');
+    formSheet.classList.add('active');
+    sheetBackdrop.classList.add('active');
+    document.body.style.overflow = "hidden";
   };
 });
 
-// tutup iframe
-function closeFormSheet(){
+window.closeFormSheet = function(){
   formSheet.classList.remove('active');
   sheetBackdrop.classList.remove('active');
   sheetFrame.src="";
   document.body.style.overflow = "";
-}
+};
+
 sheetBackdrop.onclick = ()=>{
   closeFormMenu();
   closeFormSheet();
 };
 
-
+});
 </script>
+
+
 <div class="sheet-backdrop" id="sheetBackdrop"></div>
 
 <div class="form-sheet" id="formMenuSheet">
