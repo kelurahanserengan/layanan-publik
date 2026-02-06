@@ -299,6 +299,37 @@ body{
   transform:scale(.985);
 }
 
+.hero-slide{
+  transform:scale(1.1);
+}
+
+.hero-slide.active{
+  transform:scale(1);
+}
+
+.hero-dots{
+  position:absolute;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:8px;
+  z-index:5;
+}
+
+.hero-dots span{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:rgba(255,255,255,.45);
+  transition:.3s;
+}
+
+.hero-dots span.active{
+  width:22px;
+  border-radius:10px;
+  background:#fff;
+}
 
 </style>
 </head>
@@ -320,6 +351,7 @@ body{
       <small>Easy • Active • Service</small>
     </div>
   </div>
+  <div class="hero-dots"></div>
 </div>
 
 <div class="container mt-3" id="layanan">
@@ -521,13 +553,78 @@ window.closeSerena = function(){
 
 
 // ===== SLIDER =====
-const slides=document.querySelectorAll('.hero-slide');
-let i=0;
-setInterval(()=>{
+// ===== iOS HERO SLIDER =====
+const slider = document.querySelector('.hero-slider');
+const slides = document.querySelectorAll('.hero-slide');
+const dotsWrap = document.querySelector('.hero-dots');
+
+let index = 0;
+let timer = null;
+let startX = 0;
+let isTouch = false;
+
+// dots
+slides.forEach((_,i)=>{
+  const d=document.createElement('span');
+  if(i===0) d.classList.add('active');
+  d.onclick=()=>goSlide(i);
+  dotsWrap.appendChild(d);
+});
+
+function goSlide(i){
   slides.forEach(s=>s.classList.remove('active'));
-  i=(i+1)%slides.length;
-  slides[i].classList.add('active');
-},4500);
+  dotsWrap.querySelectorAll('span').forEach(d=>d.classList.remove('active'));
+  index=i;
+  slides[index].classList.add('active');
+  dotsWrap.children[index].classList.add('active');
+}
+
+function next(){
+  goSlide((index+1)%slides.length);
+}
+
+function start(){
+  stop();
+  timer=setInterval(next,4500);
+}
+
+function stop(){
+  if(timer) clearInterval(timer);
+}
+
+// autoplay
+start();
+
+// pause on touch
+slider.addEventListener('touchstart',e=>{
+  startX=e.touches[0].clientX;
+  isTouch=true;
+  stop();
+});
+
+slider.addEventListener('touchmove',e=>{
+  if(!isTouch) return;
+  let dx=e.touches[0].clientX-startX;
+  slides[index].style.transform=`translateX(${dx*0.3}px) scale(.95)`;
+});
+
+slider.addEventListener('touchend',e=>{
+  if(!isTouch) return;
+  let dx=e.changedTouches[0].clientX-startX;
+
+  slides[index].style.transform='';
+
+  if(dx>60) goSlide((index-1+slides.length)%slides.length);
+  else if(dx<-60) goSlide((index+1)%slides.length);
+
+  isTouch=false;
+  start();
+});
+
+// pause on hover desktop
+slider.addEventListener('mouseenter',stop);
+slider.addEventListener('mouseleave',start);
+
 
 
 // ===== SEARCH =====
