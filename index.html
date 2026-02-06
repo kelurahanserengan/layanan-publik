@@ -240,10 +240,16 @@ body{
   flex-direction:column;
   transform:translateY(100%);
   transition:transform .45s cubic-bezier(.22,1,.36,1);
+    transform:translateY(110%) scale(.96);
+  opacity:0;
+  transition:
+    transform .55s cubic-bezier(.22,1.1,.36,1),
+    opacity .35s ease;
 }
 
 .form-sheet.active{
-  transform:translateY(0);
+  transform:translateY(0) scale(1);
+  opacity:1;
 }
 
 
@@ -264,6 +270,22 @@ body{
   top:0;
   background:#fff;
   z-index:5;
+}
+.form-list a{
+  position:relative;
+  overflow:hidden;
+}
+
+.ripple{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.45);
+  transform:scale(0);
+  animation:ripple .6s linear;
+}
+
+@keyframes ripple{
+  to{transform:scale(4);opacity:0;}
 }
 
 </style>
@@ -551,14 +573,19 @@ modalLink.addEventListener('click', function () {
 // ===== FORM MENU =====
 document.getElementById('openFormMenu').onclick = e=>{
   e.preventDefault();
+
+  // tutup serena jika terbuka
+  serenaSheet.classList.remove('active');
+
   formMenuSheet.classList.add('active');
   sheetBackdrop.classList.add('active');
   document.body.style.overflow = "hidden";
-  formMenuSheet.style.transform = "translateY(0)";
-  serenaSheet.style.transform = "translateY(0)";
+};
 
-formSheet.style.transform = "translateY(0)";
-
+window.closeSerena = function(){
+  serenaSheet.classList.remove('active');
+  sheetBackdrop.classList.remove('active');
+  document.body.style.overflow = "";
 };
 
 window.closeFormMenu = function(){
@@ -633,6 +660,19 @@ else{
     currentSheet = null;
   });
 
+document.querySelectorAll('.form-list a').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const r = document.createElement('span');
+    const rect = this.getBoundingClientRect();
+    const d = Math.max(rect.width, rect.height);
+    r.style.width = r.style.height = d + 'px';
+    r.style.left = e.clientX - rect.left - d/2 + 'px';
+    r.style.top  = e.clientY - rect.top  - d/2 + 'px';
+    r.className = 'ripple';
+    this.appendChild(r);
+    setTimeout(()=>r.remove(),600);
+  });
+});
 
 
 });
