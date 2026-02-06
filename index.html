@@ -107,69 +107,50 @@ body{
   font-size:20px;
   z-index:999;
 }
-.bottom-nav{
+.form-sheet{
   position:fixed;
-  bottom:0;
   left:0;
   right:0;
+  bottom:-100%;
+  height:70vh;
   background:#fff;
+  border-radius:24px 24px 0 0;
+  box-shadow:0 -10px 40px rgba(0,0,0,.25);
+  z-index:9999;
+  transition:.35s ease;
   display:flex;
-  justify-content:space-around;
-  padding:10px 0;
-  box-shadow:0 -4px 15px rgba(0,0,0,.15);
-  z-index:998;
+  flex-direction:column;
 }
-.bottom-nav a{
-  text-decoration:none;
-  color:#666;
-  font-size:12px;
+
+.form-sheet.active{bottom:0}
+
+.form-sheet-header{
+  padding:14px;
   text-align:center;
+  font-weight:600;
+  border-bottom:1px solid #eee;
+  position:relative;
 }
-.bottom-nav a.active{color:#0d6efd;font-weight:600}
-footer{
-  background:#0d6efd;
+
+.form-sheet-close{
+  position:absolute;
+  right:14px;
+  top:10px;
+  background:#dc3545;
   color:#fff;
-  padding:28px;
-  border-radius:28px 28px 0 0;
-}
-  .accordion-button{
-  border-radius:12px;
-  font-size:14px;
-}
-.accordion-item{
   border:none;
-  margin-bottom:8px;
-  border-radius:14px;
-  overflow:hidden;
-}
-.form-nav{
-  position:fixed;
-  bottom:58px;
-  left:0;
-  right:0;
-  background:#ffffff;
-  display:flex;
-  gap:10px;
-  padding:8px 10px;
-  overflow-x:auto;
-  box-shadow:0 -2px 10px rgba(0,0,0,.12);
-  z-index:997;
+  padding:6px 12px;
+  border-radius:12px;
 }
 
-.form-nav a{
-  flex:0 0 auto;
+.form-list a{
+  display:block;
+  padding:14px;
+  margin:10px;
   background:#0d6efd;
   color:#fff;
-  padding:8px 14px;
-  border-radius:20px;
-  font-size:12px;
+  border-radius:14px;
   text-decoration:none;
-  white-space:nowrap;
-  transition:.2s;
-}
-
-.form-nav a:hover{
-  background:#084298;
 }
 
 </style>
@@ -328,9 +309,11 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
 <a href="#home" class="active">🏠<br>Home</a>
 <a href="#profil">🌟<br>SERENA</a>
 <a href="#layanan">📄<br>Layanan</a>
+<a href="#" id="openFormMenu">🧾<br>Formulir</a>
 <a href="#lokasi">📍<br>Lokasi</a>
 <a href="#kontak">☎️<br>Kontak</a>
 </div>
+
   
 <!-- MODAL -->
 <div class="modal fade" id="layananModal" tabindex="-1">
@@ -436,8 +419,72 @@ modalLink.addEventListener('click', function () {
 
   document.getElementById('formFrame').src = CURRENT_LINK;
 });
+
+  // buka menu formulir
+openFormMenu.onclick = e=>{
+  e.preventDefault();
+  formMenuSheet.classList.add('active');
+};
+
+// tutup menu
+function closeFormMenu(){
+  formMenuSheet.classList.remove('active');
+}
+
+// klik item form
+document.querySelectorAll('.form-list a').forEach(a=>{
+  a.onclick = e=>{
+    e.preventDefault();
+    sheetTitle.innerText = a.dataset.title;
+    sheetFrame.src = a.dataset.link;
+    formMenuSheet.classList.remove('active');
+    formSheet.classList.add('active');
+  };
+});
+
+// tutup iframe
+function closeFormSheet(){
+  formSheet.classList.remove('active');
+  sheetFrame.src="";
+}
+
 </script>
 
+<div class="form-sheet" id="formMenuSheet">
+  <div class="form-sheet-header">
+    📑 Daftar Formulir
+    <button class="form-sheet-close" onclick="closeFormMenu()">Tutup</button>
+  </div>
+
+  <div class="p-2 form-list">
+    <a href="#" data-title="F1.01 Biodata"
+       data-link="https://script.google.com/macros/s/AKfycbwenCtGEOFMFxthJMa3lLC6j2GzRbPRis6b2DqdQF5NqpCA96YvJjxdFOzOnWwAO45ltQ/exec">
+       🧾 F1.01 Formulir Biodata
+    </a>
+
+    <a href="#" data-title="F1.02 Peristiwa"
+       data-link="https://script.google.com/macros/s/AKfycbyFn1nsqbNLvYJ5qOpcj1ApyDlECoQZJlvzHMng_yWlb8T8M07tgssOqvS8HF-_xHcC/exec">
+       📑 F1.02 Formulir Peristiwa
+    </a>
+
+    <a href="#" data-title="F1.03 Pindah"
+       data-link="https://script.google.com/macros/s/AKfycbx6nGb4E_D9pDGiOmSkxpDNEiER8lxwdZRJcAcBSVhoNKZ9ZWmWHRNav6r96VkNLKL6/exec">
+       🚚 F1.03 Formulir Pindah
+    </a>
+
+    <a href="#" data-title="F1.06 Perubahan"
+       data-link="https://script.google.com/macros/s/AKfycbznGWT_u9p7y784oS2WdXwEAuyDQmeCXwioMOIlaS31n4CMKxrRNHYVOLodNkO09kfQ/exec">
+       ✏️ F1.06 Perubahan Data
+    </a>
+  </div>
+</div>
+<div class="form-sheet" id="formSheet">
+  <div class="form-sheet-header">
+    <span id="sheetTitle">Form</span>
+    <button class="form-sheet-close" onclick="closeFormSheet()">Tutup</button>
+  </div>
+  <iframe id="sheetFrame"></iframe>
+</div>
 
 </body>
 </html>
