@@ -334,32 +334,6 @@ body{
   border-radius:10px;
   background:#fff;
 }
-.search-wrap{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:#f1f5f9;
-  border-radius:16px;
-  padding:12px 14px;
-  box-shadow:inset 0 2px 6px rgba(0,0,0,.08);
-}
-
-.search-wrap i{
-  font-size:18px;
-  color:#64748b;
-}
-
-.search-wrap input{
-  border:none;
-  outline:none;
-  background:transparent;
-  width:100%;
-  font-size:14px;
-}
-.search-wrap:focus-within{
-  background:#fff;
-  box-shadow:0 0 0 2px rgba(13,110,253,.2);
-}
 
 </style>
 </head>
@@ -383,15 +357,7 @@ body{
   </div>
   <div class="hero-dots"></div>
 </div>
-  
-<div class="card-app mb-3 search-box" data-aos="fade-up">
-  <div class="search-wrap">
-    <i class="bi bi-search"></i>
-    <input type="text" id="searchInput" placeholder="Cari layanan SERENA...">
-  </div>
-</div>
 
-  
 <div class="container mt-3" id="layanan">
 
 <div class="card-app mb-3" data-aos="fade-up">
@@ -425,12 +391,14 @@ Kecepatan layanan meningkat, kepuasan warga naik, dan budaya kerja aparatur maki
 
 </div>
 </div>
-
-  <div class="pengumuman mb-3" data-aos="fade-up">
+<div class="pengumuman mb-3" data-aos="fade-up">
 📢 <b>Pengumuman</b><br>
 Pastikan berkas lengkap sebelum mengajukan permohonan layanan.
+</div>  
+<div class="card-app mb-3 search-box" data-aos="fade-up">
+<input type="text" id="searchInput" class="form-control" placeholder="🔍 Cari layanan...">
 </div>
-  
+
 <div class="card-app mb-3" data-aos="fade-up">
 <h6>📋 Daftar Layanan</h6>
 <div class="row g-3 mt-2" id="layananList">
