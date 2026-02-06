@@ -249,6 +249,41 @@ body{
   background:#f8fafc;
   border-top:1px solid #e5e7eb;
 }
+.form-sheet{
+  position:fixed;
+  inset:0;
+  top:100%;
+  background:#fff;
+  border-radius:0;
+  z-index:1300;
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+  display:flex;
+  flex-direction:column;
+  transform:translateY(0);
+}
+
+.form-sheet.active{
+  top:0;
+}
+
+.sheet-handle{
+  width:44px;
+  height:5px;
+  background:#d1d5db;
+  border-radius:6px;
+  margin:10px auto 6px;
+}
+
+.form-sheet-header{
+  padding:14px 16px;
+  text-align:center;
+  font-weight:600;
+  border-bottom:1px solid #eee;
+  position:sticky;
+  top:0;
+  background:#fff;
+  z-index:5;
+}
 
 </style>
 </head>
@@ -517,6 +552,9 @@ document.getElementById('openFormMenu').onclick = e=>{
   formMenuSheet.classList.add('active');
   sheetBackdrop.classList.add('active');
   document.body.style.overflow = "hidden";
+  formMenuSheet.style.transform = "translateY(0)";
+formSheet.style.transform = "translateY(0)";
+
 };
 
 window.closeFormMenu = function(){
@@ -552,11 +590,49 @@ sheetBackdrop.onclick = ()=>{
 
 });
 </script>
+<script>
+let startY = 0;
+let currentSheet = null;
+
+document.querySelectorAll('.form-sheet').forEach(sheet=>{
+
+  sheet.addEventListener('touchstart', e=>{
+    startY = e.touches[0].clientY;
+    currentSheet = sheet;
+    sheet.style.transition = 'none';
+  });
+
+  sheet.addEventListener('touchmove', e=>{
+    if(!currentSheet) return;
+    let y = e.touches[0].clientY - startY;
+    if(y > 0){
+      sheet.style.transform = `translateY(${y}px)`;
+    }
+  });
+
+  sheet.addEventListener('touchend', e=>{
+    if(!currentSheet) return;
+    let moved = e.changedTouches[0].clientY - startY;
+    currentSheet.style.transition = 'transform .45s cubic-bezier(.22,1,.36,1)';
+
+    if(moved > 120){
+      closeFormMenu();
+      closeFormSheet();
+    }else{
+      currentSheet.style.transform = `translateY(0)`;
+    }
+
+    currentSheet = null;
+  });
+
+});
+</script>
 
 
 <div class="sheet-backdrop" id="sheetBackdrop"></div>
 
 <div class="form-sheet" id="formMenuSheet">
+  <div class="sheet-handle"></div>
   <div class="form-sheet-header">
     📑 Daftar Formulir
     <button class="form-sheet-close" onclick="closeFormMenu()">Tutup</button>
@@ -585,6 +661,7 @@ sheetBackdrop.onclick = ()=>{
   </div>
 </div>
 <div class="form-sheet" id="formSheet">
+  <div class="sheet-handle"></div>
   <div class="form-sheet-header">
     <span id="sheetTitle">Form</span>
     <button class="form-sheet-close" onclick="closeFormSheet()">Tutup</button>
