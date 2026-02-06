@@ -419,11 +419,9 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
 
 <div class="bottom-nav">
 <a href="#home" class="active">🏠<br>Home</a>
-<a href="#profil">🌟<br>SERENA</a>
+<a href="#" id="openSerenaMenu">🌟<br>SERENA</a>
 <a href="#layanan">📄<br>Layanan</a>
 <a href="#" id="openFormMenu">🧾<br>Formulir</a>
-<a href="#lokasi">📍<br>Lokasi</a>
-<a href="#kontak">☎️<br>Kontak</a>
 </div>
 
   
@@ -553,6 +551,8 @@ document.getElementById('openFormMenu').onclick = e=>{
   sheetBackdrop.classList.add('active');
   document.body.style.overflow = "hidden";
   formMenuSheet.style.transform = "translateY(0)";
+  serenaSheet.style.transform = "translateY(0)";
+
 formSheet.style.transform = "translateY(0)";
 
 };
@@ -586,7 +586,9 @@ window.closeFormSheet = function(){
 sheetBackdrop.onclick = ()=>{
   closeFormMenu();
   closeFormSheet();
+  closeSerena();
 };
+
 
 });
 </script>
@@ -624,6 +626,22 @@ document.querySelectorAll('.form-sheet').forEach(sheet=>{
 
     currentSheet = null;
   });
+
+  const serenaSheet = document.getElementById('serenaSheet');
+
+document.getElementById('openSerenaMenu').onclick = e=>{
+  e.preventDefault();
+  serenaSheet.classList.add('active');
+  sheetBackdrop.classList.add('active');
+  document.body.style.overflow = "hidden";
+};
+
+function closeSerena(){
+  serenaSheet.classList.remove('active');
+  sheetBackdrop.classList.remove('active');
+  document.body.style.overflow = "";
+}
+
 
 });
 </script>
@@ -686,5 +704,114 @@ document.querySelectorAll('.form-sheet').forEach(sheet=>{
   </a>
 </div>
 
+<div class="form-sheet" id="serenaSheet">
+  <div class="sheet-handle"></div>
+
+  <div class="form-sheet-header">
+    🌟 Profil SERENA
+    <button class="form-sheet-close" onclick="closeSerena()">Tutup</button>
+  </div>
+
+  <div class="p-3" style="overflow:auto">
+
+    <div class="accordion" id="accordionSerena">
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#s1">
+            📌 Pendahuluan
+          </button>
+        </h2>
+        <div id="s1" class="accordion-collapse collapse show">
+          <div class="accordion-body">
+            Inovasi “SERENA” merupakan inovasi tata kelola pemerintahan daerah dan pelayanan publik
+            yang dikembangkan oleh Kelurahan Serengan untuk mewujudkan pelayanan yang mudah, aktif,
+            dan responsif berbasis teknologi.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s2">
+            ⚖️ Dasar Hukum
+          </button>
+        </h2>
+        <div id="s2" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <ul>
+              <li>UU No 25 Tahun 2009 tentang Pelayanan Publik</li>
+              <li>UU No 23 Tahun 2014 tentang Pemerintahan Daerah</li>
+              <li>PP No 38 Tahun 2017 tentang Inovasi Daerah</li>
+              <li>Permendagri No 104 Tahun 2018</li>
+              <li>Perwali Surakarta tentang Inovasi Daerah</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s3">
+            🎯 Tujuan
+          </button>
+        </h2>
+        <div id="s3" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <ul>
+              <li>Meningkatkan tata kelola efektif dan transparan.</li>
+              <li>Pelayanan mudah diakses masyarakat.</li>
+              <li>Budaya kerja aktif dan inovatif.</li>
+              <li>Integrasi inovasi pelayanan.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s4">
+            👥 Sasaran
+          </button>
+        </h2>
+        <div id="s4" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            Masyarakat Serengan, aparatur kelurahan, dan lembaga kemasyarakatan sebagai mitra inovasi.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s5">
+            🧭 Mekanisme
+          </button>
+        </h2>
+        <div id="s5" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            Pembentukan tim inovasi, integrasi sistem digital, monitoring berkala, dan evaluasi kinerja.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s6">
+            📊 Indikator Keberhasilan
+          </button>
+        </h2>
+        <div id="s6" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            Kecepatan layanan meningkat, kepuasan warga naik, dan sistem digital aktif berjalan.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+  
 </body>
 </html>
