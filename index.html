@@ -287,6 +287,19 @@ body{
 @keyframes ripple{
   to{transform:scale(4);opacity:0;}
 }
+.hero-wrap{
+  max-width:1200px;
+  margin:14px auto 0;
+  padding:0 14px;
+}
+
+.hero-slider{
+  width:100%;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 14px 30px rgba(0,0,0,.18);
+  transition:transform .35s ease, box-shadow .35s ease;
+}
 
 </style>
 </head>
@@ -298,7 +311,8 @@ body{
 </div>
 
 
-<div class="hero-slider" id="home">
+<div class="hero-wrap">
+  <div class="hero-slider" id="home">
   <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1601582589907-f92af5ed9db8')"></div>
   <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1509099836639-18ba1795216d')"></div>
   <div class="hero-overlay"></div>
@@ -307,7 +321,7 @@ body{
 <small>Easy • Active • Service</small>
   </div>
 </div>
-
+</div>
 <div class="container mt-3" id="layanan">
 
 <div class="pengumuman mb-3" data-aos="fade-up">
