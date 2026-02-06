@@ -108,24 +108,6 @@ body{
   font-size:20px;
   z-index:999;
 }
-.form-sheet{
-  position:fixed;
-  inset:0;
-  top:100%;
-  background:#fff;
-  border-radius:0;
-  box-shadow:0 -10px 40px rgba(0,0,0,.25);
-  z-index:1300;
-  transition:.35s ease;
-  display:flex;
-  flex-direction:column;
-}
-
-
-
-.form-sheet.active{
-  top:0;
-}
 
 
 .form-sheet-header{
@@ -479,20 +461,19 @@ const sheetFrame = document.getElementById('sheetFrame');
 const sheetTitle = document.getElementById('sheetTitle');
 const sheetBackdrop = document.getElementById('sheetBackdrop');
 const serenaSheet = document.getElementById('serenaSheet');
-const sheetBackdrop = document.getElementById('sheetBackdrop');
 
-document.getElementById('openSerenaMenu').onclick = e=>{
-  e.preventDefault();
-  serenaSheet.classList.add('active');
-  sheetBackdrop.classList.add('active');
-  document.body.style.overflow = "hidden";
-};
 
-window.closeSerena = function(){
-  serenaSheet.classList.remove('active');
-  sheetBackdrop.classList.remove('active');
-  document.body.style.overflow = "";
-};
+const openSerenaMenu = document.getElementById('openSerenaMenu');
+if(openSerenaMenu){
+  openSerenaMenu.onclick = e=>{
+    e.preventDefault();
+    serenaSheet.classList.add('active');
+    sheetBackdrop.classList.add('active');
+    document.body.style.overflow = "hidden";
+    serenaSheet.style.transform = "translateY(0)";
+  };
+}
+
   
 
 
@@ -633,10 +614,12 @@ document.querySelectorAll('.form-sheet').forEach(sheet=>{
     let moved = e.changedTouches[0].clientY - startY;
     currentSheet.style.transition = 'transform .45s cubic-bezier(.22,1,.36,1)';
 
-    if(moved > 120){
-      closeFormMenu();
-      closeFormSheet();
-    }else{
+if(moved > 120){
+  closeFormMenu();
+  closeFormSheet();
+  closeSerena();
+}
+else{
       currentSheet.style.transform = `translateY(0)`;
     }
 
