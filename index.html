@@ -110,12 +110,10 @@ body{
 }
 .form-sheet{
   position:fixed;
-  left:0;
-  right:0;
-  bottom:-100%;
-  height:70vh;
+  inset:0;
+  top:100%;
   background:#fff;
-  border-radius:24px 24px 0 0;
+  border-radius:0;
   box-shadow:0 -10px 40px rgba(0,0,0,.25);
   z-index:1300;
   transition:.35s ease;
@@ -124,15 +122,23 @@ body{
 }
 
 
-.form-sheet.active{bottom:0}
+
+.form-sheet.active{
+  top:0;
+}
+
 
 .form-sheet-header{
-  padding:14px;
+  padding:14px 16px;
   text-align:center;
   font-weight:600;
   border-bottom:1px solid #eee;
-  position:relative;
+  position:sticky;
+  top:0;
+  background:#fff;
+  z-index:5;
 }
+
 
 .form-sheet-close{
   position:absolute;
@@ -203,54 +209,7 @@ body{
   border:none;
   border-radius:0 0 24px 24px;
 }
-.serena-footer{
-  background:#f8fafc;
-  padding:18px 16px 90px;
-  border-top:1px solid #e5e7eb;
-}
 
-.footer-wrap{
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:5px;
-  flex-wrap:wrap;
-}
-
-.footer-left h4{
-  margin:0;
-  font-weight:700;
-  color:#1f2933;
-}
-
-.footer-left p{
-  margin:4px 0 0;
-  font-size:13px;
-  color:#6b7280;
-}
-
-.footer-right{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.footer-right a{
-  text-decoration:none;
-  font-size:13px;
-  color:#2563eb;
-  background:#eef4ff;
-  padding:8px 12px;
-  border-radius:10px;
-  transition:.25s;
-}
-
-.footer-right a:hover{
-  background:#2563eb;
-  color:#fff;
-}
 .floating-social{
   position:fixed;
   right:16px;
@@ -282,6 +241,14 @@ body{
 .floating-social .ig{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);}
 .floating-social .mail{background:#2563eb;}
 .floating-social .tel{background:#0ea5e9;}
+.serena-footer-mini{
+  text-align:center;
+  font-size:12px;
+  color:#6b7280;
+  padding:14px 10px 90px;
+  background:#f8fafc;
+  border-top:1px solid #e5e7eb;
+}
 
 </style>
 </head>
@@ -409,16 +376,12 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
 </div>
 
 </div>
-
-<footer class="serena-footer">
-  <div class="footer-wrap">
-    <div class="footer-left">
-      <h4>SERENA</h4>
-      <p>Kelurahan Serengan Kota Surakarta</p>
-    </div>
+  
+<footer class="serena-footer-mini">
+  ©2025 SERENA v.1.0 Kelurahan Serengan
 </footer>
 
- 
+
 <div class="bottom-nav">
 <a href="#home" class="active">🏠<br>Home</a>
 <a href="#profil">🌟<br>SERENA</a>
