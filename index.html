@@ -234,19 +234,18 @@ body{
 .form-sheet{
   position:fixed;
   inset:0;
-  top:100%;
   background:#fff;
-  border-radius:0;
   z-index:1300;
-  transition:transform .45s cubic-bezier(.22,1,.36,1);
   display:flex;
   flex-direction:column;
-  transform:translateY(0);
+  transform:translateY(100%);
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
 }
 
 .form-sheet.active{
-  top:0;
+  transform:translateY(0);
 }
+
 
 .sheet-handle{
   width:44px;
@@ -401,7 +400,9 @@ width="100%" height="260" style="border-radius:16px;border:0"></iframe>
 
 <div class="bottom-nav">
 <a href="#home" class="active">🏠<br>Home</a>
-<a href="#" id="openSerenaMenu">🌟<br>SERENA</a>
+<a href="#" id="openSerenaMenu" class="nav-link">
+  🌟 SERENA
+</a>
 <a href="#layanan">📄<br>Layanan</a>
 <a href="#" id="openFormMenu">🧾<br>Formulir</a>
 </div>
@@ -467,12 +468,18 @@ const openSerenaMenu = document.getElementById('openSerenaMenu');
 if(openSerenaMenu){
   openSerenaMenu.onclick = e=>{
     e.preventDefault();
-    serenaSheet.classList.add('active');
-    sheetBackdrop.classList.add('active');
-    document.body.style.overflow = "hidden";
-    serenaSheet.style.transform = "translateY(0)";
+serenaSheet.classList.add('active');
+sheetBackdrop.classList.add('active');
+document.body.style.overflow = "hidden";
+
   };
 }
+window.closeSerena = function(){
+  serenaSheet.classList.remove('active');
+  sheetBackdrop.classList.remove('active');
+  serenaSheet.style.transform = "";
+  document.body.style.overflow = "";
+};
 
   
 
