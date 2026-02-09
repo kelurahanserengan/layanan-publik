@@ -539,14 +539,98 @@ renderJam();
 setInterval(renderJam,60000);
 </script>
 
+<div class="card-app mb-3 lokasi-card" data-aos="fade-up" id="lokasi">
+  <h6>📍 Lokasi Kantor</h6>
 
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.910806811021!2d110.81335162588387!3d-7.584687274938732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a16722da4102b%3A0x93283f70f0a9bcaf!2sKantor%20Lurah%20Serengan%2C%20Jl.%20Sadewa%20No.39%2C%20Serengan%2C%20Surakarta%20City%2C%20Central%20Java%2057155!5e0!3m2!1sen!2sid!4v1770637485239!5m2!1sen!2sid"
+    width="100%" height="260" style="border-radius:16px;border:0">
+  </iframe>
 
-
-  <div class="card-app mb-3" data-aos="fade-up" id="lokasi">
-    <h6>📍 Lokasi Kantor</h6>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.910806811021!2d110.81335162588387!3d-7.584687274938732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a16722da4102b%3A0x93283f70f0a9bcaf!2sKantor%20Lurah%2C%20Jl.%20Sadewa%20No.39%2C%20Serengan%2C%20Surakarta%20City%2C%20Central%20Java%2057155!5e0!3m2!1sen!2sid!4v1770637485239!5m2!1sen!2sid" 
-      width="100% height="300" style="border-radius:16px;border:0"></iframe>
+  <div class="lokasi-info">
+    <span id="jarakText">📏 Menghitung jarak...</span>
+    <span id="waktuText">⏱ Menghitung waktu...</span>
   </div>
+
+  <a id="btnMaps" target="_blank" class="btn-maps">
+    🧭 Navigasi ke Lokasi
+  </a>
+</div>
+<style>
+.lokasi-card{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.lokasi-info{
+  display:flex;
+  justify-content:space-between;
+  margin:10px 0;
+  font-size:14px;
+  font-weight:600;
+}
+
+.btn-maps{
+  display:block;
+  text-align:center;
+  background:linear-gradient(135deg,#3b82f6,#22c55e);
+  color:#fff;
+  padding:10px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:700;
+}
+</style>
+<script>
+const kantorLat = -7.584687274938732;
+const kantorLng = 110.81335162588387;
+
+function hitungJarak(lat1, lon1, lat2, lon2){
+  const R = 6371;
+  const dLat = (lat2-lat1) * Math.PI/180;
+  const dLon = (lon2-lon1) * Math.PI/180;
+  const a =
+    Math.sin(dLat/2)*Math.sin(dLat/2) +
+    Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180) *
+    Math.sin(dLon/2)*Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
+function initLokasi(){
+  if(!navigator.geolocation){
+    document.getElementById("jarakText").innerText="GPS tidak didukung";
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const userLat = pos.coords.latitude;
+    const userLng = pos.coords.longitude;
+
+    const jarak = hitungJarak(userLat,userLng,kantorLat,kantorLng);
+
+    const kecepatan = 40; // km/jam rata2 motor
+    const waktu = (jarak / kecepatan) * 60;
+
+    document.getElementById("jarakText").innerText =
+      "📏 Jarak: " + jarak.toFixed(2) + " km";
+
+    document.getElementById("waktuText").innerText =
+      "⏱ Estimasi: " + Math.ceil(waktu) + " menit";
+
+    document.getElementById("btnMaps").href =
+      `https://www.google.com/maps/dir/${userLat},${userLng}/${kantorLat},${kantorLng}`;
+  }, err=>{
+    document.getElementById("jarakText").innerText="📏 Lokasi ditolak";
+    document.getElementById("waktuText").innerText="⏱ Aktifkan GPS";
+  });
+}
+
+initLokasi();
+</script>
+
 
 </div>
   
