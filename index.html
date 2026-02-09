@@ -437,14 +437,144 @@ body{
 <!-- ================= INFO ================= -->
 <div class="container mt-3" id="info">
 
-  <div class="card-app mb-3" data-aos="fade-up">
-    <h6>⏰ Jam Layanan</h6>
-    <ul class="mb-0">
-      <li>Senin : 07.30 – 16.30 WIB</li>
-      <li>Jumat : 07.30 – 14.30 WIB</li>
-      <li>Sabtu/Minggu : Libur</li>
-    </ul>
+<div class="card-app mb-3 jam-kerja" data-aos="fade-up">
+  <h6>⏰ Jam Layanan</h6>
+
+  <div class="now-time" id="nowTime"></div>
+
+  <div id="statusBox" class="status-box">
+    <span id="statusDot"></span>
+    <span id="statusText">Memuat status...</span>
   </div>
+
+  <div id="nextOpen" class="next-open"></div>
+
+  <ul class="mb-0 mt-2">
+    <li>Senin – Kamis : 07.30 – 16.30 WIB</li>
+    <li>Jumat : 07.30 – 14.30 WIB</li>
+    <li>Sabtu / Minggu : Libur</li>
+  </ul>
+</div>
+
+<style>
+.jam-kerja{
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.now-time{
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.status-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  border-radius:14px;
+  font-weight:600;
+  margin:8px 0;
+}
+
+.status-open{
+  background:#e9fbf1;
+  color:#0f8a4c;
+}
+
+.status-close{
+  background:#fdecec;
+  color:#c62828;
+}
+
+#statusDot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  animation:pulse 1.4s infinite;
+}
+
+.dot-open{background:#28c76f;}
+.dot-close{background:#ea5455;}
+
+.next-open{
+  font-size:13px;
+  opacity:.85;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.4);opacity:.6}
+  100%{transform:scale(1);opacity:1}
+}
+</style>
+
+<script>
+const hariNama = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+
+function formatJam(n){ return n.toString().padStart(2,"0"); }
+
+function cekJamKerja(){
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const second = now.getSeconds();
+  const timeNow = hour * 60 + minute;
+
+  document.getElementById("nowTime").innerHTML =
+    `📅 ${hariNama[day]}, ${formatJam(hour)}:${formatJam(minute)}:${formatJam(second)} WIB`;
+
+  let openTime = null;
+  let closeTime = null;
+
+  if(day >= 1 && day <= 4){
+    openTime = 7 * 60 + 30;
+    closeTime = 16 * 60 + 30;
+  }
+
+  if(day === 5){
+    openTime = 7 * 60 + 30;
+    closeTime = 14 * 60 + 30;
+  }
+
+  const statusBox = document.getElementById("statusBox");
+  const statusText = document.getElementById("statusText");
+  const statusDot = document.getElementById("statusDot");
+  const nextOpen = document.getElementById("nextOpen");
+
+  let buka = false;
+
+  if(openTime !== null && timeNow >= openTime && timeNow <= closeTime){
+    buka = true;
+  }
+
+  if(buka){
+    statusBox.className = "status-box status-open";
+    statusDot.className = "dot-open";
+    statusText.innerHTML = "🟢 Kantor Sedang Buka";
+    nextOpen.innerHTML = "";
+  }else{
+    statusBox.className = "status-box status-close";
+    statusDot.className = "dot-close";
+    statusText.innerHTML = "🔴 Kantor Sedang Tutup";
+
+    let info = "Besok pukul 07.30 WIB";
+
+    if(day === 5) info = "Senin pukul 07.30 WIB";
+    if(day === 6) info = "Senin pukul 07.30 WIB";
+    if(day === 0) info = "Senin pukul 07.30 WIB";
+
+    nextOpen.innerHTML = "📢 Buka lagi: " + info;
+  }
+}
+
+cekJamKerja();
+setInterval(cekJamKerja, 1000);
+</script>
+
 
   <div class="card-app mb-3" data-aos="fade-up" id="lokasi">
     <h6>📍 Lokasi Kantor</h6>
