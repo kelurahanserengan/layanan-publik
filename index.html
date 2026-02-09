@@ -437,121 +437,106 @@ body{
 <!-- ================= INFO ================= -->
 <div class="container mt-3" id="info">
 
-  <div class="card-app mb-3 jam-kerja" data-aos="fade-up">
+<div class="card-app mb-3 jam-kerja" data-aos="fade-up">
   <h6>⏰ Jam Layanan</h6>
 
-  <ul class="mb-0 mt-2">
-    <li>Senin – Kamis : 07.30 – 16.30 WIB</li>
-    <li>Jumat : 07.30 – 14.30 WIB</li>
-    <li>Sabtu / Minggu : Libur</li>
-  </ul>
-
-      <div id="statusBox" class="status-box">
-    <span id="statusDot"></span>
-    <span id="statusText">Memuat status...</span>
-  </div>
+  <table class="table-jam">
+    <thead>
+      <tr>
+        <th>Hari</th>
+        <th>Jam</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="jamTable"></tbody>
+  </table>
 </div>
 
 <style>
-.jam-kerja{
-  background:#fff;
-  border-radius:18px;
-  padding:18px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
+.table-jam{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+  font-size:14px;
 }
 
-.now-time{
+.table-jam th{
+  text-align:left;
+  padding:8px;
+  background:#f3f6fb;
+  border-radius:6px;
+}
+
+.table-jam td{
+  padding:8px;
+  border-bottom:1px solid #eef1f6;
+}
+
+.today{
+  background:#eef6ff;
   font-weight:600;
-  margin-bottom:6px;
 }
 
-.status-box{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 14px;
-  border-radius:14px;
-  font-weight:600;
-  margin:8px 0;
-}
-
-.status-open{
+.badge-open{
   background:#e9fbf1;
   color:#0f8a4c;
+  padding:3px 8px;
+  border-radius:10px;
+  font-size:12px;
 }
 
-.status-close{
+.badge-close{
   background:#fdecec;
   color:#c62828;
-}
-
-#statusDot{
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  animation:pulse 1.4s infinite;
-}
-
-.dot-open{background:#28c76f;}
-.dot-close{background:#ea5455;}
-
-.next-open{
-  font-size:13px;
-  opacity:.85;
-}
-
-@keyframes pulse{
-  0%{transform:scale(1);opacity:1}
-  50%{transform:scale(1.4);opacity:.6}
-  100%{transform:scale(1);opacity:1}
+  padding:3px 8px;
+  border-radius:10px;
+  font-size:12px;
 }
 </style>
-<script>
-function cekJamKerja(){
-  const now = new Date();
-  const day = now.getDay();
-  const hour = now.getHours();
-  const minute = now.getMinutes();
-  const timeNow = hour * 60 + minute;
 
-  let openTime = null;
-  let closeTime = null;
+ <script>
+const jamData = [
+  {hari:"Senin", open:450, close:990, label:"07.30 - 16.30"},
+  {hari:"Selasa", open:450, close:990, label:"07.30 - 16.30"},
+  {hari:"Rabu", open:450, close:990, label:"07.30 - 16.30"},
+  {hari:"Kamis", open:450, close:990, label:"07.30 - 16.30"},
+  {hari:"Jumat", open:450, close:870, label:"07.30 - 14.30"},
+  {hari:"Sabtu", open:null, close:null, label:"Libur"},
+  {hari:"Minggu", open:null, close:null, label:"Libur"},
+];
 
-  // Senin - Kamis
-  if(day >= 1 && day <= 4){
-    openTime = 7 * 60 + 30;
-    closeTime = 16 * 60 + 30;
-  }
+function renderJam(){
+  const now=new Date();
+  const d=now.getDay();
+  const nowMin=now.getHours()*60+now.getMinutes();
 
-  // Jumat
-  if(day === 5){
-    openTime = 7 * 60 + 30;
-    closeTime = 14 * 60 + 30;
-  }
+  const mapDay=[6,0,1,2,3,4,5]; // mapping senin=1
 
-  const statusBox = document.getElementById("statusBox");
-  const statusText = document.getElementById("statusText");
-  const statusDot = document.getElementById("statusDot");
+  let html="";
 
-  if(!statusBox) return;
+  jamData.forEach((j,i)=>{
+    let realIndex=mapDay.indexOf(i);
+    let isToday = (i === (d===0?6:d-1));
+    let buka = j.open!==null && nowMin>=j.open && nowMin<=j.close && isToday;
 
-  let buka = openTime !== null && timeNow >= openTime && timeNow <= closeTime;
+    html += `
+      <tr class="${isToday?'today':''}">
+        <td>${j.hari}</td>
+        <td>${j.label}</td>
+        <td>
+          ${isToday
+            ? (buka?'<span class="badge-open">Buka</span>':'<span class="badge-close">Tutup</span>')
+            : '-'}
+        </td>
+      </tr>
+    `;
+  });
 
-  if(buka){
-    statusBox.className = "status-box status-open";
-    statusDot.className = "dot-open";
-    statusText.innerHTML = "🟢 Kantor Sedang Buka";
-  }else{
-    statusBox.className = "status-box status-close";
-    statusDot.className = "dot-close";
-    statusText.innerHTML = "🔴 Kantor Sedang Tutup";
-  }
+  document.getElementById("jamTable").innerHTML=html;
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-  cekJamKerja();
-  setInterval(cekJamKerja, 30000);
-});
+renderJam();
+setInterval(renderJam,60000);
 </script>
 
 
