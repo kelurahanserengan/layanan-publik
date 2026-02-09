@@ -620,8 +620,8 @@ setInterval(renderJam,60000);
 </style>
   
 <script>
-const kantorLat = -7.584202;
-const kantorLng = 110.81671;
+const kantorLat = -7.5842020;
+const kantorLng = 110.8167100;
 
 let currentMode = "driving";
 let speed = 40;
@@ -652,7 +652,12 @@ function setMode(mode,label){
 }
 
 function updateInfo(){
-  const jarak = hitungJarak(userLat,userLng,kantorLat,kantorLng);
+  const jarakLurus = hitungJarak(userLat,userLng,kantorLat,kantorLng);
+
+  // faktor koreksi jalan kota
+  const faktorJalan = 1.45;
+  const jarak = jarakLurus * faktorJalan;
+
   const waktu = (jarak / speed) * 60;
 
   document.getElementById("jarakText").innerText =
@@ -664,6 +669,7 @@ function updateInfo(){
   document.getElementById("btnMaps").href =
     `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${kantorLat},${kantorLng}&travelmode=${currentMode}`;
 }
+
 
 function initLokasi(){
   if(!navigator.geolocation){
