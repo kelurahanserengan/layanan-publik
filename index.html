@@ -547,13 +547,6 @@ setInterval(renderJam,60000);
     width="100%" height="260" style="border-radius:16px;border:0">
   </iframe>
 
-  <!-- MODE -->
-  <div class="mode-wrap">
-    <button class="mode-btn active" onclick="setMode('driving','mobil')">🚗 Mobil</button>
-    <button class="mode-btn" onclick="setMode('motor','motor')">🏍 Motor</button>
-    <button class="mode-btn" onclick="setMode('walking','jalan')">🚶 Jalan</button>
-  </div>
-
   <div class="lokasi-info">
     <span id="jarakText">📏 Menghitung jarak...</span>
     <span id="waktuText">⏱ Menghitung waktu...</span>
@@ -625,8 +618,8 @@ setInterval(renderJam,60000);
 </style>
   
 <script>
-const kantorLat = -7.5846873;
-const kantorLng = 110.8133516;
+const kantorLat = -7.5871394;
+const kantorLng = 110.7507102,13;
 
 let currentMode = "driving";
 let speed = 40;
