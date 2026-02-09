@@ -547,6 +547,13 @@ setInterval(renderJam,60000);
     width="100%" height="260" style="border-radius:16px;border:0">
   </iframe>
 
+  <!-- MODE -->
+  <div class="mode-wrap">
+    <button class="mode-btn active" onclick="setMode('driving','mobil')">🚗 Mobil</button>
+    <button class="mode-btn" onclick="setMode('motor','motor')">🏍 Motor</button>
+    <button class="mode-btn" onclick="setMode('walking','jalan')">🚶 Jalan</button>
+  </div>
+
   <div class="lokasi-info">
     <span id="jarakText">📏 Menghitung jarak...</span>
     <span id="waktuText">⏱ Menghitung waktu...</span>
@@ -556,12 +563,28 @@ setInterval(renderJam,60000);
     🧭 Navigasi ke Lokasi
   </a>
 </div>
+
 <style>
-.lokasi-card{
-  background:#fff;
-  border-radius:18px;
-  padding:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
+.mode-wrap{
+  display:flex;
+  gap:6px;
+  margin:10px 0;
+}
+
+.mode-btn{
+  flex:1;
+  border:none;
+  padding:6px;
+  border-radius:10px;
+  background:#eef2f7;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.mode-btn.active{
+  background:linear-gradient(135deg,#3b82f6,#22c55e);
+  color:#fff;
 }
 
 .lokasi-info{
@@ -583,48 +606,66 @@ setInterval(renderJam,60000);
   font-weight:700;
 }
 </style>
+  
 <script>
 const kantorLat = -7.584687274938732;
 const kantorLng = 110.81335162588387;
+
+let currentMode = "driving";
+let speed = 40;
+let userLat = null;
+let userLng = null;
 
 function hitungJarak(lat1, lon1, lat2, lon2){
   const R = 6371;
   const dLat = (lat2-lat1) * Math.PI/180;
   const dLon = (lon2-lon1) * Math.PI/180;
   const a =
-    Math.sin(dLat/2)*Math.sin(dLat/2) +
+    Math.sin(dLat/2)**2 +
     Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180) *
-    Math.sin(dLon/2)*Math.sin(dLon/2);
+    Math.sin(dLon/2)**2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   return R * c;
 }
 
+function setMode(mode,label){
+  document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+
+  if(label==="mobil"){ speed=40; currentMode="driving"; }
+  if(label==="motor"){ speed=50; currentMode="driving"; }
+  if(label==="jalan"){ speed=5; currentMode="walking"; }
+
+  if(userLat) updateInfo();
+}
+
+function updateInfo(){
+  const jarak = hitungJarak(userLat,userLng,kantorLat,kantorLng);
+  const waktu = (jarak / speed) * 60;
+
+  document.getElementById("jarakText").innerText =
+    "📏 Jarak: " + jarak.toFixed(2) + " km";
+
+  document.getElementById("waktuText").innerText =
+    "⏱ Estimasi: " + Math.ceil(waktu) + " menit";
+
+  document.getElementById("btnMaps").href =
+    `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${kantorLat},${kantorLng}&travelmode=${currentMode}`;
+}
+
 function initLokasi(){
   if(!navigator.geolocation){
-    document.getElementById("jarakText").innerText="GPS tidak didukung";
+    jarakText.innerText="GPS tidak didukung";
     return;
   }
 
   navigator.geolocation.getCurrentPosition(pos=>{
-    const userLat = pos.coords.latitude;
-    const userLng = pos.coords.longitude;
-
-    const jarak = hitungJarak(userLat,userLng,kantorLat,kantorLng);
-
-    const kecepatan = 40; // km/jam rata2 motor
-    const waktu = (jarak / kecepatan) * 60;
-
-    document.getElementById("jarakText").innerText =
-      "📏 Jarak: " + jarak.toFixed(2) + " km";
-
-    document.getElementById("waktuText").innerText =
-      "⏱ Estimasi: " + Math.ceil(waktu) + " menit";
-
-    document.getElementById("btnMaps").href =
-      `https://www.google.com/maps/dir/${userLat},${userLng}/${kantorLat},${kantorLng}`;
-  }, err=>{
-    document.getElementById("jarakText").innerText="📏 Lokasi ditolak";
-    document.getElementById("waktuText").innerText="⏱ Aktifkan GPS";
+    userLat = pos.coords.latitude;
+    userLng = pos.coords.longitude;
+    updateInfo();
+  },()=>{
+    jarakText.innerText="📏 Lokasi ditolak";
+    waktuText.innerText="⏱ Aktifkan GPS";
   });
 }
 
