@@ -506,31 +506,24 @@ body{
   100%{transform:scale(1);opacity:1}
 }
 </style>
-
 <script>
-const hariNama = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-
-function formatJam(n){ return n.toString().padStart(2,"0"); }
-
 function cekJamKerja(){
   const now = new Date();
   const day = now.getDay();
   const hour = now.getHours();
   const minute = now.getMinutes();
-  const second = now.getSeconds();
   const timeNow = hour * 60 + minute;
-
-  document.getElementById("nowTime").innerHTML =
-    `📅 ${hariNama[day]}, ${formatJam(hour)}:${formatJam(minute)}:${formatJam(second)} WIB`;
 
   let openTime = null;
   let closeTime = null;
 
+  // Senin - Kamis
   if(day >= 1 && day <= 4){
     openTime = 7 * 60 + 30;
     closeTime = 16 * 60 + 30;
   }
 
+  // Jumat
   if(day === 5){
     openTime = 7 * 60 + 30;
     closeTime = 14 * 60 + 30;
@@ -539,44 +532,35 @@ function cekJamKerja(){
   const statusBox = document.getElementById("statusBox");
   const statusText = document.getElementById("statusText");
   const statusDot = document.getElementById("statusDot");
-  const nextOpen = document.getElementById("nextOpen");
 
-  let buka = false;
+  if(!statusBox) return;
 
-  if(openTime !== null && timeNow >= openTime && timeNow <= closeTime){
-    buka = true;
-  }
+  let buka = openTime !== null && timeNow >= openTime && timeNow <= closeTime;
 
   if(buka){
     statusBox.className = "status-box status-open";
     statusDot.className = "dot-open";
     statusText.innerHTML = "🟢 Kantor Sedang Buka";
-    nextOpen.innerHTML = "";
   }else{
     statusBox.className = "status-box status-close";
     statusDot.className = "dot-close";
     statusText.innerHTML = "🔴 Kantor Sedang Tutup";
-
-    let info = "Besok pukul 07.30 WIB";
-
-    if(day === 5) info = "Senin pukul 07.30 WIB";
-    if(day === 6) info = "Senin pukul 07.30 WIB";
-    if(day === 0) info = "Senin pukul 07.30 WIB";
-
-    nextOpen.innerHTML = "📢 Buka lagi: " + info;
   }
 }
 
-cekJamKerja();
-setInterval(cekJamKerja, 1000);
+document.addEventListener("DOMContentLoaded", function(){
+  cekJamKerja();
+  setInterval(cekJamKerja, 30000);
+});
 </script>
+
 
 
 
   <div class="card-app mb-3" data-aos="fade-up" id="lokasi">
     <h6>📍 Lokasi Kantor</h6>
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.910806811021!2d110.81335162588387!3d-7.584687274938732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a16722da4102b%3A0x93283f70f0a9bcaf!2sKantor%20Lurah%2C%20Jl.%20Sadewa%20No.39%2C%20Serengan%2C%20Surakarta%20City%2C%20Central%20Java%2057155!5e0!3m2!1sen!2sid!4v1770637485239!5m2!1sen!2sid" 
-      width="100% height="260" style="border-radius:16px;border:0"></iframe>
+      width="100% height="300" style="border-radius:16px;border:0"></iframe>
   </div>
 
 </div>
