@@ -409,10 +409,9 @@ body{
           data-link="https://script.google.com/macros/s/AKfycbwF5EunAgB5lDdFr5sdZJvhnhO0ZZAwAKdwdIE9OlR_Bj9LxKDS8ytnX7R9XHP7Qu6X3A/exec">
           <div class="icon">📄</div>
           <small>Surat Keterangan</small>
-        </div>
-      </div><!-- Kartu Layanan -->
+        </div><!-- Kartu Layanan -->
 <div class="col-4 layanan-item">
-  <div class="service-card" data-bs-toggle="modal" data-bs-target="#dukcapilModal">
+  <div class="service-card" id="dukcapilCard">
     <div class="icon">🏛️</div>
     <small>Layanan Dukcapil</small>
   </div>
@@ -427,13 +426,34 @@ body{
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-0">
-        <iframe src="https://dukcapildalamgenggaman.surakarta.go.id/" 
+        <iframe id="dukcapilIframe" src="https://dukcapildalamgenggaman.surakarta.go.id/" 
                 style="width:100%;height:100vh;border:none;"></iframe>
       </div>
     </div>
   </div>
 </div>
 
+<script>
+const dukcapilCard = document.getElementById('dukcapilCard');
+const dukcapilIframe = document.getElementById('dukcapilIframe');
+const dukcapilModal = new bootstrap.Modal(document.getElementById('dukcapilModal'));
+
+dukcapilCard.addEventListener('click', () => {
+  dukcapilModal.show();
+
+  // Cek load iframe setelah 500ms
+  setTimeout(() => {
+    try {
+      // Jika iframe diakses, tidak terjadi error → tampil di modal
+      dukcapilIframe.contentWindow.location.href;
+    } catch (e) {
+      // Jika error, redirect ke tab baru
+      window.open('https://dukcapildalamgenggaman.surakarta.go.id/', '_blank');
+      dukcapilModal.hide();
+    }
+  }, 500);
+});
+</script>
 
 <!--
       <div class="col-4 layanan-item">
