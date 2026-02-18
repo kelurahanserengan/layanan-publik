@@ -411,14 +411,30 @@ body{
           <small>Surat Keterangan</small>
         </div>
       </div>
+<!-- Kartu Layanan -->
 <div class="col-4 layanan-item">
-  <a href="https://dukcapildalamgenggaman.surakarta.go.id/" target="_blank" style="text-decoration:none;color:inherit;">
-    <div class="service-card">
-      <div class="icon">🏛️</div>
-      <small>Layanan Dukcapil</small>
-    </div>
-  </a>
+  <div class="service-card" data-bs-toggle="modal" data-bs-target="#dukcapilModal">
+    <div class="icon">🏛️</div>
+    <small>Layanan Dukcapil</small>
+  </div>
 </div>
+
+<!-- Modal Iframe -->
+<div class="modal fade" id="dukcapilModal" tabindex="-1" aria-labelledby="dukcapilModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" style="max-width:90%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dukcapilModalLabel">Layanan Dukcapil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <iframe src="https://dukcapildalamgenggaman.surakarta.go.id/" 
+                style="width:100%;height:80vh;border:none;"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!--
       <div class="col-4 layanan-item">
         <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
