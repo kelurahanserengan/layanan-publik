@@ -404,14 +404,14 @@ body{
           data-bs-toggle="modal"
           data-bs-target="#layananModal"
           data-title="Surat Keterangan"
-          data-syarat="<li>Pengantar RT/RW</li><li>KTP-el</li><li>KK</li><li>Form</li>"
-          data-alur="<li>Online</li><li>Verifikasi</li><li>Proses</li><li>Selesai</li>"
+          data-syarat="<li>Pengantar RT/RW</li><li>KTP-el</li><li>Kartu Keluarga</li><li>Form</li>"
+          data-alur="<li>Isi Formulir</li><li>Verifikasi</li><li>Proses</li><li>Selesai</li>"
           data-link="https://script.google.com/macros/s/AKfycbwF5EunAgB5lDdFr5sdZJvhnhO0ZZAwAKdwdIE9OlR_Bj9LxKDS8ytnX7R9XHP7Qu6X3A/exec">
           <div class="icon">📄</div>
-          <small>Surat</small>
+          <small>Surat Keterangan</small>
         </div>
       </div>
-
+<!--
       <div class="col-4 layanan-item">
         <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
           data-title="Domisili"
@@ -429,7 +429,7 @@ body{
           <small>Usaha</small>
         </div>
       </div>
-
+-->
     </div>
   </div>
 
@@ -440,7 +440,7 @@ body{
 <div class="container mt-3" id="info">
 
 <div class="card-app mb-3 jam-kerja" data-aos="fade-up">
-  <h6>⏰ Jam Layanan</h6>
+  <h6>⏰ Jam Layanan Bulan Ramadhan</h6>
 
   <table class="table-jam">
     <thead>
@@ -499,26 +499,25 @@ body{
   
  <script>
 const jamData = [
-  {hari:"Senin", open:450, close:990, label:"07.30 - 16.30 WIB"},
-  {hari:"Selasa", open:450, close:990, label:"07.30 - 16.30 WIB"},
-  {hari:"Rabu", open:450, close:990, label:"07.30 - 16.30 WIB"},
-  {hari:"Kamis", open:450, close:990, label:"07.30 - 16.30 WIB"},
-  {hari:"Jumat", open:450, close:870, label:"07.30 - 14.30 WIB"},
+  {hari:"Senin", open:480, close:930, label:"08.00 - 15.30 WIB"},
+  {hari:"Selasa", open:480, close:930, label:"08.00 - 15.30 WIB"},
+  {hari:"Rabu", open:480, close:930, label:"08.00 - 15.30 WIB"},
+  {hari:"Kamis", open:480, close:930, label:"08.00 - 15.30 WIB"},
+  {hari:"Jumat", open:480, close:810, label:"08.00 - 13.30 WIB"},
   {hari:"Sabtu", open:null, close:null, label:"Libur"},
   {hari:"Minggu", open:null, close:null, label:"Libur"},
 ];
 
 function renderJam(){
-  const now=new Date();
-  const d=now.getDay();
-  const nowMin=now.getHours()*60+now.getMinutes();
+  const now = new Date();
+  const d = now.getDay();
+  const nowMin = now.getHours()*60 + now.getMinutes();
 
-  const mapDay=[6,0,1,2,3,4,5]; // mapping senin=1
+  const mapDay = [6,0,1,2,3,4,5]; // mapping Senin=1
 
-  let html="";
+  let html = "";
 
   jamData.forEach((j,i)=>{
-    let realIndex=mapDay.indexOf(i);
     let isToday = (i === (d===0?6:d-1));
     let buka = j.open!==null && nowMin>=j.open && nowMin<=j.close && isToday;
 
@@ -535,12 +534,13 @@ function renderJam(){
     `;
   });
 
-  document.getElementById("jamTable").innerHTML=html;
+  document.getElementById("jamTable").innerHTML = html;
 }
 
 renderJam();
 setInterval(renderJam,60000);
 </script>
+
 
 <div class="card-app mb-3 lokasi-card" data-aos="fade-up" id="lokasi">
   <h6>📍 Lokasi Kantor</h6>
