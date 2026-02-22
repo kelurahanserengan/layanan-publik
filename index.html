@@ -342,8 +342,15 @@ body{
 
 <body>
 
-<div class="app-header">
-📱 SERENA <small style="font-weight:400">– Serengan Easy N’ Active Service</small>
+<div class="app-header d-flex justify-content-between align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
+  <div>
+    📱 SERENA <small style="font-weight:400">– Serengan Easy N’ Active Service</small>
+  </div>
+  <a href="https://script.google.com/macros/s/AKfycbxwmyfy--OGeBn7ZbnyW8gqulYVFNbcRwxHCaomA5LzgVsEl8K5N7t27Ew51ruT4ZYZ/exec" 
+     target="_blank" 
+     style="color: white; font-size: 20px; text-decoration: none;">
+    <i class="bi bi-lock-fill"></i>
+  </a>
 </div>
 
 
@@ -709,7 +716,6 @@ initLokasi();
 </a>
 <a href="#layanan">📄<br>Layanan</a>
 <a href="#" id="openFormMenu">🧾<br>Formulir</a>
-<a href="#" id="openAdminMenu">🔐<br>Admin</a>
 </div>
 
   
@@ -767,28 +773,8 @@ const sheetFrame = document.getElementById('sheetFrame');
 const sheetTitle = document.getElementById('sheetTitle');
 const sheetBackdrop = document.getElementById('sheetBackdrop');
 const serenaSheet = document.getElementById('serenaSheet');
-  // Tambahkan ini di dalam script DOMContentLoaded Anda
-const adminSheet = document.getElementById('adminSheet');
 
-// Fungsi Buka Admin
-document.getElementById('openAdminMenu').onclick = e => {
-  e.preventDefault();
-  adminSheet.classList.add('active');
-  document.getElementById('sheetBackdrop').classList.add('active');
-  document.body.style.overflow = "hidden";
-};
 
-// Fungsi Tutup Admin (Taruh di luar atau gabung dengan fungsi close lainnya)
-window.closeAdminSheet = function() {
-  adminSheet.classList.remove('active');
-  document.getElementById('sheetBackdrop').classList.remove('active');
-  document.body.style.overflow = "";
-};
-
-// Tambahkan closeAdminSheet() ke dalam event klik backdrop agar bisa ditutup saat klik luar
-document.getElementById('sheetBackdrop').addEventListener('click', () => {
-  closeAdminSheet();
-});
 const openSerenaMenu = document.getElementById('openSerenaMenu');
 if(openSerenaMenu){
   openSerenaMenu.onclick = e=>{
@@ -1211,14 +1197,7 @@ document.querySelectorAll('.form-list a').forEach(a=>{
 
   </div>
 </div>
-<div class="form-sheet" id="adminSheet">
-  <div class="sheet-handle"></div>
-  <div class="form-sheet-header">
-    🔐 Login Administrator
-    <button class="form-sheet-close" onclick="closeAdminSheet()">Tutup</button>
-  </div>
-  <iframe src="https://script.google.com/macros/s/AKfycbxwmyfy--OGeBn7ZbnyW8gqulYVFNbcRwxHCaomA5LzgVsEl8K5N7t27Ew51ruT4ZYZ/exec" style="width:100%;height:100%;border:none;"></iframe>
-</div>
+
   
 </body>
 </html>
