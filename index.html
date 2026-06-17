@@ -706,7 +706,11 @@ body{
           <div class="spin"></div>
           <p>Memuat panel admin…</p>
         </div>
-        <iframe id="adminFrame" src="about:blank" title="Panel Admin SERENA" onload="adminFrameReady()"></iframe>
+        <iframe id="adminFrame"
+          src="about:blank"
+          title="Panel Admin SERENA"
+          sandbox="allow-scripts allow-forms allow-same-origin allow-popups-to-escape-sandbox"
+          onload="adminFrameReady()"></iframe>
       </div>
     </div>
 
@@ -769,8 +773,8 @@ function initLokasi(){
 initLokasi();
 
 /* ---- ADMIN MODAL + PIN GATE ---- */
-const ADMIN_SRC = "https://script.google.com/macros/s/AKfycbzcEcnLZGgYIFnbpGOxHh9IXqGpu0pDSvoKAGv7t8tyNZ4jM5mEZBEBllMaYb3IWFVf/exec";
-const ADMIN_PIN = "393939"; // ← ganti PIN sesuai kebutuhan
+const ADMIN_SRC = "https://script.google.com/macros/s/AKfycbzcEcnLZGgYIFnbpGOxHh9IXqGpu0pDSvoKAGv7t8tyNZ4jM5mEZBEBllMaYb3IWFVf/exec?embedded=true";
+const ADMIN_PIN = "123456"; // ← ganti PIN sesuai kebutuhan
 let adminLoaded = false;
 
 window.bukaAdmin = function(){
