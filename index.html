@@ -709,7 +709,7 @@ body{
         <iframe id="adminFrame"
           src="about:blank"
           title="Panel Admin SERENA"
-          sandbox="allow-scripts allow-forms allow-same-origin allow-popups-to-escape-sandbox"
+          allow="fullscreen"
           onload="adminFrameReady()"></iframe>
       </div>
     </div>
@@ -774,7 +774,7 @@ initLokasi();
 
 /* ---- ADMIN MODAL + PIN GATE ---- */
 const ADMIN_SRC = "https://script.google.com/macros/s/AKfycbzcEcnLZGgYIFnbpGOxHh9IXqGpu0pDSvoKAGv7t8tyNZ4jM5mEZBEBllMaYb3IWFVf/exec?embedded=true";
-const ADMIN_PIN = "393939"; // ← ganti PIN sesuai kebutuhan
+const ADMIN_PIN = "123456"; // ← ganti PIN sesuai kebutuhan
 let adminLoaded = false;
 
 window.bukaAdmin = function(){
@@ -855,6 +855,14 @@ window.togglePin = function(){
 window.adminFrameReady = function(){
   document.getElementById("adminLoader").classList.add("gone");
 };
+
+// Tangkap pesan dari GAS iframe (untuk previewLink mobile)
+window.addEventListener("message", function(e){
+  if(!e.data || !e.data.type) return;
+  if(e.data.type === "OPEN_URL"){
+    window.open(e.data.url, "_blank");
+  }
+});
 
 document.addEventListener("keydown", e=>{
   if(e.key === "Escape") tutupAdmin();
