@@ -535,7 +535,8 @@ body.a11y-contrast .badge-close{ background:#c62828 !important; color:#fff !impo
 
   <div class="card-app mb-3 search-box" data-aos="fade-up">
     <label for="searchInput" class="visually-hidden">Cari layanan</label>
-    <input type="search" id="searchInput" class="form-control" placeholder="🔍 Cari layanan..." aria-label="Cari layanan">
+    <input type="search" id="searchInput" class="form-control" placeholder="🔍 Cari layanan..." aria-label="Cari layanan" aria-describedby="searchCount">
+    <p id="searchCount" class="visually-hidden" role="status" aria-live="polite"></p>
   </div>
 
   <div class="card-app mb-3" data-aos="fade-up">
@@ -670,7 +671,8 @@ body.a11y-contrast .badge-close{ background:#c62828 !important; color:#fff !impo
               </label>
             </div>
           </div>
-          <button id="modalLink" class="btn btn-primary w-100 mt-3 disabled" disabled aria-disabled="true">Isi Pengajuan</button>
+          <button type="button" id="modalBaca" class="btn btn-outline-secondary w-100 mt-2" aria-pressed="false">🔊 Dengarkan Persyaratan &amp; Alur</button>
+          <button id="modalLink" class="btn btn-primary w-100 mt-2 disabled" disabled aria-disabled="true">Isi Pengajuan</button>
         </div>
         <div id="formFrameWrap" class="d-none mt-3">
           <iframe id="formFrame" title="Formulir pengajuan layanan" style="width:100%;height:80vh;border:none;border-radius:12px"></iframe>
@@ -802,8 +804,27 @@ body.a11y-contrast .badge-close{ background:#c62828 !important; color:#fff !impo
     <button type="button" class="a11y-toggle" id="toggleReadable" aria-pressed="false">🔤 Huruf Mudah Dibaca</button>
   </div>
 
+  <div class="a11y-group">
+    <p>Bantuan Suara (Tuna Netra)</p>
+    <button type="button" class="a11y-toggle" id="toggleTTS" aria-pressed="false">🔊 Bacakan Halaman Ini</button>
+    <button type="button" class="a11y-toggle" id="stopTTS" style="display:none">⏹ Berhenti Membaca</button>
+  </div>
+
+  <div class="a11y-group">
+    <p>Pintasan Keyboard</p>
+    <p style="font-size:11px;color:#94a3b8;margin:0;line-height:1.5">
+      Alt+1 : ke konten utama<br>
+      Alt+2 : buka/tutup panel ini<br>
+      Alt+3 : bacakan halaman<br>
+      Esc : tutup jendela yang terbuka
+    </p>
+  </div>
+
   <button type="button" class="a11y-reset" id="a11yReset">Reset Pengaturan</button>
 </div>
+
+<!-- Pengumuman untuk pembaca layar (perubahan pengaturan aksesibilitas) -->
+<p id="a11yAnnouncer" class="visually-hidden" role="status" aria-live="polite"></p>
 
 <!-- ======== ADMIN MODAL (pop-up center + PIN gate) ======== -->
 <div class="admin-overlay" id="adminOverlay">
@@ -1085,6 +1106,16 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
 
+  /* ---- JUMLAH HASIL PENCARIAN DIUMUMKAN UNTUK PEMBACA LAYAR ---- */
+  const searchCountEl = document.getElementById('searchCount');
+  const searchInputEl = document.getElementById('searchInput');
+  if(searchInputEl){
+    searchInputEl.addEventListener('input', function(){
+      const visible = Array.from(document.querySelectorAll('.layanan-item')).filter(el=>el.style.display!=="none").length;
+      searchCountEl.textContent = this.value ? (visible+" layanan ditemukan") : "";
+    });
+  }
+
   /* ---- BOTTOM NAV ---- */
   document.querySelectorAll('.bottom-nav a').forEach(a=>{
     a.onclick=()=>{
@@ -1213,6 +1244,12 @@ document.addEventListener("DOMContentLoaded", function(){
   let a11yState = Object.assign({fs:1,contrast:false,underline:false,readable:false}, loadA11y());
   applyA11y(a11yState);
 
+  function announce(msg){
+    const el = document.getElementById('a11yAnnouncer');
+    el.textContent = "";
+    setTimeout(()=>{ el.textContent = msg; }, 50);
+  }
+
   window.closeA11yPanel = function(){
     a11yPanel.classList.remove('open');
     a11yFab.setAttribute('aria-expanded','false');
@@ -1231,23 +1268,127 @@ document.addEventListener("DOMContentLoaded", function(){
     btn.addEventListener('click', ()=>{
       a11yState.fs = Number(btn.dataset.fs);
       applyA11y(a11yState); saveA11y(a11yState);
+      announce("Ukuran teks diubah ke level "+a11yState.fs);
     });
   });
   document.getElementById('toggleContrast').addEventListener('click', function(){
     a11yState.contrast = !a11yState.contrast;
     applyA11y(a11yState); saveA11y(a11yState);
+    announce("Kontras tinggi "+(a11yState.contrast?"diaktifkan":"dimatikan"));
   });
   document.getElementById('toggleUnderline').addEventListener('click', function(){
     a11yState.underline = !a11yState.underline;
     applyA11y(a11yState); saveA11y(a11yState);
+    announce("Garis bawah tautan "+(a11yState.underline?"diaktifkan":"dimatikan"));
   });
   document.getElementById('toggleReadable').addEventListener('click', function(){
     a11yState.readable = !a11yState.readable;
     applyA11y(a11yState); saveA11y(a11yState);
+    announce("Huruf mudah dibaca "+(a11yState.readable?"diaktifkan":"dimatikan"));
   });
   document.getElementById('a11yReset').addEventListener('click', function(){
     a11yState = {fs:1,contrast:false,underline:false,readable:false};
     applyA11y(a11yState); saveA11y(a11yState);
+    stopSpeaking();
+    announce("Pengaturan aksesibilitas dikembalikan ke semula");
+  });
+
+  /* ================= TEXT-TO-SPEECH (BANTUAN TUNA NETRA) ================= */
+  const ttsSupported = 'speechSynthesis' in window;
+  const toggleTTSBtn = document.getElementById('toggleTTS');
+  const stopTTSBtn = document.getElementById('stopTTS');
+
+  function speak(text, onEnd){
+    if(!ttsSupported) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "id-ID";
+    utter.rate = 0.95;
+    if(onEnd) utter.onend = onEnd;
+    window.speechSynthesis.speak(utter);
+  }
+  function stopSpeaking(){
+    if(ttsSupported) window.speechSynthesis.cancel();
+    toggleTTSBtn.setAttribute('aria-pressed','false');
+    stopTTSBtn.style.display = "none";
+  }
+
+  if(!ttsSupported){
+    toggleTTSBtn.disabled = true;
+    toggleTTSBtn.textContent = "🔊 Baca halaman (tidak didukung browser ini)";
+  }
+
+  toggleTTSBtn.addEventListener('click', function(){
+    if(!ttsSupported) return;
+    const mainText = document.getElementById('konten-utama').innerText;
+    speak(mainText, stopSpeaking);
+    toggleTTSBtn.setAttribute('aria-pressed','true');
+    stopTTSBtn.style.display = "block";
+    announce("Membacakan seluruh konten halaman");
+  });
+  stopTTSBtn.addEventListener('click', function(){
+    stopSpeaking();
+    announce("Pembacaan dihentikan");
+  });
+
+  /* Tombol "Dengarkan Persyaratan & Alur" di dalam modal layanan */
+  const modalBacaBtn = document.getElementById('modalBaca');
+  if(modalBacaBtn){
+    modalBacaBtn.addEventListener('click', function(){
+      if(!ttsSupported){ announce("Fitur suara tidak didukung browser ini"); return; }
+      const judul = document.getElementById('modalTitle').innerText;
+      const syarat = document.getElementById('modalSyarat').innerText;
+      const alur = document.getElementById('modalAlur').innerText;
+      const teks = "Layanan "+judul+". Persyaratan: "+syarat+". Alur layanan: "+alur;
+      if(this.getAttribute('aria-pressed')==='true'){
+        stopSpeaking(); this.setAttribute('aria-pressed','false'); this.textContent="🔊 Dengarkan Persyaratan & Alur";
+      } else {
+        speak(teks, ()=>{ modalBacaBtn.setAttribute('aria-pressed','false'); modalBacaBtn.textContent="🔊 Dengarkan Persyaratan & Alur"; });
+        this.setAttribute('aria-pressed','true');
+        this.textContent="⏹ Berhenti Membaca";
+      }
+    });
+  }
+  // Hentikan suara saat modal/sheet ditutup agar tidak terus berbicara di latar
+  layananModal.addEventListener('hidden.bs.modal', stopSpeaking);
+
+  /* ================= FOCUS TRAP UNTUK JENDELA KUSTOM ================= */
+  function trapFocus(container){
+    const focusable = container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])');
+    if(!focusable.length) return;
+    const first = focusable[0], last = focusable[focusable.length-1];
+    function handler(e){
+      if(e.key !== 'Tab') return;
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+    container.addEventListener('keydown', handler);
+    container._trapHandler = handler;
+  }
+  function releaseFocusTrap(container){
+    if(container._trapHandler) container.removeEventListener('keydown', container._trapHandler);
+  }
+  [document.getElementById('adminModal'), formMenuSheet, formSheet, serenaSheet].forEach(el=>{
+    const obs = new MutationObserver(()=>{
+      const isOpen = el.classList.contains('active') || el.closest('.admin-overlay')?.classList.contains('open');
+      if(isOpen) trapFocus(el); else releaseFocusTrap(el);
+    });
+    obs.observe(el, {attributes:true, attributeFilter:['class']});
+    if(el.closest('.admin-overlay')){
+      const overlay = document.getElementById('adminOverlay');
+      new MutationObserver(()=>{
+        if(overlay.classList.contains('open')) trapFocus(document.getElementById('adminModal'));
+        else releaseFocusTrap(document.getElementById('adminModal'));
+      }).observe(overlay, {attributes:true, attributeFilter:['class']});
+    }
+  });
+
+  /* ================= PINTASAN KEYBOARD GLOBAL ================= */
+  document.addEventListener('keydown', function(e){
+    if(!e.altKey) return;
+    if(e.key === '1'){ e.preventDefault(); document.getElementById('konten-utama').setAttribute('tabindex','-1'); document.getElementById('konten-utama').focus(); }
+    if(e.key === '2'){ e.preventDefault(); a11yFab.click(); }
+    if(e.key === '3'){ e.preventDefault(); toggleTTSBtn.click(); }
   });
 
 });
