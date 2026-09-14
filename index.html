@@ -481,6 +481,52 @@ body.a11y-contrast .badge-close{ background:#c62828 !important; color:#fff !impo
 
 <!-- ======== SKIP LINK ======== -->
 <a href="#konten-utama" class="skip-link">Langsung ke konten utama</a>
+<a href="#a11yFab" class="skip-link" style="left:-999px;">Langsung ke Pengaturan Aksesibilitas (Alt+2)</a>
+
+<!-- ======== WIDGET AKSESIBILITAS (ditaruh di awal DOM agar cepat dijangkau Tab/swipe pembaca layar; posisi tampilan tetap kiri-bawah via CSS) ======== -->
+<button class="a11y-fab" id="a11yFab" aria-haspopup="true" aria-expanded="false" aria-controls="a11yPanel" aria-label="Buka pengaturan aksesibilitas: ukuran teks, kontras, dan bantuan suara">
+  <i class="bi bi-universal-access" aria-hidden="true"></i>
+</button>
+<div class="a11y-panel" id="a11yPanel" role="dialog" aria-modal="false" aria-label="Pengaturan Aksesibilitas">
+  <h2>♿ Aksesibilitas</h2>
+
+  <div class="a11y-group">
+    <p>Ukuran Teks</p>
+    <div class="a11y-row" role="group" aria-label="Pilih ukuran teks">
+      <button type="button" data-fs="1" aria-pressed="true">A</button>
+      <button type="button" data-fs="2" aria-pressed="false" style="font-size:16px">A+</button>
+      <button type="button" data-fs="3" aria-pressed="false" style="font-size:18px">A++</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <p>Tampilan</p>
+    <button type="button" class="a11y-toggle" id="toggleContrast" aria-pressed="false">🌓 Kontras Tinggi</button>
+    <button type="button" class="a11y-toggle" id="toggleUnderline" aria-pressed="false">🔗 Garis Bawahi Tautan</button>
+    <button type="button" class="a11y-toggle" id="toggleReadable" aria-pressed="false">🔤 Huruf Mudah Dibaca</button>
+  </div>
+
+  <div class="a11y-group">
+    <p>Bantuan Suara (Tuna Netra)</p>
+    <button type="button" class="a11y-toggle" id="toggleTTS" aria-pressed="false">🔊 Bacakan Halaman Ini</button>
+    <button type="button" class="a11y-toggle" id="stopTTS" style="display:none">⏹ Berhenti Membaca</button>
+  </div>
+
+  <div class="a11y-group">
+    <p>Pintasan Keyboard</p>
+    <p style="font-size:11px;color:#94a3b8;margin:0;line-height:1.5">
+      Alt+1 : ke konten utama<br>
+      Alt+2 : buka/tutup panel ini<br>
+      Alt+3 : bacakan halaman<br>
+      Esc : tutup jendela yang terbuka
+    </p>
+  </div>
+
+  <button type="button" class="a11y-reset" id="a11yReset">Reset Pengaturan</button>
+</div>
+
+<!-- Pengumuman untuk pembaca layar (perubahan pengaturan aksesibilitas) -->
+<p id="a11yAnnouncer" class="visually-hidden" role="status" aria-live="polite"></p>
 
 <!-- ======== HEADER + TOMBOL ADMIN ======== -->
 <header class="app-header">
@@ -781,52 +827,7 @@ body.a11y-contrast .badge-close{ background:#c62828 !important; color:#fff !impo
   <a href="tel:0882003654359" class="tel" aria-label="Telepon Kelurahan Serengan"><i class="bi bi-telephone" aria-hidden="true"></i></a>
 </div>
 
-<!-- ======== WIDGET AKSESIBILITAS ======== -->
-<button class="a11y-fab" id="a11yFab" aria-haspopup="true" aria-expanded="false" aria-controls="a11yPanel" aria-label="Buka pengaturan aksesibilitas">
-  <i class="bi bi-universal-access" aria-hidden="true"></i>
-</button>
-<div class="a11y-panel" id="a11yPanel" role="dialog" aria-modal="false" aria-label="Pengaturan Aksesibilitas">
-  <h2>♿ Aksesibilitas</h2>
 
-  <div class="a11y-group">
-    <p>Ukuran Teks</p>
-    <div class="a11y-row" role="group" aria-label="Pilih ukuran teks">
-      <button type="button" data-fs="1" aria-pressed="true">A</button>
-      <button type="button" data-fs="2" aria-pressed="false" style="font-size:16px">A+</button>
-      <button type="button" data-fs="3" aria-pressed="false" style="font-size:18px">A++</button>
-    </div>
-  </div>
-
-  <div class="a11y-group">
-    <p>Tampilan</p>
-    <button type="button" class="a11y-toggle" id="toggleContrast" aria-pressed="false">🌓 Kontras Tinggi</button>
-    <button type="button" class="a11y-toggle" id="toggleUnderline" aria-pressed="false">🔗 Garis Bawahi Tautan</button>
-    <button type="button" class="a11y-toggle" id="toggleReadable" aria-pressed="false">🔤 Huruf Mudah Dibaca</button>
-  </div>
-
-  <div class="a11y-group">
-    <p>Bantuan Suara (Tuna Netra)</p>
-    <button type="button" class="a11y-toggle" id="toggleTTS" aria-pressed="false">🔊 Bacakan Halaman Ini</button>
-    <button type="button" class="a11y-toggle" id="stopTTS" style="display:none">⏹ Berhenti Membaca</button>
-  </div>
-
-  <div class="a11y-group">
-    <p>Pintasan Keyboard</p>
-    <p style="font-size:11px;color:#94a3b8;margin:0;line-height:1.5">
-      Alt+1 : ke konten utama<br>
-      Alt+2 : buka/tutup panel ini<br>
-      Alt+3 : bacakan halaman<br>
-      Esc : tutup jendela yang terbuka
-    </p>
-  </div>
-
-  <button type="button" class="a11y-reset" id="a11yReset">Reset Pengaturan</button>
-</div>
-
-<!-- Pengumuman untuk pembaca layar (perubahan pengaturan aksesibilitas) -->
-<p id="a11yAnnouncer" class="visually-hidden" role="status" aria-live="polite"></p>
-
-<!-- ======== ADMIN MODAL (pop-up center + PIN gate) ======== -->
 <div class="admin-overlay" id="adminOverlay">
   <div class="admin-modal" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminModalHeading">
 
