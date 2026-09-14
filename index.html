@@ -13,25 +13,69 @@
 <link rel="preload" as="image" href="img/gedung2.jpeg">
 
 <style>
-body{
-  font-family:Inter,system-ui;
-  background:#eef2f7;
-  margin:0;
-  padding-bottom:90px;
+/* ======== AKSESIBILITAS: SKIP LINK ======== */
+.skip-link {
+  position: absolute; top: -40px; left: 0;
+  background: #000; color: #fff; padding: 8px 16px;
+  z-index: 10000; transition: top 0.2s;
+  text-decoration: none; font-weight: bold;
+}
+.skip-link:focus { top: 0; }
+
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: #eef2f7;
+  margin: 0;
+  padding-bottom: 90px;
+  transition: font-size 0.2s, background-color 0.2s, color 0.2s;
+}
+
+/* ======== FOKUS KEYBOARD VISUAL ======== */
+:focus-visible {
+  outline: 3px solid #ffbf00 !important;
+  outline-offset: 3px !important;
+}
+
+/* ======== MODES AKSESIBILITAS ======== */
+body.high-contrast {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+body.high-contrast .card-app,
+body.high-contrast .service-card,
+body.high-contrast .app-header,
+body.high-contrast .bottom-nav,
+body.high-contrast .form-sheet {
+  background-color: #121212 !important;
+  color: #fff !important;
+  border: 1px solid #fff !important;
+}
+body.high-contrast a, 
+body.high-contrast .bottom-nav a.active {
+  color: #ffff00 !important;
+}
+body.highlight-links a, 
+body.highlight-links .service-card {
+  text-decoration: underline !important;
+  border: 2px solid #0d6efd !important;
+}
+body.dyslexic-font {
+  font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif !important;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
 }
 
 /* ======== HEADER ======== */
-.app-header{
-  position:sticky; top:0; z-index:999;
-  background:#0d6efd; color:#fff;
-  padding:12px 16px;
-  font-weight:600;
-  box-shadow:0 4px 12px rgba(0,0,0,.2);
-  display:flex; align-items:center; justify-content:space-between;
+.app-header {
+  position: sticky; top: 0; z-index: 999;
+  background: #0d6efd; color: #fff;
+  padding: 12px 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  display: flex; align-items: center; justify-content: space-between;
 }
-.header-left { display:flex; align-items:center; gap:10px; }
+.header-left { display: flex; align-items: center; gap: 10px; }
 
-/* ✨ TOMBOL ADMIN DI HEADER — pill style menyatu */
 .btn-admin-header {
   display: inline-flex; align-items: center; gap: 6px;
   background: rgba(255,255,255,.15);
@@ -44,7 +88,7 @@ body{
   white-space: nowrap;
   backdrop-filter: blur(4px);
 }
-.btn-admin-header:hover {
+.btn-admin-header:hover, .btn-admin-header:focus {
   background: rgba(255,255,255,.28);
   transform: scale(1.04);
   color: #fff;
@@ -52,175 +96,191 @@ body{
 .btn-admin-header .bi { font-size: 14px; }
 
 /* ======== HERO ======== */
-.hero-slider{
-  height:28vh; position:relative;
-  overflow:hidden; border-radius:22px;
-  box-shadow:0 14px 30px rgba(0,0,0,.18);
+.hero-slider {
+  height: 28vh; position: relative;
+  overflow: hidden; border-radius: 22px;
+  box-shadow: 0 14px 30px rgba(0,0,0,.18);
 }
-.hero-slide{
-  position:absolute; inset:0;
-  background-size:cover; background-position:center;
-  opacity:0; transition:.8s; transform:scale(1.1);
+.hero-slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: .8s; transform: scale(1.1);
 }
-.hero-slide.active{ opacity:1; transform:scale(1); }
-.hero-overlay{
-  position:absolute; inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.55),transparent);
+.hero-slide.active { opacity: 1; transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.65), transparent);
 }
-.hero-text{ position:absolute; bottom:18px; left:18px; color:#fff; }
-.hero-dots{
-  position:absolute; bottom:12px; left:50%; transform:translateX(-50%);
-  display:flex; gap:8px; z-index:5;
+.hero-text { position: absolute; bottom: 18px; left: 18px; color: #fff; }
+.hero-dots {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 5;
 }
-.hero-dots span{
-  width:8px; height:8px; border-radius:50%;
-  background:rgba(255,255,255,.45); transition:.3s; cursor:pointer;
+.hero-dots button {
+  width: 10px; height: 10px; border-radius: 50%; border: none;
+  background: rgba(255,255,255,.45); transition: .3s; cursor: pointer; padding: 0;
 }
-.hero-dots span.active{ width:22px; border-radius:10px; background:#fff; }
+.hero-dots button.active { width: 22px; border-radius: 10px; background: #fff; }
 
 /* ======== CARDS ======== */
-.card-app{
-  background:#fff; border-radius:22px;
-  padding:18px; box-shadow:0 8px 25px rgba(0,0,0,.08);
+.card-app {
+  background: #fff; border-radius: 22px;
+  padding: 18px; box-shadow: 0 8px 25px rgba(0,0,0,.08);
 }
-.pengumuman{
-  background:linear-gradient(135deg,#0d6efd,#3b82f6);
-  color:#fff; padding:16px; border-radius:18px; font-size:15px;
+.pengumuman {
+  background: linear-gradient(135deg,#0d6efd,#3b82f6);
+  color: #fff; padding: 16px; border-radius: 18px; font-size: 15px;
 }
-.service-card{
-  background:#fff; border-radius:22px;
-  padding:18px 12px; text-align:center;
-  cursor:pointer; transition:.25s;
-  box-shadow:0 6px 18px rgba(0,0,0,.1);
+.service-card {
+  background: #fff; border-radius: 22px;
+  padding: 18px 12px; text-align: center;
+  cursor: pointer; transition: .25s;
+  box-shadow: 0 6px 18px rgba(0,0,0,.1);
 }
-.service-card:hover{ transform:translateY(-6px) scale(1.02); }
-.icon{ font-size:34px; }
+.service-card:hover, .service-card:focus { transform: translateY(-6px) scale(1.02); }
+.icon { font-size: 34px; }
 
 /* ======== TIMELINE ======== */
-.timeline{
-  border-left:3px solid #0d6efd;
-  padding-left:18px; font-size:15px;
+.timeline {
+  border-left: 3px solid #0d6efd;
+  padding-left: 18px; font-size: 15px;
 }
-.timeline div{ margin-bottom:14px; position:relative; }
-.timeline div:before{
-  content:""; width:12px; height:12px;
-  background:#0d6efd; border-radius:50%;
-  position:absolute; left:-25px; top:4px;
+.timeline div { margin-bottom: 14px; position: relative; }
+.timeline div:before {
+  content: ""; width: 12px; height: 12px;
+  background: #0d6efd; border-radius: 50%;
+  position: absolute; left: -25px; top: 4px;
 }
 
 /* ======== SEARCH ======== */
-.search-box input{ border-radius:14px; padding:10px 14px; }
+.search-box input { border-radius: 14px; padding: 10px 14px; }
 
 /* ======== JAM LAYANAN ======== */
-.table-jam{ width:100%; border-collapse:collapse; margin-top:10px; font-size:14px; }
-.table-jam th{ text-align:left; padding:8px; background:#f3f6fb; border-radius:6px; }
-.table-jam td{ padding:8px; border-bottom:1px solid #eef1f6; }
-.today{ background:#eef6ff; font-weight:600; }
-.badge-open{ background:#e9fbf1; color:#0f8a4c; padding:3px 8px; border-radius:10px; font-size:12px; }
-.badge-close{ background:#fdecec; color:#c62828; padding:3px 8px; border-radius:10px; font-size:12px; }
+.table-jam { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+.table-jam th { text-align: left; padding: 8px; background: #f3f6fb; border-radius: 6px; }
+.table-jam td { padding: 8px; border-bottom: 1px solid #eef1f6; }
+.today { background: #eef6ff; font-weight: 600; }
+.badge-open { background: #e9fbf1; color: #0f8a4c; padding: 3px 8px; border-radius: 10px; font-size: 12px; }
+.badge-close { background: #fdecec; color: #c62828; padding: 3px 8px; border-radius: 10px; font-size: 12px; }
 
 /* ======== LOKASI ======== */
-.lokasi-info{ display:flex; justify-content:space-between; margin:10px 0; font-size:14px; font-weight:600; }
-.btn-maps{
-  display:block; text-align:center;
-  background:#0d6efd; color:#fff; padding:10px;
-  border-radius:12px; text-decoration:none; font-weight:700;
-}
-.mode-btn{
-  flex:1; border:none; padding:6px; border-radius:10px;
-  background:#0d6efd; color:#fff; font-size:13px; font-weight:600; cursor:pointer;
+.lokasi-info { display: flex; justify-content: space-between; margin: 10px 0; font-size: 14px; font-weight: 600; }
+.btn-maps {
+  display: block; text-align: center;
+  background: #0d6efd; color: #fff; padding: 10px;
+  border-radius: 12px; text-decoration: none; font-weight: 700;
 }
 
 /* ======== BOTTOM NAV ======== */
-.bottom-nav{
-  position:fixed; bottom:0; left:0; right:0;
-  background:#fff; display:flex;
-  justify-content:space-around; padding:10px 0;
-  box-shadow:0 -4px 15px rgba(0,0,0,.15); z-index:1200;
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff; display: flex;
+  justify-content: space-around; padding: 10px 0;
+  box-shadow: 0 -4px 15px rgba(0,0,0,.15); z-index: 1200;
 }
-.bottom-nav a{
-  text-decoration:none; color:#666; font-size:12px;
-  text-align:center; flex:1;
+.bottom-nav a {
+  text-decoration: none; color: #4b5563; font-size: 12px;
+  text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center;
 }
-.bottom-nav a.active{ color:#0d6efd; font-weight:600; }
+.bottom-nav a.active { color: #0d6efd; font-weight: 600; }
 
-/* ======== SHEET BACKDROP ======== */
-.sheet-backdrop{
-  position:fixed; inset:0; background:rgba(0,0,0,.45);
-  z-index:1100; opacity:0; pointer-events:none; transition:.3s;
+/* ======== SHEET BACKDROP & FORM SHEET ======== */
+.sheet-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  z-index: 1100; opacity: 0; pointer-events: none; transition: .3s;
 }
-.sheet-backdrop.active{ opacity:1; pointer-events:auto; }
+.sheet-backdrop.active { opacity: 1; pointer-events: auto; }
 
-/* ======== FORM SHEET ======== */
-.form-sheet{
-  position:fixed; inset:0; background:#fff; z-index:1300;
-  display:flex; flex-direction:column;
-  transform:translateY(110%) scale(.96); opacity:0;
-  transition:transform .55s cubic-bezier(.22,1.1,.36,1), opacity .35s ease;
+.form-sheet {
+  position: fixed; inset: 0; background: #fff; z-index: 1300;
+  display: flex; flex-direction: column;
+  transform: translateY(110%) scale(.96); opacity: 0;
+  transition: transform .55s cubic-bezier(.22,1.1,.36,1), opacity .35s ease;
 }
-.form-sheet.active{ transform:translateY(0) scale(1); opacity:1; }
+.form-sheet.active { transform: translateY(0) scale(1); opacity: 1; }
 
-.sheet-handle{
-  width:44px; height:5px; background:#d1d5db;
-  border-radius:6px; margin:10px auto 6px;
+.sheet-handle { width: 44px; height: 5px; background: #d1d5db; border-radius: 6px; margin: 10px auto 6px; }
+.form-sheet-header {
+  padding: 14px 16px; text-align: center; font-weight: 600;
+  border-bottom: 1px solid #eee;
+  position: sticky; top: 0; background: #fff; z-index: 5;
 }
-.form-sheet-header{
-  padding:14px 16px; text-align:center; font-weight:600;
-  border-bottom:1px solid #eee;
-  position:sticky; top:0; background:#fff; z-index:5;
+.form-sheet-close {
+  position: absolute; right: 14px; top: 10px;
+  background: #dc3545; color: #fff; border: none;
+  padding: 6px 12px; border-radius: 12px; cursor: pointer;
 }
-.form-sheet-close{
-  position:absolute; right:14px; top:10px;
-  background:#dc3545; color:#fff; border:none;
-  padding:6px 12px; border-radius:12px; cursor:pointer;
-}
-.form-sheet iframe{ flex:1; width:100%; border:none; border-radius:0 0 24px 24px; }
-.form-list a{
-  display:block; padding:14px; margin:10px;
-  background:#0d6efd; color:#fff; border-radius:14px;
-  text-decoration:none; position:relative; overflow:hidden;
+.form-sheet iframe { flex: 1; width: 100%; border: none; border-radius: 0 0 24px 24px; }
+.form-list a {
+  display: block; padding: 14px; margin: 10px;
+  background: #0d6efd; color: #fff; border-radius: 14px;
+  text-decoration: none; position: relative; overflow: hidden;
 }
 
 /* ======== VALIDASI BOX ======== */
-.validasi-box{
-  background:#f8fbff; border:2px dashed #0d6efd;
-  border-radius:10px; padding:14px 16px; transition:.3s ease;
+.validasi-box {
+  background: #f8fbff; border: 2px dashed #0d6efd;
+  border-radius: 10px; padding: 14px 16px; transition: .3s ease;
 }
-.validasi-box:hover{ background:#eef5ff; border-color:#0a58ca; }
-.validasi-box input.form-check-input{ transform:scale(1.3); cursor:pointer; }
-.validasi-box label{ cursor:pointer; color:#0a3d91; }
+.validasi-box:hover { background: #eef5ff; border-color: #0a58ca; }
+.validasi-box input.form-check-input { transform: scale(1.3); cursor: pointer; }
+.validasi-box label { cursor: pointer; color: #0a3d91; }
 
 /* ======== FLOATING SOCIAL ======== */
-.floating-social{
-  position:fixed; right:16px; bottom:90px;
-  display:flex; flex-direction:column; gap:12px; z-index:1400;
+.floating-social {
+  position: fixed; right: 16px; bottom: 90px;
+  display: flex; flex-direction: column; gap: 12px; z-index: 1400;
 }
-.floating-social a{
-  width:46px; height:46px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  color:#fff; font-size:22px;
-  box-shadow:0 6px 20px rgba(0,0,0,.25); transition:.25s;
+.floating-social a {
+  width: 46px; height: 46px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 22px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.25); transition: .25s; text-decoration: none;
 }
-.floating-social a:hover{ transform:scale(1.12) rotate(6deg); }
-.floating-social .wa{ background:#25D366; }
-.floating-social .ig{ background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af); }
-.floating-social .mail{ background:#2563eb; }
-.floating-social .tel{ background:#0ea5e9; }
+.floating-social a:hover, .floating-social a:focus { transform: scale(1.12) rotate(6deg); }
+.floating-social .wa { background: #25D366; }
+.floating-social .ig { background: linear-gradient(45deg,#f58529,#dd2a7b,#8134af); }
+.floating-social .mail { background: #2563eb; }
+.floating-social .tel { background: #0ea5e9; }
+
+/* ======== FLOATING TOOLBAR AKSESIBILITAS ======== */
+.accessibility-menu {
+  position: fixed; left: 16px; bottom: 90px; z-index: 1400;
+}
+.btn-access-toggle {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #111827; color: #fff; border: 2px solid #fff;
+  font-size: 22px; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,.3); cursor: pointer;
+}
+.access-panel {
+  position: absolute; bottom: 60px; left: 0; background: #fff;
+  border-radius: 16px; padding: 12px; width: 220px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.2); display: none;
+  flex-direction: column; gap: 8px; border: 1px solid #e5e7eb;
+}
+.access-panel.show { display: flex; }
+.access-panel button {
+  background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px;
+  padding: 8px; font-size: 13px; font-weight: 600; text-align: left;
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+}
+.access-panel button:hover, .access-panel button:focus { background: #e5e7eb; }
 
 /* ======== FOOTER ======== */
-.serena-footer-mini{
-  text-align:center; font-size:12px; color:#6b7280;
-  padding:14px 10px 20px;
-  background:#f8fafc; border-top:1px solid #e5e7eb;
+.serena-footer-mini {
+  text-align: center; font-size: 12px; color: #4b5563;
+  padding: 14px 10px 20px;
+  background: #f8fafc; border-top: 1px solid #e5e7eb;
 }
 
 /* ======== RIPPLE ======== */
-.ripple{
-  position:absolute; border-radius:50%;
-  background:rgba(255,255,255,.45);
-  transform:scale(0); animation:ripple .6s linear;
+.ripple {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,.45);
+  transform: scale(0); animation: ripple .6s linear;
 }
-@keyframes ripple{ to{transform:scale(4);opacity:0;} }
+@keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
 /* ======== ADMIN MODAL + PIN GATE ======== */
 .admin-overlay {
@@ -231,17 +291,13 @@ body{
 .admin-overlay.open { display: flex; }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
-/* Fullscreen — overlay IS the modal */
 .admin-modal {
-  background: #fff;
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column;
-  overflow: hidden;
+  background: #fff; width: 100%; height: 100%;
+  display: flex; flex-direction: column; overflow: hidden;
   animation: popIn .22s cubic-bezier(.22,1,.36,1);
 }
 @keyframes popIn { from{transform:scale(.97);opacity:0} to{transform:scale(1);opacity:1} }
 
-/* PIN GATE */
 #adminPinGate {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
@@ -252,22 +308,18 @@ body{
 .pin-icon {
   width: 64px; height: 64px;
   background: linear-gradient(135deg,#0d3b7a,#1a6bc8);
-  border-radius: 18px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px; color: #fff;
-  margin: 0 auto 14px;
+  border-radius: 18px; display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: #fff; margin: 0 auto 14px;
   box-shadow: 0 8px 24px rgba(13,59,122,.3);
 }
 .pin-title { font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
-.pin-sub   { font-size: 12px; color: #64748b; }
-
+.pin-sub { font-size: 12px; color: #64748b; }
 .pin-body { width: 100%; max-width: 320px; }
 .pin-label { display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 8px; }
 .pin-input-wrap {
   position: relative; display: flex; align-items: center;
   border: 2px solid #cbd5e1; border-radius: 12px;
-  overflow: hidden; background: #fff;
-  transition: border-color .2s;
+  overflow: hidden; background: #fff; transition: border-color .2s;
 }
 .pin-input-wrap:focus-within { border-color: #0d6efd; box-shadow: 0 0 0 3px rgba(13,110,253,.15); }
 .pin-input {
@@ -278,97 +330,63 @@ body{
 }
 .pin-eye {
   background: none; border: none; padding: 0 14px;
-  color: #94a3b8; cursor: pointer; font-size: 17px;
-  transition: color .15s;
+  color: #94a3b8; cursor: pointer; font-size: 17px; transition: color .15s;
 }
 .pin-eye:hover { color: #0d6efd; }
-
 .pin-error {
   font-size: 12px; color: #dc3545; font-weight: 600;
   min-height: 18px; margin: 8px 0 4px; text-align: center;
 }
 .btn-pin-masuk {
-  width: 100%; padding: 13px;
-  background: #0d6efd; color: #fff;
-  border: none; border-radius: 12px;
-  font-size: 15px; font-weight: 700; cursor: pointer;
+  width: 100%; padding: 13px; background: #0d6efd; color: #fff;
+  border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 4px 16px rgba(13,110,253,.35);
-  transition: background .15s, transform .12s;
-  margin-top: 8px;
+  box-shadow: 0 4px 16px rgba(13,110,253,.35); transition: background .15s, transform .12s; margin-top: 8px;
 }
 .btn-pin-masuk:hover { background: #0b5ed7; transform: translateY(-1px); }
-.btn-pin-masuk:active { transform: translateY(0); }
 .btn-pin-batal {
-  width: 100%; padding: 10px;
-  background: none; border: 1px solid #e2e8f0;
-  border-radius: 12px; font-size: 14px;
-  color: #64748b; cursor: pointer; margin-top: 8px;
-  transition: background .15s;
+  width: 100%; padding: 10px; background: none; border: 1px solid #e2e8f0;
+  border-radius: 12px; font-size: 14px; color: #64748b; cursor: pointer; margin-top: 8px; transition: background .15s;
 }
 .btn-pin-batal:hover { background: #f1f5f9; }
 
-/* DASHBOARD (setelah PIN) */
-#adminDashboard {
-  display: none;
-  flex: 1;          /* mengisi sisa tinggi modal */
-  flex-direction: column;
-  min-height: 0;    /* penting agar flex child bisa scroll */
-}
+#adminDashboard { display: none; flex: 1; flex-direction: column; min-height: 0; }
 .admin-chrome {
   background: #f8fafc; border-bottom: 1px solid #e2e8f0;
-  padding: 10px 14px;
-  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  padding: 10px 14px; display: flex; align-items: center; gap: 10px; flex-shrink: 0;
 }
 .chrome-dots { display: flex; gap: 6px; }
 .chrome-dots i { width: 12px; height: 12px; border-radius: 50%; display: block; }
 .chrome-dots .r { background: #ff5f57; }
 .chrome-dots .y { background: #febc2e; }
 .chrome-dots .g { background: #28c840; }
-/* URL bar — hanya tampil label aman, bukan link asli */
 .admin-url-bar {
   flex: 1; background: #fff; border: 1px solid #e2e8f0;
-  border-radius: 7px; padding: 5px 11px;
-  font-size: 12px; color: #64748b;
+  border-radius: 7px; padding: 5px 11px; font-size: 12px; color: #64748b;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  display: flex; align-items: center; gap: 6px;
-  user-select: none; pointer-events: none; /* tidak bisa diklik/disalin */
+  display: flex; align-items: center; gap: 6px; user-select: none; pointer-events: none;
 }
 .admin-url-bar .lock-ic { color: #10b981; font-size: 12px; }
 .btn-admin-close {
   background: #dc3545; color: #fff; border: none;
-  padding: 7px 16px; border-radius: 10px;
-  font-size: 13px; font-weight: 600; cursor: pointer;
-  display: flex; align-items: center; gap: 6px;
-  transition: background .14s, transform .1s;
-  flex-shrink: 0;
+  padding: 7px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; gap: 6px; transition: background .14s, transform .1s; flex-shrink: 0;
 }
-.btn-admin-close:hover  { background: #bb2d3b; }
-.btn-admin-close:active { transform: scale(.96); }
+.btn-admin-close:hover { background: #bb2d3b; }
 
-/* iframe area */
-.admin-iframe-wrap {
-  flex: 1; position: relative; min-height: 0;
-}
+.admin-iframe-wrap { flex: 1; position: relative; min-height: 0; }
 .admin-loader {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 12px;
-  background: #fff; z-index: 2; transition: opacity .3s;
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px; background: #fff; z-index: 2; transition: opacity .3s;
 }
 .admin-loader.gone { opacity: 0; pointer-events: none; }
 .spin {
-  width: 40px; height: 40px;
-  border: 3px solid #e2e8f0; border-top-color: #0d6efd;
+  width: 40px; height: 40px; border: 3px solid #e2e8f0; border-top-color: #0d6efd;
   border-radius: 50%; animation: spin .75s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .admin-loader p { font-size: 13px; color: #64748b; font-weight: 500; }
-.admin-iframe-wrap iframe {
-  position: absolute; inset: 0;   /* iframe mengisi seluruh wrapper */
-  width: 100%; height: 100%;
-  border: none; display: block;
-}
+.admin-iframe-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
 
 @media (max-width: 480px) {
   .admin-url-bar { display: none; }
@@ -378,170 +396,206 @@ body{
 
 <body>
 
-<!-- ======== HEADER + TOMBOL ADMIN ======== -->
-<div class="app-header">
+<!-- SKIP TO CONTENT LINK -->
+<a href="#main-content" class="skip-link">Lompat ke Konten Utama</a>
+
+<!-- ======== HEADER ======== -->
+<header class="app-header" role="banner">
   <div class="header-left">
-    📱 SERENA <small style="font-weight:400;margin-left:4px">– Serengan Easy N' Active Service</small>
+    <span aria-hidden="true">📱</span>
+    <h1>SERENA <small style="font-weight:400;font-size:14px;">– Serengan Easy N' Active Service</small></h1>
   </div>
-  <!-- ✨ TOMBOL ADMIN — buka modal, URL tersembunyi -->
-  <button class="btn-admin-header" onclick="bukaAdmin()">
-    <i class="bi bi-lock-fill"></i> Admin
+  <button class="btn-admin-header" onclick="bukaAdmin()" aria-label="Buka Panel Admin SERENA">
+    <i class="bi bi-lock-fill" aria-hidden="true"></i> Admin
   </button>
-</div>
+</header>
 
-<!-- ======== HERO SLIDER ======== -->
-<div class="container mt-3" id="home">
-  <div class="hero-slider">
-    <div class="hero-slide active" style="background-image:url('img/gedung1.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('img/gedung2.jpeg')"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-text">
-      <h5>SERENA – Layanan Digital Serengan</h5>
-      <small>Easy • Active • Service</small>
+<main id="main-content">
+  <!-- ======== HERO SLIDER ======== -->
+  <div class="container mt-3" id="home">
+    <section class="hero-slider" aria-label="Galeri Foto Gedung Pelayanan">
+      <div class="hero-slide active" style="background-image:url('img/gedung1.jpg')" role="img" aria-label="Foto Gedung Depan Kantor Kelurahan Serengan"></div>
+      <div class="hero-slide" style="background-image:url('img/gedung2.jpeg')" role="img" aria-label="Foto Ruang Pelayanan Publik Kelurahan Serengan"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-text">
+        <h2>SERENA – Layanan Digital Serengan</h2>
+        <p class="mb-0"><small>Easy • Active • Service</small></p>
+      </div>
+      <div class="hero-dots" aria-label="Navigasi Slider"></div>
+    </section>
+  </div>
+
+  <!-- ======== TENTANG ======== -->
+  <div class="container mt-3" id="tentang">
+    <section class="card-app mb-3" data-aos="fade-up" aria-labelledby="heading-tentang">
+      <h3 id="heading-tentang" style="font-size:18px;">🌟 Tentang SERENA</h3>
+      <p style="font-size:15px;line-height:1.6">
+        <b>SERENA (Serengan Easy N' Active Service)</b> merupakan inovasi tata kelola pemerintahan dan pelayanan publik Kelurahan Serengan untuk mewujudkan pelayanan yang <b>mudah, aktif, dan responsif</b> berbasis teknologi.
+      </p>
+      <div class="timeline mt-2" role="list">
+        <div role="listitem"><b>Pendahuluan</b><br>SERENA menghadirkan sistem pelayanan terpadu berbasis digital, terintegrasi, dan adaptif terhadap kebutuhan warga.</div>
+        <div role="listitem"><b>Tujuan</b><br>Meningkatkan kualitas tata kelola pemerintahan yang efektif, efisien, dan transparan.</div>
+        <div role="listitem"><b>Sasaran</b><br>Masyarakat Serengan, aparatur kelurahan, serta lembaga kemasyarakatan sebagai mitra inovasi.</div>
+        <div role="listitem"><b>Indikator</b><br>Kecepatan layanan meningkat, kepuasan warga naik, dan budaya kerja aparatur makin inovatif.</div>
+        <div role="listitem"><b>Penutup</b><br>Inovasi SERENA menjadi wujud nyata transformasi pelayanan publik modern.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======== LAYANAN ======== -->
+  <div class="container mt-3" id="layanan">
+    <aside class="pengumuman mb-3" data-aos="fade-up" role="region" aria-label="Pengumuman Penting">
+      <span aria-hidden="true">📢</span> <b>Pengumuman</b><br>
+      Pastikan berkas lengkap sebelum mengajukan permohonan layanan.
+    </aside>
+
+    <div class="card-app mb-3 search-box" data-aos="fade-up">
+      <label for="searchInput" class="visually-hidden">Cari layanan publik</label>
+      <input type="text" id="searchInput" class="form-control" placeholder="🔍 Cari layanan..." aria-label="Cari layanan publik">
     </div>
-    <div class="hero-dots"></div>
-  </div>
-</div>
 
-<!-- ======== TENTANG ======== -->
-<div class="container mt-3" id="tentang">
-  <div class="card-app mb-3" data-aos="fade-up">
-    <h6>🌟 Tentang SERENA</h6>
-    <p style="font-size:15px;line-height:1.6">
-      <b>SERENA (Serengan Easy N' Active Service)</b> merupakan inovasi tata kelola pemerintahan dan pelayanan publik Kelurahan Serengan untuk mewujudkan pelayanan yang <b>mudah, aktif, dan responsif</b> berbasis teknologi.
-    </p>
-    <div class="timeline mt-2">
-      <div><b>Pendahuluan</b><br>SERENA menghadirkan sistem pelayanan terpadu berbasis digital, terintegrasi, dan adaptif terhadap kebutuhan warga.</div>
-      <div><b>Tujuan</b><br>Meningkatkan kualitas tata kelola pemerintahan yang efektif, efisien, dan transparan.</div>
-      <div><b>Sasaran</b><br>Masyarakat Serengan, aparatur kelurahan, serta lembaga kemasyarakatan sebagai mitra inovasi.</div>
-      <div><b>Indikator</b><br>Kecepatan layanan meningkat, kepuasan warga naik, dan budaya kerja aparatur makin inovatif.</div>
-      <div><b>Penutup</b><br>Inovasi SERENA menjadi wujud nyata transformasi pelayanan publik modern.</div>
-    </div>
-  </div>
-</div>
+    <section class="card-app mb-3" data-aos="fade-up" aria-labelledby="heading-layanan">
+      <h3 id="heading-layanan" style="font-size:18px;">📋 Daftar Layanan</h3>
+      <div class="row g-3 mt-2" id="layananList">
 
-<!-- ======== LAYANAN ======== -->
-<div class="container mt-3" id="layanan">
-  <div class="pengumuman mb-3" data-aos="fade-up">
-    📢 <b>Pengumuman</b><br>
-    Pastikan berkas lengkap sebelum mengajukan permohonan layanan.
-  </div>
-
-  <div class="card-app mb-3 search-box" data-aos="fade-up">
-    <input type="text" id="searchInput" class="form-control" placeholder="🔍 Cari layanan...">
-  </div>
-
-  <div class="card-app mb-3" data-aos="fade-up">
-    <h6>📋 Daftar Layanan</h6>
-    <div class="row g-3 mt-2" id="layananList">
-
-      <div class="col-4 layanan-item">
-        <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
-          data-title="Surat Keterangan"
-          data-syarat="<li>Pengantar RT/RW</li><li>KTP-el</li><li>Kartu Keluarga</li>"
-          data-alur="<li>Isi Formulir</li><li>Upload Persyaratan</li><li>Proses Petugas</li><li>Selesai</li>"
-          data-link="https://script.google.com/macros/s/AKfycbxMkS7N_vilvWjmi09eHoWvCC6-r_e7dqPzoCbmQrC5o0Bt_3YlOlJxiRdMZUvpkB829w/exec">
-          <div class="icon">📄</div><small>Surat Keterangan</small>
+        <div class="col-4 layanan-item">
+          <div class="service-card" tabindex="0" role="button" data-bs-toggle="modal" data-bs-target="#layananModal"
+            data-title="Surat Keterangan"
+            data-syarat="<li>Pengantar RT/RW</li><li>KTP-el</li><li>Kartu Keluarga</li>"
+            data-alur="<li>Isi Formulir</li><li>Upload Persyaratan</li><li>Proses Petugas</li><li>Selesai</li>"
+            data-link="https://script.google.com/macros/s/AKfycbxMkS7N_vilvWjmi09eHoWvCC6-r_e7dqPzoCbmQrC5o0Bt_3YlOlJxiRdMZUvpkB829w/exec">
+            <div class="icon" aria-hidden="true">📄</div>
+            <small class="d-block mt-1">Surat Keterangan</small>
+          </div>
         </div>
-      </div>
 
-      <div class="col-4 layanan-item">
-        <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
-          data-title="KIS"
-          data-syarat="<li>Pengantar RT/RW</li><li>KTP-el</li><li>Kartu Keluarga</li>"
-          data-alur="<li>Isi Formulir</li><li>Upload Persyaratan</li><li>Proses Petugas</li><li>Selesai</li>"
-          data-link="https://script.google.com/macros/s/AKfycbzffaFw_WZ_9uhcbAO1L6xGI1UFcKSuNXidAAosOAO_Kv1_wHgbCWaupqW2xg2i9s03/exec">
-          <div class="icon">🪪</div><small>KIS</small>
+        <div class="col-4 layanan-item">
+          <div class="service-card" tabindex="0" role="button" data-bs-toggle="modal" data-bs-target="#layananModal"
+            data-title="KIS"
+            data-syarat="<li>Pengantar RT/RW</li><li>KTP-el</li><li>Kartu Keluarga</li>"
+            data-alur="<li>Isi Formulir</li><li>Upload Persyaratan</li><li>Proses Petugas</li><li>Selesai</li>"
+            data-link="https://script.google.com/macros/s/AKfycbzffaFw_WZ_9uhcbAO1L6xGI1UFcKSuNXidAAosOAO_Kv1_wHgbCWaupqW2xg2i9s03/exec">
+            <div class="icon" aria-hidden="true">🪪</div>
+            <small class="d-block mt-1">KIS</small>
+          </div>
         </div>
-      </div>
 
-      <div class="col-4 layanan-item">
-        <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
-          data-title="Nikah"
-          data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Bukti Dukung Ijazah/Buku Nikah Orang Tua</li>"
-          data-alur="<li>Isi Formulir</li><li>Upload Persyaratan</li><li>Proses Petugas</li><li>Selesai</li>"
-          data-link="https://script.google.com/macros/s/AKfycbwzZPQUzpA2xJqD2MWYoXOkFNEGDSxG4tLLljqIZx2G4cobAAMPlSG-UXFeKEryqbpzqg/exec">
-          <div class="icon">💍</div><small>Nikah</small>
+        <div class="col-4 layanan-item">
+          <div class="service-card" tabindex="0" role="button" data-bs-toggle="modal" data-bs-target="#layananModal"
+            data-title="Nikah"
+            data-syarat="<li>KTP-el</li><li>Kartu Keluarga</li><li>Bukti Dukung Ijazah/Buku Nikah Orang Tua</li>"
+            data-alur="<li>Isi Formulir</li><li>Upload Persyaratan</li><li>Proses Petugas</li><li>Selesai</li>"
+            data-link="https://script.google.com/macros/s/AKfycbwzZPQUzpA2xJqD2MWYoXOkFNEGDSxG4tLLljqIZx2G4cobAAMPlSG-UXFeKEryqbpzqg/exec">
+            <div class="icon" aria-hidden="true">💍</div>
+            <small class="d-block mt-1">Nikah</small>
+          </div>
         </div>
-      </div>
 
-      <div class="col-4 layanan-item">
-        <div class="service-card" data-bs-toggle="modal" data-bs-target="#layananModal"
-          data-title="Pembayaran PBB"
-          data-syarat="<li>Nomor Objek Pajak (NOP)</li>"
-          data-alur="<li>Isi Nomor Objek Pajak (NOP)</li><li>Pilih Pembayaran</li><li>Selesai</li>"
-          data-link="https://script.google.com/macros/s/AKfycbyGuO3KyJ_k41IuW4VxMH3D_j1Bt7DpgR8sK0boE5S3RjvOvHS5B-Uh_M4fQXdGB2-zgQ/exec">
-          <div class="icon">💳</div><small>Pembayaran PBB</small>
+        <div class="col-4 layanan-item">
+          <div class="service-card" tabindex="0" role="button" data-bs-toggle="modal" data-bs-target="#layananModal"
+            data-title="Pembayaran PBB"
+            data-syarat="<li>Nomor Objek Pajak (NOP)</li>"
+            data-alur="<li>Isi Nomor Objek Pajak (NOP)</li><li>Pilih Pembayaran</li><li>Selesai</li>"
+            data-link="https://script.google.com/macros/s/AKfycbyGuO3KyJ_k41IuW4VxMH3D_j1Bt7DpgR8sK0boE5S3RjvOvHS5B-Uh_M4fQXdGB2-zgQ/exec">
+            <div class="icon" aria-hidden="true">💳</div>
+            <small class="d-block mt-1">Pembayaran PBB</small>
+          </div>
         </div>
-      </div>
 
-      <div class="col-4 layanan-item">
-        <a href="https://dukcapildalamgenggaman.surakarta.go.id/" target="_blank" style="text-decoration:none;color:inherit;">
-          <div class="service-card"><div class="icon">🏛️</div><small>Layanan Dukcapil</small></div>
-        </a>
-      </div>
-      <div class="col-4 layanan-item">
-        <a href="https://dtsen-form.bps.go.id/login?redirect=/" target="_blank" style="text-decoration:none;color:inherit;">
-          <div class="service-card"><div class="icon">👥</div><small>Cek Desil</small></div>
-        </a>
-      </div>
+        <div class="col-4 layanan-item">
+          <a href="https://dukcapildalamgenggaman.surakarta.go.id/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
+            <div class="service-card">
+              <div class="icon" aria-hidden="true">🏛️</div>
+              <small class="d-block mt-1">Layanan Dukcapil</small>
+            </div>
+          </a>
+        </div>
 
-      <div class="col-4 layanan-item">
-        <a href="https://api.whatsapp.com/send/?phone=628118165165&text&type=phone_number&app_absent=0" target="_blank" style="text-decoration:none;color:inherit;">
-          <div class="service-card"><div class="icon">🩺</div><small>Pandawa BPJS</small></div>
-        </a>
-      </div>
+        <div class="col-4 layanan-item">
+          <a href="https://dtsen-form.bps.go.id/login?redirect=/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
+            <div class="service-card">
+              <div class="icon" aria-hidden="true">👥</div>
+              <small class="d-block mt-1">Cek Desil</small>
+            </div>
+          </a>
+        </div>
 
-    </div>
+        <div class="col-4 layanan-item">
+          <a href="https://api.whatsapp.com/send/?phone=628118165165&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
+            <div class="service-card">
+              <div class="icon" aria-hidden="true">🩺</div>
+              <small class="d-block mt-1">Pandawa BPJS</small>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </section>
   </div>
-</div>
 
-<!-- ======== JAM LAYANAN ======== -->
-<div class="container mt-3" id="info">
-  <div class="card-app mb-3" data-aos="fade-up">
-    <h6>⏰ Jam Layanan</h6>
-    <table class="table-jam">
-      <thead><tr><th>Hari</th><th>Jam</th><th>Status</th></tr></thead>
-      <tbody id="jamTable"></tbody>
-    </table>
+  <!-- ======== JAM LAYANAN & LOKASI ======== -->
+  <div class="container mt-3" id="info">
+    <section class="card-app mb-3" data-aos="fade-up" aria-labelledby="heading-jam">
+      <h3 id="heading-jam" style="font-size:18px;">⏰ Jam Layanan</h3>
+      <table class="table-jam">
+        <caption class="visually-hidden">Jadwal Operasional Pelayanan Publik Kantor Kelurahan</caption>
+        <thead>
+          <tr><th scope="col">Hari</th><th scope="col">Jam</th><th scope="col">Status</th></tr>
+        </thead>
+        <tbody id="jamTable"></tbody>
+      </table>
+    </section>
+
+    <section class="card-app mb-3" data-aos="fade-up" id="lokasi" aria-labelledby="heading-lokasi">
+      <h3 id="heading-lokasi" style="font-size:18px;">📍 Lokasi Kantor</h3>
+      <iframe title="Peta Lokasi Kantor Kelurahan Serengan" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.910806811021!2d110.81335162588387!3d-7.584687274938732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a16722da4102b%3A0x93283f70f0a9bcaf!2sKantor%20Lurah%20Serengan%2C%20Jl.%20Sadewa%20No.39%2C%20Serengan%2C%20Surakarta%20City%2C%20Central%20Java%2057155!5e0!3m2!1sen!2sid!4v1770637485239!5m2!1sen!2sid"
+        width="100%" height="260" style="border-radius:16px;border:0"></iframe>
+      <div class="lokasi-info">
+        <span id="jarakText">📏 Menghitung jarak...</span>
+        <span id="waktuText">⏱ Menghitung waktu...</span>
+      </div>
+      <a id="btnMaps" target="_blank" rel="noopener noreferrer" class="btn-maps">🧭 Navigasi ke Lokasi</a>
+    </section>
   </div>
+</main>
 
-  <!-- ======== LOKASI ======== -->
-  <div class="card-app mb-3" data-aos="fade-up" id="lokasi">
-    <h6>📍 Lokasi Kantor</h6>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.910806811021!2d110.81335162588387!3d-7.584687274938732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a16722da4102b%3A0x93283f70f0a9bcaf!2sKantor%20Lurah%20Serengan%2C%20Jl.%20Sadewa%20No.39%2C%20Serengan%2C%20Surakarta%20City%2C%20Central%20Java%2057155!5e0!3m2!1sen!2sid!4v1770637485239!5m2!1sen!2sid"
-      width="100%" height="260" style="border-radius:16px;border:0"></iframe>
-    <div class="lokasi-info">
-      <span id="jarakText">📏 Menghitung jarak...</span>
-      <span id="waktuText">⏱ Menghitung waktu...</span>
-    </div>
-    <a id="btnMaps" target="_blank" class="btn-maps">🧭 Navigasi ke Lokasi</a>
-  </div>
-</div>
-
-<footer class="serena-footer-mini">©2025 SERENA v.1.0 Kelurahan Serengan</footer>
+<footer class="serena-footer-mini" role="contentinfo">©2025 SERENA v.1.0 Kelurahan Serengan</footer>
 
 <!-- ======== BOTTOM NAV ======== -->
-<div class="bottom-nav">
-  <a href="#home" class="active">🏠<br>Home</a>
-  <a href="#" id="openSerenaMenu">🌟<br>SERENA</a>
-  <a href="#layanan">📄<br>Layanan</a>
-  <a href="#" id="openFormMenu">🧾<br>Formulir</a>
+<nav class="bottom-nav" aria-label="Navigasi Utama Bawah">
+  <a href="#home" class="active" aria-label="Beranda SERENA"><span aria-hidden="true">🏠</span><span>Home</span></a>
+  <a href="#" id="openSerenaMenu" aria-label="Profil SERENA"><span aria-hidden="true">🌟</span><span>SERENA</span></a>
+  <a href="#layanan" aria-label="Daftar Layanan"><span aria-hidden="true">📄</span><span>Layanan</span></a>
+  <a href="#" id="openFormMenu" aria-label="Daftar Formulir"><span aria-hidden="true">🧾</span><span>Formulir</span></a>
+</nav>
+
+<!-- ======== WIDGET AKSESIBILITAS ======== -->
+<div class="accessibility-menu">
+  <button class="btn-access-toggle" onclick="toggleAccessPanel()" aria-label="Menu Fitur Aksesibilitas" aria-expanded="false" id="btnAccessToggle">
+    <i class="bi bi-universal-access" aria-hidden="true"></i>
+  </button>
+  <div class="access-panel" id="accessPanel" role="region" aria-label="Pengaturan Aksesibilitas">
+    <button onclick="changeFontSize(1)"><i class="bi bi-zoom-in" aria-hidden="true"></i> Perbesar Teks</button>
+    <button onclick="changeFontSize(-1)"><i class="bi bi-zoom-out" aria-hidden="true"></i> Perkecil Teks</button>
+    <button onclick="toggleHighContrast()"><i class="bi bi-circle-half" aria-hidden="true"></i> Kontras Tinggi</button>
+    <button onclick="toggleHighlightLinks()"><i class="bi bi-link-45deg" aria-hidden="true"></i> Sorot Link</button>
+    <button onclick="toggleDyslexicFont()"><i class="bi bi-fonts" aria-hidden="true"></i> Font Disleksia</button>
+  </div>
 </div>
 
 <!-- ======== MODAL LAYANAN ======== -->
-<div class="modal fade" id="layananModal" tabindex="-1">
+<div class="modal fade" id="layananModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
   <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-sm-down">
     <div class="modal-content rounded-4">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle"></h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+        <h4 class="modal-title" id="modalTitle"></h4>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
       </div>
       <div class="modal-body">
         <div id="infoLayanan">
-          <h6>📌 Persyaratan</h6>
+          <h5>📌 Persyaratan</h5>
           <ul id="modalSyarat"></ul>
-          <h6 class="mt-3">🔄 Alur Layanan</h6>
+          <h5 class="mt-3">🔄 Alur Layanan</h5>
           <ol id="modalAlur"></ol>
           <div class="validasi-box mt-3">
             <div class="form-check d-flex align-items-center gap-2">
@@ -554,22 +608,21 @@ body{
           <button id="modalLink" class="btn btn-primary w-100 mt-3 disabled">Isi Pengajuan</button>
         </div>
         <div id="formFrameWrap" class="d-none mt-3">
-          <iframe id="formFrame" style="width:100%;height:80vh;border:none;border-radius:12px"></iframe>
+          <iframe id="formFrame" title="Formulir Layanan Digital" style="width:100%;height:80vh;border:none;border-radius:12px"></iframe>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ======== SHEET BACKDROP ======== -->
+<!-- ======== SHEET BACKDROP & FORM MENU ======== -->
 <div class="sheet-backdrop" id="sheetBackdrop"></div>
 
-<!-- ======== FORM MENU SHEET ======== -->
-<div class="form-sheet" id="formMenuSheet">
+<div class="form-sheet" id="formMenuSheet" role="dialog" aria-modal="true" aria-labelledby="heading-form-menu">
   <div class="sheet-handle"></div>
   <div class="form-sheet-header">
-    📑 Daftar Formulir
-    <button class="form-sheet-close" onclick="closeFormMenu()">Tutup</button>
+    <span id="heading-form-menu">📑 Daftar Formulir</span>
+    <button class="form-sheet-close" onclick="closeFormMenu()" aria-label="Tutup menu formulir">Tutup</button>
   </div>
   <div class="p-2 form-list">
     <a href="#" data-title="F1.01 Biodata" data-link="https://script.google.com/macros/s/AKfycbwenCtGEOFMFxthJMa3lLC6j2GzRbPRis6b2DqdQF5NqpCA96YvJjxdFOzOnWwAO45ltQ/exec">🧾 F1.01 Formulir Biodata</a>
@@ -581,69 +634,68 @@ body{
   </div>
 </div>
 
-<!-- ======== FORM SHEET (iframe) ======== -->
-<div class="form-sheet" id="formSheet">
+<div class="form-sheet" id="formSheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
   <div class="sheet-handle"></div>
   <div class="form-sheet-header">
     <span id="sheetTitle">Form</span>
-    <button class="form-sheet-close" onclick="closeFormSheet()">Tutup</button>
+    <button class="form-sheet-close" onclick="closeFormSheet()" aria-label="Tutup formulir">Tutup</button>
   </div>
-  <iframe id="sheetFrame"></iframe>
+  <iframe id="sheetFrame" title="Pengisian Formulir Digital"></iframe>
 </div>
 
 <!-- ======== SERENA SHEET ======== -->
-<div class="form-sheet" id="serenaSheet">
+<div class="form-sheet" id="serenaSheet" role="dialog" aria-modal="true" aria-labelledby="heading-serena-sheet">
   <div class="sheet-handle"></div>
   <div class="form-sheet-header">
-    🌟 Profil SERENA
-    <button class="form-sheet-close" onclick="closeSerena()">Tutup</button>
+    <span id="heading-serena-sheet">🌟 Profil SERENA</span>
+    <button class="form-sheet-close" onclick="closeSerena()" aria-label="Tutup profil SERENA">Tutup</button>
   </div>
   <div class="p-3" style="overflow:auto">
     <div class="accordion" id="accordionSerena">
       <div class="accordion-item">
-        <h2 class="accordion-header">
+        <h4 class="accordion-header">
           <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#s1">📌 Pendahuluan</button>
-        </h2>
+        </h4>
         <div id="s1" class="accordion-collapse collapse show">
           <div class="accordion-body">Inovasi "SERENA" merupakan inovasi tata kelola pemerintahan daerah dan pelayanan publik yang dikembangkan oleh Kelurahan Serengan untuk mewujudkan pelayanan yang mudah, aktif, dan responsif berbasis teknologi.</div>
         </div>
       </div>
       <div class="accordion-item">
-        <h2 class="accordion-header">
+        <h4 class="accordion-header">
           <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s2">⚖️ Dasar Hukum</button>
-        </h2>
+        </h4>
         <div id="s2" class="accordion-collapse collapse">
           <div class="accordion-body"><ul><li>UU No 25 Tahun 2009 tentang Pelayanan Publik</li><li>UU No 23 Tahun 2014 tentang Pemerintahan Daerah</li><li>PP No 38 Tahun 2017 tentang Inovasi Daerah</li><li>Permendagri No 104 Tahun 2018</li><li>Perwali Surakarta tentang Inovasi Daerah</li></ul></div>
         </div>
       </div>
       <div class="accordion-item">
-        <h2 class="accordion-header">
+        <h4 class="accordion-header">
           <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s3">🎯 Tujuan</button>
-        </h2>
+        </h4>
         <div id="s3" class="accordion-collapse collapse">
           <div class="accordion-body"><ul><li>Meningkatkan tata kelola efektif dan transparan.</li><li>Pelayanan mudah diakses masyarakat.</li><li>Budaya kerja aktif dan inovatif.</li><li>Integrasi inovasi pelayanan.</li></ul></div>
         </div>
       </div>
       <div class="accordion-item">
-        <h2 class="accordion-header">
+        <h4 class="accordion-header">
           <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s4">👥 Sasaran</button>
-        </h2>
+        </h4>
         <div id="s4" class="accordion-collapse collapse">
           <div class="accordion-body">Masyarakat Serengan, aparatur kelurahan, dan lembaga kemasyarakatan sebagai mitra inovasi.</div>
         </div>
       </div>
       <div class="accordion-item">
-        <h2 class="accordion-header">
+        <h4 class="accordion-header">
           <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s5">🧭 Mekanisme</button>
-        </h2>
+        </h4>
         <div id="s5" class="accordion-collapse collapse">
           <div class="accordion-body">Pembentukan tim inovasi, integrasi sistem digital, monitoring berkala, dan evaluasi kinerja.</div>
         </div>
       </div>
       <div class="accordion-item">
-        <h2 class="accordion-header">
+        <h4 class="accordion-header">
           <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#s6">📊 Indikator Keberhasilan</button>
-        </h2>
+        </h4>
         <div id="s6" class="accordion-collapse collapse">
           <div class="accordion-body">Kecepatan layanan meningkat, kepuasan warga naik, dan sistem digital aktif berjalan.</div>
         </div>
@@ -653,53 +705,54 @@ body{
 </div>
 
 <!-- ======== FLOATING SOCIAL ======== -->
-<div class="floating-social">
-  <a href="https://wa.me/62882003654359" class="wa" target="_blank"><i class="bi bi-whatsapp"></i></a>
-  <a href="https://www.instagram.com/kelurahanserengan/" class="ig" target="_blank"><i class="bi bi-instagram"></i></a>
-  <a href="mailto:kel-serengan@surakarta.go.id" class="mail"><i class="bi bi-envelope"></i></a>
-  <a href="tel:0882003654359" class="tel"><i class="bi bi-telephone"></i></a>
-</div>
+<aside class="floating-social" aria-label="Kontak dan Media Sosial Melayang">
+  <a href="https://wa.me/62882003654359" class="wa" target="_blank" rel="noopener noreferrer" aria-label="Chat via WhatsApp Kelurahan Serengan"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
+  <a href="https://www.instagram.com/kelurahanserengan/" class="ig" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi Instagram Kelurahan Serengan"><i class="bi bi-instagram" aria-hidden="true"></i></a>
+  <a href="mailto:kel-serengan@surakarta.go.id" class="mail" aria-label="Kirim Email ke Kelurahan Serengan"><i class="bi bi-envelope" aria-hidden="true"></i></a>
+  <a href="tel:0882003654359" class="tel" aria-label="Hubungi Telepon Kantor Kelurahan"><i class="bi bi-telephone" aria-hidden="true"></i></a>
+</aside>
 
-<!-- ======== ADMIN MODAL (pop-up center + PIN gate) ======== -->
-<div class="admin-overlay" id="adminOverlay">
+<!-- ======== ADMIN MODAL ======== -->
+<div class="admin-overlay" id="adminOverlay" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
   <div class="admin-modal" id="adminModal">
 
     <!-- STEP 1: PIN GATE -->
     <div id="adminPinGate">
       <div class="pin-header">
-        <div class="pin-icon"><i class="bi bi-shield-lock-fill"></i></div>
-        <div class="pin-title">Panel Admin SERENA</div>
-        <div class="pin-sub">Kelurahan Serengan · Kota Surakarta</div>
+        <div class="pin-icon"><i class="bi bi-shield-lock-fill" aria-hidden="true"></i></div>
+        <h3 class="pin-title" id="adminTitle">Panel Admin SERENA</h3>
+        <p class="pin-sub mb-0">Kelurahan Serengan · Kota Surakarta</p>
       </div>
       <div class="pin-body">
-        <label class="pin-label">Masukkan PIN untuk melanjutkan</label>
+        <label for="pinInput" class="pin-label">Masukkan PIN untuk melanjutkan</label>
         <div class="pin-input-wrap" id="pinInputWrap">
           <input type="password" id="pinInput" class="pin-input"
             maxlength="6" placeholder="••••••"
             oninput="clearPinError()"
-            onkeydown="if(event.key==='Enter') cekPin()">
-          <button class="pin-eye" type="button" onclick="togglePin()">
-            <i class="bi bi-eye" id="pinEyeIcon"></i>
+            onkeydown="if(event.key==='Enter') cekPin()"
+            aria-label="Masukkan PIN Rahasia Admin">
+          <button class="pin-eye" type="button" onclick="togglePin()" aria-label="Tampilkan atau Sembunyikan PIN">
+            <i class="bi bi-eye" id="pinEyeIcon" aria-hidden="true"></i>
           </button>
         </div>
-        <div class="pin-error" id="pinError"></div>
+        <div class="pin-error" id="pinError" role="alert"></div>
         <button class="btn-pin-masuk" onclick="cekPin()">
-          <i class="bi bi-unlock-fill"></i> Masuk
+          <i class="bi bi-unlock-fill" aria-hidden="true"></i> Masuk
         </button>
         <button class="btn-pin-batal" onclick="tutupAdmin()">Batal</button>
       </div>
     </div>
 
-    <!-- STEP 2: DASHBOARD (tampil setelah PIN benar) -->
-    <div id="adminDashboard" style="display:none;">
+    <!-- STEP 2: DASHBOARD -->
+    <div id="adminDashboard">
       <div class="admin-chrome">
-        <div class="chrome-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+        <div class="chrome-dots" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i></div>
         <div class="admin-url-bar">
-          <i class="bi bi-shield-lock-fill lock-ic"></i>
+          <i class="bi bi-shield-lock-fill lock-ic" aria-hidden="true"></i>
           Panel Admin SERENA · Kelurahan Serengan
         </div>
-        <button class="btn-admin-close" onclick="tutupAdmin()">
-          <i class="bi bi-x-lg"></i> Tutup
+        <button class="btn-admin-close" onclick="tutupAdmin()" aria-label="Tutup Panel Admin">
+          <i class="bi bi-x-lg" aria-hidden="true"></i> Tutup
         </button>
       </div>
       <div class="admin-iframe-wrap">
@@ -723,6 +776,35 @@ body{
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <script>
+/* ---- FITUR WIDGET AKSESIBILITAS ---- */
+let fontSize = 100;
+function changeFontSize(dir) {
+  fontSize += dir * 10;
+  if (fontSize < 80) fontSize = 80;
+  if (fontSize > 150) fontSize = 150;
+  document.body.style.fontSize = fontSize + "%";
+}
+
+function toggleHighContrast() {
+  document.body.classList.toggle('high-contrast');
+}
+
+function toggleHighlightLinks() {
+  document.body.classList.toggle('highlight-links');
+}
+
+function toggleDyslexicFont() {
+  document.body.classList.toggle('dyslexic-font');
+}
+
+function toggleAccessPanel() {
+  const panel = document.getElementById('accessPanel');
+  const btn = document.getElementById('btnAccessToggle');
+  const isOpen = panel.classList.contains('show');
+  panel.classList.toggle('show');
+  btn.setAttribute('aria-expanded', !isOpen);
+}
+
 /* ---- JAM LAYANAN ---- */
 const jamData = [
   {hari:"Senin",   open:480, close:990, label:"07.30 - 16.30 WIB"},
@@ -742,7 +824,7 @@ function renderJam(){
     let isToday = (i === (d===0?6:d-1));
     let buka = j.open!==null && nowMin>=j.open && nowMin<=j.close && isToday;
     html += `<tr class="${isToday?'today':''}">
-      <td>${j.hari}</td><td>${j.label}</td>
+      <th scope="row">${j.hari}</th><td>${j.label}</td>
       <td>${isToday?(buka?'<span class="badge-open">Buka</span>':'<span class="badge-close">Tutup</span>'):'-'}</td>
     </tr>`;
   });
@@ -773,13 +855,12 @@ function initLokasi(){
 }
 initLokasi();
 
-/* ---- ADMIN MODAL + PIN GATE ---- */
+/* ---- ADMIN MODAL ---- */
 const ADMIN_SRC = "https://script.google.com/macros/s/AKfycbzcEcnLZGgYIFnbpGOxHh9IXqGpu0pDSvoKAGv7t8tyNZ4jM5mEZBEBllMaYb3IWFVf/exec?embedded=true";
-const ADMIN_PIN = "393939"; // ← ganti PIN sesuai kebutuhan
+const ADMIN_PIN = "393939";
 let adminLoaded = false;
 
 window.bukaAdmin = function(){
-  // reset ke PIN gate setiap buka
   document.getElementById("pinInput").value = "";
   document.getElementById("pinError").innerText = "";
   document.getElementById("pinInputWrap").style.borderColor = "";
@@ -793,7 +874,6 @@ window.bukaAdmin = function(){
 window.tutupAdmin = function(){
   document.getElementById("adminOverlay").classList.remove("open");
   document.body.style.overflow = "";
-  // reset iframe saat tutup agar aman
   setTimeout(()=>{
     if(!document.getElementById("adminOverlay").classList.contains("open")){
       document.getElementById("adminFrame").src = "about:blank";
@@ -802,16 +882,12 @@ window.tutupAdmin = function(){
   }, 400);
 };
 
-
-
-
 window.cekPin = function(){
   const val = document.getElementById("pinInput").value.trim();
   if(val === ADMIN_PIN){
-    // PIN benar → sembunyikan gate, tampilkan dashboard sebagai flex
     document.getElementById("adminPinGate").style.display = "none";
     const dash = document.getElementById("adminDashboard");
-    dash.style.display = "flex";          // flex agar chrome + iframe stretch benar
+    dash.style.display = "flex";
     dash.style.flexDirection = "column";
     dash.style.flex = "1";
     if(!adminLoaded){
@@ -820,7 +896,6 @@ window.cekPin = function(){
       adminLoaded = true;
     }
   } else {
-    // PIN salah → shake + error
     const wrap = document.getElementById("pinInputWrap");
     wrap.style.borderColor = "#dc3545";
     wrap.style.boxShadow = "0 0 0 3px rgba(220,53,69,.15)";
@@ -857,7 +932,6 @@ window.adminFrameReady = function(){
   document.getElementById("adminLoader").classList.add("gone");
 };
 
-// Tangkap pesan dari GAS iframe (untuk previewLink mobile)
 window.addEventListener("message", function(e){
   if(!e.data || !e.data.type) return;
   if(e.data.type === "OPEN_URL"){
@@ -872,20 +946,21 @@ document.addEventListener("keydown", e=>{
 document.addEventListener("DOMContentLoaded", function(){
   AOS.init();
 
-  /* ---- SLIDER ---- */
+  /* ---- SLIDER ACCESSIBLE ---- */
   const slider = document.querySelector('.hero-slider');
   const slides = document.querySelectorAll('.hero-slide');
   const dotsWrap = document.querySelector('.hero-dots');
   let index=0, timer=null, startX=0, isTouch=false;
   slides.forEach((_,i)=>{
-    const d=document.createElement('span');
+    const d=document.createElement('button');
+    d.setAttribute('aria-label', `Beralih ke foto slide ${i+1}`);
     if(i===0) d.classList.add('active');
     d.onclick=()=>goSlide(i);
     dotsWrap.appendChild(d);
   });
   function goSlide(i){
     slides.forEach(s=>s.classList.remove('active'));
-    dotsWrap.querySelectorAll('span').forEach(d=>d.classList.remove('active'));
+    dotsWrap.querySelectorAll('button').forEach(d=>d.classList.remove('active'));
     index=i; slides[index].classList.add('active'); dotsWrap.children[index].classList.add('active');
   }
   function next(){ goSlide((index+1)%slides.length); }
@@ -903,6 +978,16 @@ document.addEventListener("DOMContentLoaded", function(){
     isTouch=false; start();
   });
   slider.addEventListener('mouseenter',stop); slider.addEventListener('mouseleave',start);
+
+  /* ---- NAVIGASI KEYBOARD UNTUK SERVICE CARD ---- */
+  document.querySelectorAll('.service-card[role="button"]').forEach(card => {
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+  });
 
   /* ---- SEARCH ---- */
   document.getElementById('searchInput').addEventListener('input',function(){
@@ -981,7 +1066,6 @@ document.addEventListener("DOMContentLoaded", function(){
       formSheet.classList.add('active');
       sheetBackdrop.classList.add('active');
       document.body.style.overflow="hidden";
-      // ripple
       const r=document.createElement('span');
       const rect=a.getBoundingClientRect();
       const d=Math.max(rect.width,rect.height);
