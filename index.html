@@ -316,6 +316,37 @@ body.a11y-contrast *:focus-visible{
 html.a11y-fs-3 #layananList .col-4{ flex:0 0 50%; max-width:50%; }
 html.a11y-fs-2 #layananList .col-4{ flex:0 0 33.33%; max-width:33.33%; }
 
+/* ======== MODE SEDERHANA (kurangi animasi & visual ramai: disabilitas kognitif, lansia, low vision) ======== */
+body.a11y-simple [data-aos]{
+  opacity:1 !important; transform:none !important; transition:none !important;
+}
+body.a11y-simple .hero-slide, body.a11y-simple .hero-overlay, body.a11y-simple .hero-dots{
+  display:none !important;
+}
+body.a11y-simple .hero-slider{
+  height:auto; background:#0d6efd; box-shadow:none; padding:20px; display:flex; align-items:center;
+}
+body.a11y-simple .hero-text{ position:static; color:#fff; }
+body.a11y-simple .card-app,
+body.a11y-simple .service-card,
+body.a11y-simple .pengumuman,
+body.a11y-simple .form-sheet-header,
+body.a11y-simple .a11y-panel{
+  box-shadow:none !important;
+  border:1px solid #cbd5e1 !important;
+  border-radius:10px !important;
+}
+body.a11y-simple .pengumuman{ background:#0d6efd !important; }
+body.a11y-simple .service-card{
+  display:flex; align-items:center; gap:14px; text-align:left;
+}
+body.a11y-simple .service-card:hover{ transform:none !important; }
+body.a11y-simple .service-card .icon{ font-size:26px; }
+body.a11y-simple #layananList .col-4{ flex:0 0 100%; max-width:100%; }
+body.a11y-simple .floating-social a{ box-shadow:none; border:2px solid #fff; }
+body.a11y-simple .floating-social a:hover{ transform:none; }
+body.a11y-simple .ripple{ display:none !important; }
+
 /* ======== FOOTER ======== */
 .serena-footer-mini{
   text-align:center; font-size:12px; color:#6b7280;
@@ -512,6 +543,7 @@ html.a11y-fs-2 #layananList .col-4{ flex:0 0 33.33%; max-width:33.33%; }
     <button type="button" class="a11y-toggle" id="toggleContrast" aria-pressed="false">🌓 Kontras Tinggi</button>
     <button type="button" class="a11y-toggle" id="toggleUnderline" aria-pressed="false">🔗 Garis Bawahi Tautan</button>
     <button type="button" class="a11y-toggle" id="toggleReadable" aria-pressed="false">🔤 Huruf Mudah Dibaca</button>
+    <button type="button" class="a11y-toggle" id="toggleSimple" aria-pressed="false">🧩 Mode Sederhana</button>
   </div>
 
   <div class="a11y-group">
@@ -1259,8 +1291,12 @@ document.addEventListener("DOMContentLoaded", function(){
     document.getElementById('toggleUnderline').setAttribute('aria-pressed', String(!!state.underline));
     bodyEl.classList.toggle('a11y-readable', !!state.readable);
     document.getElementById('toggleReadable').setAttribute('aria-pressed', String(!!state.readable));
+    bodyEl.classList.toggle('a11y-simple', !!state.simple);
+    document.getElementById('toggleSimple').setAttribute('aria-pressed', String(!!state.simple));
+    if(state.simple){ stop(); }
+    else if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ start(); }
   }
-  let a11yState = Object.assign({fs:1,contrast:false,underline:false,readable:false}, loadA11y());
+  let a11yState = Object.assign({fs:1,contrast:false,underline:false,readable:false,simple:false}, loadA11y());
   applyA11y(a11yState);
 
   function announce(msg){
@@ -1305,8 +1341,13 @@ document.addEventListener("DOMContentLoaded", function(){
     applyA11y(a11yState); saveA11y(a11yState);
     announce("Huruf mudah dibaca "+(a11yState.readable?"diaktifkan":"dimatikan"));
   });
+  document.getElementById('toggleSimple').addEventListener('click', function(){
+    a11yState.simple = !a11yState.simple;
+    applyA11y(a11yState); saveA11y(a11yState);
+    announce("Mode sederhana "+(a11yState.simple?"diaktifkan, animasi dan elemen dekoratif dikurangi":"dimatikan"));
+  });
   document.getElementById('a11yReset').addEventListener('click', function(){
-    a11yState = {fs:1,contrast:false,underline:false,readable:false};
+    a11yState = {fs:1,contrast:false,underline:false,readable:false,simple:false};
     applyA11y(a11yState); saveA11y(a11yState);
     stopSpeaking();
     announce("Pengaturan aksesibilitas dikembalikan ke semula");
